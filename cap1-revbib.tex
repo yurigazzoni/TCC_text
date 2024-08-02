@@ -1,0 +1,100 @@
+% ----------------------------------------------------------
+\chapter{Revisão Bibliográfica}
+% ----------------------------------------------------------
+
+Para atingir o objetivo de projetar o hardware de um computador de bordo robusto, foi preciso buscar na literatura acadêmica o estado da arte, principalmente o que tange o projeto de OBDHs para satélites de pequeno porte. 
+
+Primeiro, foram analisados as placas de OBDH dos projetos do FloripaSat-1 e FloripaSat-2, desenvolvidos pelo SpaceLab da UFSC. Depois disso, outros projetos comerciais foram estudados, para obtenção de noções sobre a arquitetura e componentes usados. Um panorama geral foi feito, verificando-se principalmente os processadores, memórias voláteis e não-voláteis, interfaces de comunicação e outros periféricos (ADCs, RTC, sensores, etc.) utilizados. 
+
+Além disso, foi necessário um estudo sobre os efeitos de radiação em órbita baixa (\textit{Low Earth Orbit} - LEO), para que a escolha dos componentes do projeto seja a mais ideal possível, buscando mitigar os efeitos mais conhecidos.
+
+\section{Projetos da literatura}
+
+\subsection{FloripaSat-1}
+% https://ieeexplore.ieee.org/abstract/document/9085277
+O FloripaSat-1 é uma plataforma \textit{open-source} para nanossatélites. Essa plataforma consiste em três módulos: um EPS, um OBDH e um TTC.
+
+Seu OBDH foi feito para realização da interface e comunicação entre os módulos e \textit{payloads}. Aqui, destacam-se os sensores presentes: uma \textit{Inertial Measurement Unit} (com giroscópio, magnetômetro e acelerômetro), a interface com os sensores dos painéis solares e as medições de tensão e corrente de entrada do próprio módulo.
+
+Além disso, contava com um microprocessador de 16 bits, memórias flash (IS25LP128) e suporte para cartão microSD para armazenamento.
+
+\subsection{FloripaSat-2}
+% https://ieeexplore.ieee.org/abstract/document/10078027
+O FloripaSat-2 é a segunda geração da plataforma \textit{open-source} desenvolvida pelo FloripaSat-1, trazendo melhorias para os três módulos principais.
+
+Especificamente para o OBDH, foi introduzida uma memória FRAM e uma NOR flash, ao invés das flashs e cartão microSD anteriores, o que mostra uma melhoria clara de capacidade e confiabilidade. 
+
+Outras duas melhorias importantes foram, primeiramente, a adição de um conector para eventualmente conectar uma \textit{daughter board} à placa, e, segundamente, a adição de \textit{buffers} às trilhas de I2C entre os módulos. Isso acrescenta flexibilidade e confiabilidade ao OBDH da segunda geração.
+
+\subsection{Projetos comerciais}
+
+Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenção de noções sobre a arquitetura e componentes usados. Foram verificados principalmente os processadores, as memórias voláteis e não-voláteis, as interfaces de comunicação e outros periféricos (ADCs, RTC, etc.) utilizados. A Tabela \ref{tab:Tab_Rev} abaixo mostra a pesquisa realizada sobre o Estado da Arte, em conjunto com os dados de [3], sintetizados na Tabela \ref{tab:Tab_Missoes}.
+
+\begin{table}[htb]
+    \centering
+	\ABNTEXfontereduzida
+	\caption{\label{tab:Tab_Rev}Principais componentes usados pelos fabricantes de OBDHs comerciais.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \begin{tabular}{@{}p{2cm}p{2.6cm}p{2cm}p{2cm}p{2.2cm}p{2.6cm}@{}}
+		\toprule
+		\textbf{Fabricante} & \textbf{Nome do Produto} & \textbf{Processador} & \textbf{Memórias} & \textbf{Periféricos} & \textbf{Interfaces de comunicação} \\ 
+        \midrule
+        GomSpace & NanoMind A3200 & AT32UC3C & Flash, SDRAM, FRAM & Giroscópio, Magnetômetro, Transceivers, Sensores de temperatura & CAN, I2C, SPI, JTAG, USART \\%https://gomspace.com/UserFiles/Subsystems/datasheet/gs-ds-nanomind-a3200_1006901-117.pdf
+        
+        \midrule
+        GomSpace & NanoMind HPMK3 & Zynq 7030 & Flash, eMMC, DDR3 & Watchdog, Sensores de temperatura, VCO, Sensores de tensão e corrente & CAN, USART, USB, I2C, JTAG, LVDS, SpaceWire \\ %https://gomspace.com/UserFiles/Subsystems/datasheet/gs-ds-NanoMind_HP_MK3.pdf
+
+        \midrule
+        ISIS Space & ISIS On Board Computer & Atmel & Flash, SDRAM, FRAM, Cartões SD & Sensores de temperatura, Sensores de tensão e corrente, RTC, ADC & USART, USB, I2C, JTAG, PWM \\ %https://www.isispace.nl/product/on-board-computer/
+
+        \midrule
+        Nano Avionics & SatBus 3C2 & Não informado & Flash, FRAM, Cartões SD & Giroscópio, Magnetômetro, Rádio UHF, ADC & CAN, SPI, I2C, USART, PWM, USB \\ %https://nanoavionics.com/cubesat-components/cubesat-on-board-computer-main-bus-unit-satbus-3c2/
+
+        \midrule
+        AAC Clyde Space & Kryten-M3 & Smart Fusion 2 SoC & MRAM, eNVM & RTC, Sensores de tensão e corrente & CAN, SPI, I2C, USART, RS422, LVDS \\ %https://www.aac-clyde.space/what-we-do/space-products-components/command-data-handling/kryten-m3       
+
+
+		
+        \\ \bottomrule
+	\end{tabular}
+	\fonte{Elaboração própria.}
+\end{table}
+
+\begin{table}[H]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:Tab_Missoes}Síntese da tabela apresentada por [3].}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{3.5cm} >{\centering}p{3.5cm} >{\centering}p{3.5cm} @{}}
+    
+		\toprule
+		\textbf{Fabricante} & \textbf{Processadores} & \textbf{Missões por Fabricante} \tabularnewline 
+        \midrule
+        Xilinx & Zynq 7020, Zynq 7030, Zynq 7045, Ultrascale+, etc. & 24 \tabularnewline
+        
+        \midrule
+        Atmel + Microchip & ATmega329P, AT91SAM9G20, PIC24F, etc. & 22 \tabularnewline 
+
+        \midrule
+        Texas Instruments & MSP430, OMAP3530, Sitara AM3703, etc. & 15 \tabularnewline 
+
+        \midrule
+        Cobham Gaisler & GR712RC, UT699, LEON3FT & 8 \tabularnewline
+        
+        \bottomrule
+	\end{tabular}
+	\fonte{George e Wilson, 2018, página 463.}
+\end{table}
+
+Comparando ambas tabelas, é possível verificar que a maioria dos processadores apresentados são de duas fabricantes: Xilinx (especialmente chips da família Zynq 7000) e Microchip (incluindo Atmel). Além disso, a maior parte dos projetos comerciais vistos apresentam memórias FRAM, que possuem um número máximo de ciclos de leitura e escrita muito elevada, além de memórias Flash. Outro destaque foi a presença de sensores de tensão e corrente, bem como magnetômetros e giroscópios. 
+
+\section{Efeitos da Radiação em LEO}
+
+
+
+
+
+% Citação: 
+% https://sci-hub.se/10.1109/jproc.2018.2802438
+ 
+
