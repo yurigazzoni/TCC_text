@@ -2,17 +2,25 @@
 \chapter{Revisão Bibliográfica}
 % ----------------------------------------------------------
 
-Para atingir o objetivo de projetar o hardware de um computador de bordo robusto, foi preciso buscar na literatura acadêmica o estado da arte, principalmente o que tange o projeto de OBDHs para satélites de pequeno porte. 
+Para atingir o objetivo de projetar o \textit{hardware} de um computador de bordo robusto, foi preciso buscar na literatura acadêmica o estado da arte que tange o projeto de OBDHs (\textit{On-Board Data Handling}) para satélites de pequeno porte. 
+ 
+Primeiro, foi necessário um estudo sobre a radiação em LEO - \textit{Low Earth Orbit} (órbitas com raio menor que 1000 km, segundo ESA, 2024), para que a escolha dos componentes do projeto seja a melhor possível. Com esse estudo, buscaram-se formas de mitigar os efeitos mais conhecidos e verificar como instituições têm lidado com componentes do tipo \textit{commercial-off-the-shelf} (COTS). Além disso, foram analisadas as placas de OBDH dos projetos do FloripaSat-1 e FloripaSat-2, desenvolvidas pelo SpaceLab da UFSC. Por fim, outros projetos comerciais foram estudados para obtenção de noções sobre a arquitetura e componentes usados. Um panorama geral foi feito, verificando-se principalmente os componentes principais e mais críticos, ou seja, processadores, memórias voláteis e não-voláteis e outros periféricos.
 
-Primeiro, foram analisados as placas de OBDH dos projetos do FloripaSat-1 e FloripaSat-2, desenvolvidos pelo SpaceLab da UFSC. Depois disso, outros projetos comerciais foram estudados, para obtenção de noções sobre a arquitetura e componentes usados. Um panorama geral foi feito, verificando-se principalmente os processadores, memórias voláteis e não-voláteis, interfaces de comunicação e outros periféricos (ADCs, RTC, sensores, etc.) utilizados. 
+\section{Radiação em LEO e Componentes COTS}
 
-Além disso, foi necessário um estudo sobre os efeitos de radiação em órbita baixa (\textit{Low Earth Orbit} - LEO), para que a escolha dos componentes do projeto seja a mais ideal possível, buscando mitigar os efeitos mais conhecidos.
+Estando em solo terrestre, os eletrônicos atuais estão bem protegidos contra a maior parte da radiação incidente do universo. No caso dos satélites orbitais, a proteção atmosférica é atenuada pela órbita, mesmo para aqueles que operam em LEO. Nesse caso, a radiação pode ser suficientemente significativa para causar a mudança do comportamento eletromagnético dos materiais, causando efeitos como falhas, aquisição ou execução errada de comandos e distorção da corrente elétrica (MAYANBARI, 2011).  Esses danos são divididos em dois grupos (JUNQUEIRA, 2020): os acumulativos como o TID (\textit{Total Ionizing Dose}), e os SEE (\textit{Single Event Effects}), que indicam o acontecimento de eventos únicos. 
 
-\section{Projetos da literatura}
+Ainda segundo Junqueira (2020), o TID se caracteriza principalmente pela formação de pares elétron-lacuna, onde o primeiro aumenta a condutividade do material e o segundo contribui para oxidação, mudando as características elétricas do componente com o tempo.  Já os SEE ocorrem quando um íon atravessa um componente crítico, gerando uma linha de ionização que pode ou não ser destrutiva. 
+
+Por esse motivo, quando são escolhidos os componentes críticos para o \textit{hardware} de um \textit{CubeSat}, em sua maioria COTS, deve-se levar em consideração algumas diretrizes cruciais. Segundo Carmo et al. (2021), o componente escolhido precisa atender os requisitos operacionais, concomitante ao gerenciamento de riscos com mitigações e blindagens. 
+
+Com isso, é possível ver três formas confiáveis de escolher cada componente: usando as diretrizes da ESA (\textit{European Space Agency}), as da NASA (\textit{National Aeronautics and Space Administration}) e também através da herança de voo, ou seja, escolhendo componentes que já estiveram em missões semelhantes ou mais críticas. Nos dois primeiros casos, a consulta é através da norma ECSS-Q-ST-60C para a ESA e da lista NPSL (\textit{NASA Part Selection List}) para a NASA.  No caso da herança de voo, outros projetos devem ser analisados e consultados, o que será feito na seção a seguir.
+
+\section{Projetos anteriores}
 
 \subsection{FloripaSat-1}
 % https://ieeexplore.ieee.org/abstract/document/9085277
-O FloripaSat-1 é uma plataforma \textit{open-source} para nanossatélites. Essa plataforma consiste em três módulos: um EPS, um OBDH e um TTC.
+O FloripaSat-1 é uma plataforma \textit{open-source} para nanossatélites. Essa plataforma consiste em três módulos: um módulo de fornecimento de potência (EPS), um computador de bordo (OBDH) e um módulo de telemetria e comunicação (TTC).
 
 Seu OBDH foi feito para realização da interface e comunicação entre os módulos e \textit{payloads}. Aqui, destacam-se os sensores presentes: uma \textit{Inertial Measurement Unit} (com giroscópio, magnetômetro e acelerômetro), a interface com os sensores dos painéis solares e as medições de tensão e corrente de entrada do próprio módulo.
 
@@ -28,7 +36,7 @@ Outras duas melhorias importantes foram, primeiramente, a adição de um conecto
 
 \subsection{Projetos comerciais}
 
-Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenção de noções sobre a arquitetura e componentes usados. Foram verificados principalmente os processadores, as memórias voláteis e não-voláteis, as interfaces de comunicação e outros periféricos (ADCs, RTC, etc.) utilizados. A Tabela \ref{tab:Tab_Rev} abaixo mostra a pesquisa realizada sobre o Estado da Arte, em conjunto com os dados de [3], sintetizados na Tabela \ref{tab:Tab_Missoes}.
+Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenção de noções sobre a arquitetura e componentes usados. Foram verificados principalmente os processadores, as memórias voláteis e não-voláteis, as interfaces de comunicação e outros periféricos (ADCs, RTC, etc.) utilizados. A Tabela \ref{tab:Tab_Rev} abaixo mostra a pesquisa realizada sobre o Estado da Arte, em conjunto com os dados de George e Wilson (2018), sintetizados na Tabela \ref{tab:Tab_Missoes}.
 
 \begin{table}[htb]
     \centering
@@ -62,7 +70,7 @@ Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenç�
 
 \begin{table}[H]
 	\ABNTEXfontereduzida
-	\caption{\label{tab:Tab_Missoes}Síntese da tabela apresentada por [3].}
+	\caption{\label{tab:Tab_Missoes}Síntese da tabela apresentada por George e Wilson (2018).}
 	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
     \centering
     \begin{tabular}{@{} >{\centering}p{3.5cm} >{\centering}p{3.5cm} >{\centering}p{3.5cm} @{}}
@@ -86,9 +94,9 @@ Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenç�
 	\fonte{George e Wilson, 2018, página 463.}
 \end{table}
 
-Comparando ambas tabelas, é possível verificar que a maioria dos processadores apresentados são de duas fabricantes: Xilinx (especialmente chips da família Zynq 7000) e Microchip (incluindo Atmel). Além disso, a maior parte dos projetos comerciais vistos apresentam memórias FRAM, que possuem um número máximo de ciclos de leitura e escrita muito elevada, além de memórias Flash. Outro destaque foi a presença de sensores de tensão e corrente, bem como magnetômetros e giroscópios. 
+Comparando ambas tabelas, é possível verificar que a maioria dos processadores apresentados são de duas fabricantes: Xilinx (especialmente chips da família Zynq 7000) e Microchip (incluindo Atmel). Além disso, a maior parte dos projetos comerciais vistos apresentam memórias FRAM, que possuem um número máximo de ciclos de leitura e escrita muito elevada, além de memórias Flash. Outro destaque foi a presença de sensores de tensão e corrente, bem como magnetômetros e giroscópios.
 
-\section{Efeitos da Radiação em LEO}
+
 
 
 

@@ -12,9 +12,21 @@ english,			% idioma adicional para hifenização
 brazil				% o último idioma é o principal do documento
 hyperref=hidelinks]{abntex2}
 
+\usepackage{tccctj} % carrega o estilo CTJ
+\bibliographystyle{abntex2-alf-ufsc} % Arquivo bst com patch para correção de citação de proceedings. Produz italico em "In", conforme descrito em: https://github.com/abntex/abntex2/issues/226
+
 % Useful packages
 \usepackage{amsmath}
 \usepackage{graphicx}
+% Pacotes adicionais
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{quoting}
+\quotingsetup{indentfirst={false},font={footnotesize},leftmargin=4cm,rightmargin=0cm} 
+\hypersetup{hidelinks}
+\usepackage{enumitem}
+\setlist{noitemsep}
 %\usepackage{hyperref}
 %\usepackage{array,epsfig}
 %\usepackage{amsfonts}
@@ -28,14 +40,102 @@ hyperref=hidelinks]{abntex2}
 \usepackage{booktabs}
 \usepackage{array}
 
-\title{Capítulos TCC}
-\author{Yuri Gazzoni Rezende - 20150150}
+% ----------------------------------------------------
+
+% ----------------------------------------------------
+% Informações do trabalho
+\autor{Yuri Gazzoni Rezende}
+\titulo{OBDH Robusto Para Uso em LEO}
+% \subtitulo{Subtítulo} % Preenchimento opcional para quando houver sub-título
+\orientador{Gabriel Marcelino}
+%\coorientador{Nome do coorientador} % Preenchimento opcional para quando houver co-orientador
+\curso{Departamento de Engenharia Elétrica e Eletrônica}
+% \titulacao{Bacharel em x}
+\datadadefesa{15}{novembro}{2024}
+\local{Florianópolis}
 
 \begin{document}
-\maketitle
 
+% ----------------------------------------------------
+% 1. Capa do trabalho
+\imprimircapa
+
+% 2. Folha de rosto
+\imprimirfolhaderosto
+
+% 3. Folha de aprovação
+\begin{folhadeaprovacao}
+    \membrodabanca[Orientador/Presidente]{Prof. Dr. Nome do Orientador/Presidente}{}
+    \membrodabanca{Prof. Dr. Membro da banca 1}{UFSC}
+    \membrodabanca{Prof. Dr. Membro da banca 2}{UFSC}
+    \membrodabanca{Prof. Dr. Membro da banca 3}{UFSC\,-\,Florianópolis}
+\end{folhadeaprovacao}
+
+% 4. Dedicatória
+\begin{dedicatoria}
+    Este trabalho é dedicado aos meus colegas de classe e aos meus queridos pais.
+\end{dedicatoria}
+
+% 5. Agradecimentos 
+\begin{agradecimentos}
+    Inserir os agradecimentos aos colaboradores à execução do trabalho.
+\end{agradecimentos}
+
+% 6. Epígrafe
+\begin{epigrafe}
+    \aspas
+    A natureza é um enorme jogo de xadrez disputado por deuses, e que temos o privilégio de observar.
+    As regras do jogo são o que chamamos de física fundamental, e compreender essas regras é a nossa meta.
+    \aspas
+    \autor{Richard Phillips Feynman} % autor da epígrafe
+\end{epigrafe}
+
+% 7. Resumo em português
+\begin{resumo}
+    O texto do resumo deve ser digitado em um único bloco, sem espaço de parágrafo. Deve ser composto por uma sequência de frases concisas, afirmativas e não de uma enumeração de tópicos. Não deve conter citações. Manter o tempo verbal do texto do trabalho (impessoal) e por vezes usar a voz ativa (Ex.: este trabalho apresenta). O Resumo deve conter: tema, problema, justificativa, objetivos, método e resultados (de forma geral). Abaixo do resumo, informar as palavras-chave (palavras ou expressões significativas retiradas do texto) e preferencialmente não repetir termos do título (para aumentar os indexadores). No mínimo três e no máximo cinco. Separadas por ponto. Observe que o espaçamento aqui, entre linhas, é simples (1,0).
+
+    \palavrachave{Palavra-chave 1}
+    \palavrachave{Palavra-chave 2}
+    \palavrachave{Palavra-chave 3}
+\end{resumo}
+
+% 8a. Resumo em inglês
+\begin{resumo}[Abstract]
+    \begin{otherlanguage*}{english}
+        Resumo traduzido para outros idiomas, neste caso, inglês. Segue o formato do resumo feito na língua vernácula. As palavras-chave traduzidas, versão em língua estrangeira, são colocadas abaixo do texto precedidas pela expressão \emph{Keywords}, separadas por ponto. Observe que o espaçamento aqui, entre linhas, é simples (1,0).
+    \end{otherlanguage*}
+
+    \palavrachave{First keyword}
+    \palavrachave{Second keyword}
+    \palavrachave{Third keyword}
+\end{resumo}
+% 9. Lista de figuras
+\imprimirlistafiguras
+
+% 10. Lista de quadros
+\imprimirlistaquadros
+
+% 11. Lista de tabelas
+\imprimirlistatabelas
+
+% 12. Lista de abreviaturas e siglas
+
+% 13. Lista de símbolos 
+
+% 14. Sumário
+\imprimirsumario
+
+% ----------------------------------------------------
+
+% Elementos textuais
+\textual
+
+
+\include{cap-introducao.tex}
 \include{cap1-revbib.tex}
 \include{bib.tex}
-
+\postextual
+%\include{bib.tex}
+%\include{ref.bib}
 
 \end{document}

@@ -1,0 +1,999 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Universidade Federal de Santa Catarina
+%  Centro Tecnológico de Joinville
+%
+%  Pacote LaTeX para formatação adequada de TCC's do
+%  Centro Tecnológico de Joinville
+%
+%   Autores:
+%     Prof. Helton da Silva Gaspar
+%     Prof. Vitor Takashi Endo
+%
+%   Versão: 1.0 beta
+%   Data:   16 de maio de 2023
+%
+    \def\@tccctjvernum{1.0\,\(\beta\)}
+    \def\@tccctjverdia{16}
+    \def\@tccctjvermes{05}
+    \def\@tccctjverano{23}
+%   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Baseado no documento elaborado por Furlani: 
+% https://www.overleaf.com/latex/templates/template-trabalhos-academicos-ufsc-a4/vtfjxrcrvnjh
+
+\newif\if@semdicas
+    \DeclareOption{semdicas}{\@semdicastrue}
+
+    \ProcessOptions\relax
+
+
+
+    \RequirePackage{helvet}
+    \RequirePackage{xcolor}
+
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Flags
+    %
+    \newcounter{@flfolhadeaprovacao}\setcounter{@flfolhadeaprovacao}{0}
+    \providecommand{\@flcapa}{}%
+    \providecommand{\@flfolhadeaprovacao}{}%
+    \newcounter{@flfolhaderosto}\setcounter{@flfolhaderosto}{0}%
+    \newcounter{@fldedicatoria}\setcounter{@fldedicatoria}{0}%
+    \newcounter{@flagradecimentos}\setcounter{@flagradecimentos}{0}%
+    \newcounter{@flepigrafe}\setcounter{@flepigrafe}{0}%
+    \newcounter{@flresumo}\setcounter{@flresumo}{0}%
+    \providecommand{\@flabstract}{}%
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Comprimentos
+    %
+    \newlength{\keywordskip}\setlength{\keywordskip}{7pt}
+    \newlength{\@auxA}
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Variáveis do pacote
+    %
+    \providecommand{\@tccctjnome}{tccctj}                       %nome do pacote
+    \providecommand{\@revisor}{não especificado}
+
+    \providecommand{\imprimirano}{\@excmdred{datadadefesa}\@exargs{\@bluearg{dia},\@bluearg{mês por extenso},\@bluearg{ano}}}
+    \providecommand{\imprimirmes}{}
+    \renewcommand  {\imprimirautor}{}%\@excmdred{autor}\@exargs{\@bluearg{nome do autor}}}%   !Variável original da classe abntex2
+    \providecommand{\imprimirAUTOR}{\@excmdred{autor}\@exargs{\@bluearg{nome do autor}}}
+    \providecommand{\imprimirautorabr}{@null}
+    \providecommand{\imprimirAUTORABR}{@null}
+    \providecommand{\imprimirautorepigrafe}{\@excmdred{autor}\@exargs{\@bluearg{autor da epígrafe}}}
+    \providecommand{\imprimircentro}{Centro Tecnológico - CTC}
+    \providecommand{\imprimirCENTRO}{CENTRO TECNOLÓGICO - CTC}
+    \renewcommand  {\imprimircoorientador}{}
+    \providecommand{\imprimirCOORIENTADOR}{}
+    \renewcommand  {\imprimircoorientadorRotulo}{Coorientador(a):}
+    \providecommand{\imprimircurso}{}%\@excmdred{curso}\@exargs{\@bluearg{nome do curso}}} 
+    \providecommand{\imprimirCURSO}{\@excmdred{curso}\@exargs{\@bluearg{nome do curso}}}
+    \providecommand{\imprimircentrosigla}{CTC}
+    \providecommand{\imprimirdatadadefesa}{}%
+    \renewcommand  {\imprimirinstituicao}{Universidade Federal de Santa Catarina}%          !Variável original da classe abntex2
+    \providecommand{\imprimirINSTITUICAO}{UNIVERSIDADE FEDERAL DE SANTA CATARINA}
+    \providecommand{\imprimirinstituicaosigla}{UFSC}
+    \renewcommand  {\imprimirlocal}{Florianópolis}%                                             !Variável original da classe abntex2
+    \providecommand{\imprimirLOCAL}{FLORIANÓPOLIS}
+    \renewcommand  {\imprimirorientador}{}%\@excmdred{orientador}\@exargs{\@bluearg{nome}}}
+    \providecommand{\imprimirORIENTADOR}{\@excmdred{orientador}\@exargs{\@bluearg{nome}}}
+    \renewcommand  {\imprimirorientadorRotulo}{Orientador(a):}
+    \providecommand{\imprimirorientadorRotulolimpo}{Orientador(a)}
+    \renewcommand  {\imprimirpreambulo}{Este Trabalho de Conclusão de Curso foi julgado adequado para obtenção do Título de “Bacharel em Engenharia Eletrônica” e aprovado em sua forma final pelo Curso de Graduação em Engenharia Eletrônica.}
+    \providecommand{\imprimirpreambulofolhaderosto}{Trabalho de Conclusão de Curso do Curso de Graduação em Engenharia Eletrônica do Centro Tecnológico da Universidade Federal de Santa Catarina para a obtenção do título de Bacharel em Engenharia Eletrônica.}
+    \providecommand{\imprimirsubtitulo}{}
+    \providecommand{\imprimirSUBTITULO}{}
+    \providecommand{\imprimirtitulacao}{}%\@excmdred{titulacao}\@exargs{\@bluearg{Bacharel em ...}}}
+    \renewcommand  {\imprimirtitulo}{}%\@excmdred{titulo}\@exargs{\@bluearg{título do trabalho}}}
+    \providecommand{\imprimirTITULO}{\@excmdred{titulo}\@exargs{\@bluearg{título do trabalho}}}
+    \providecommand{\imprimirUF}{(SC)}
+    \providecommand{\@titulopalavraschave}{Palavra-chave}
+
+
+    \def\@null{@null}
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Contadores
+    %
+    \newcounter{@passotutorial}\setcounter{@passotutorial}{0}
+    \newcounter{@nmembrosbanca}\setcounter{@nmembrosbanca}{0}%
+    \newcounter{@nrev}\setcounter{@nrev}{0}
+    \newcounter{@nkeyword}\setcounter{@nkeyword}{0}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Sub-rotinas
+    %
+    \def\@subexargs(#1,#2){%
+        \def\@close{:close:}%
+        \def\@secondarg{#2}%
+        \textsf{\{#1\}}%
+        \ifx\@secondarg\@close\else{\@subexargs(#2)}\fi}
+
+    \def\@sublastname(#1 #2){%
+        \def\@close{:close:}%
+        \def\@secondarg{#2}%
+        \ifx\@secondarg\@close{#1}\else{\@sublastname(#2)}\fi}
+    %     \ifx\@secondarg\@close{#1}\else{B}\fi}
+
+    \def\@inicial(#1#2){#1}
+
+    \def\@filtroDA(#1){%
+        \def\@arg{#1}%
+        \def\@da{DA}%
+        \ifx\@arg\@da{}\else{%
+                \def\@de{DE}%
+                \ifx\@arg\@de{}\else{%
+                        \def\@do{DO}%
+                        \ifx\@arg\@do{}\else{\@inicial(#1).~}\fi%
+                    }\fi}\fi}
+
+    \def\@filtroda(#1){%
+        \def\@arg{#1}%
+        \def\@da{da}%
+        \ifx\@arg\@da{}\else{%
+                \def\@de{de}%
+                \ifx\@arg\@de{}\else{%
+                        \def\@do{do}%
+                        \ifx\@arg\@do{}\else{\@filtroDA(#1)}\fi%
+                    }\fi}\fi}
+
+    \def\@subnomeabrev(#1 #2){%
+        \def\@close{:close:}%
+        \def\@secondarg{#2}%
+        \ifx\@secondarg\@close{}\else{\@filtroda(#1)\@subnomeabrev(#2)}\fi}
+
+    \def\@filtroDAsigla(#1){%
+        \def\@arg{#1}%
+        \def\@da{DA}%
+        \ifx\@arg\@da{}\else{%
+                \def\@de{DE}%
+                \ifx\@arg\@de{}\else{%
+                        \def\@do{DO}%
+                        \ifx\@arg\@do{}\else{\@inicial(#1)}\fi%
+                    }\fi}\fi}
+
+    \def\@filtrodasigla(#1){%
+        \def\@arg{#1}%
+        \def\@da{da}%
+        \ifx\@arg\@da{}\else{%
+                \def\@de{de}%
+                \ifx\@arg\@de{}\else{%
+                        \def\@do{do}%
+                        \ifx\@arg\@do{}\else{\@filtroDAsigla(#1)}\fi%
+                    }\fi}\fi}
+
+    \def\@subsigla(#1 #2){%
+        \uppercase{\@filtrodasigla(#1)}%
+        \def\@close{:close:}%
+        \def\@secondarg{#2}%
+        \ifx\@secondarg\@close{}\else{\@subsigla(#2)}\fi}
+
+    \def\@sublimpaponto(#1.#2){#1}
+
+    \def\@sublimpadoispontos(#1:#2){#1}
+
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Macros internas
+    %
+
+    \newcommand{\@bluearg}[2][blue]{\textcolor{#1}{\(\langle\)#2\(\rangle\)}}
+
+    \newcommand{\@exargs}[2][]{\@subexargs(#2,:close:)}
+
+
+    \newcommand{\@excmd}[2][@true]{%
+        % Macro para escrever um exemplo comando
+        \textsf{\textbackslash#2}%
+        \def\@true{@true}%
+        \def\@op{#1}%
+        \ifx\@op\@true\else{\textsf{[#1]}}\fi}
+
+    \newcommand{\@excmdred}[2][@true]{\textcolor{red}{\@excmd[#1]{#2}}}
+
+
+    \newcommand{\nomeabrev}[2][]{\@sublastname(#2 :close:),~\@subnomeabrev(#2 :close:)}
+
+    \providecommand{\@dicapalavraschaveop}{}
+    \providecommand{\@dicapalavraschave}{\@excmdred{palavrachave}\@exargs{\@bluearg{primeira palavra, ou termo}}}%
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Macros de entrada de dados para o usuário
+    %
+
+
+    \newcommand{\autorepigrafe}[2][@null]{%
+        \renewcommand{\imprimirautorepigrafe}{#2}}
+
+    \renewcommand{\autor}[2][@null]{%
+        \renewcommand{\imprimirautor}{#2}
+        \renewcommand{\imprimirAUTOR}{\uppercase{#2}}
+        \def\@null{@null}%
+        \def\@op{#1}%
+        \ifx\@op\@null%
+            \author{#2}%
+            \renewcommand{\imprimirautorabr}{\nomeabrev{#2}}%
+            \renewcommand{\imprimirAUTORABR}{\uppercase{\nomeabrev{#2}}}%
+        \else%
+            \author[#1]{#2}%
+            \renewcommand{\imprimirautorabr}{#1}%
+            \renewcommand{\imprimirAUTORABR}{\uppercase{#1}}%
+        \fi}
+
+    \newcommand{\autora}[2][@null]{%
+        \autor[#1]{#2}}
+
+
+    \renewcommand{\coorientador}[2][Coorientador(a):]{%
+        \renewcommand{\imprimircoorientador}{#2}%
+        \renewcommand{\imprimirCOORIENTADOR}{\uppercase{#2}}%
+        \renewcommand{\imprimircoorientadorRotulo}{#1}}
+    \newcommand{\coorientadora}[2][Coorientadora:]{%
+        \coorientador[#1]{#2}}
+
+
+    \newcommand{\curso}[2][@null]{%
+        \renewcommand{\imprimircurso}{#2}%
+        \renewcommand{\imprimirCURSO}{\uppercase{#2}}
+        \def\@null{@null}%
+        \def\@op{#1}%
+        \ifx\@op\@null%
+            %         \renewcommand{\imprimirtitulacao}{Bacharel em #2}%
+            \ifthenelse{\equal{\imprimirtitulacao}{}}{\renewcommand{\imprimirtitulacao}{Bacharel em #2}}%
+        \else%
+            %         \renewcommand{\imprimirtitulacao}{#1}%
+            \ifthenelse{\equal{\imprimirtitulacao}{}}{\renewcommand{\imprimirtitulacao}{#1}}%
+        \fi}
+
+    \newcommand{\titulacao}[2][]{%
+        \renewcommand{\imprimirtitulacao}{#2}}
+
+    \newcommand{\datadadefesa}[4][]{%
+        \renewcommand{\imprimirano}{#4}%
+        \renewcommand{\imprimirdatadadefesa}{#2 de #3 de #4}}
+
+
+    \renewcommand{\instituicao}[2][@null]{%
+        \renewcommand{\imprimirinstituicao}{#2}%
+        \renewcommand{\imprimirINSTITUICAO}{\uppercase{#2}}%
+        \def\@null{@null}%
+        \def\@op{#1}%
+        \ifx\@op\@null%
+            \renewcommand{\imprimirinstituicaosigla}{\@subsigla(#2 :close: :close:)}%
+        \else%
+            \renewcommand{\imprimirinstituicaosigla}{#1}%
+        \fi}
+
+
+    \let\oldlocal\local%
+    \renewcommand{\local}[2][]{%
+        \oldlocal{#2}%
+        \abntex@ifnotempty{#1}{\renewcommand{\imprimirUF}{(#1)}}}
+
+    \newcommand{\membrodabanca}[3][]{%
+        \def\@opnull{}%
+        \def\@op{#1}%
+        \ifx\@opnull\@op
+            \ifnum\value{@nmembrosbanca}>0%
+                \def\@tipomembro{Membro(a)}%
+            \else%
+                \def\@tipomembro{\imprimirorientadorRotulolimpo/Presidente}%
+            \fi%
+        \else%
+            \def\@tipomembro{#1}%
+        \fi%
+
+        \ifnum\value{@flfolhadeaprovacao}>0%
+
+            \vfill%
+            \begin{minipage}{10cm}
+                \begin{center}
+                    \rule{0.75\textwidth}{0.3pt}
+
+                    #2
+
+                    \@tipomembro%#1
+
+                    \abntex@ifnotempty{#3}{#3}%\ifnum\value{@nmembrosbanca}>0{#3}\fi%
+                    \addtocounter{@nmembrosbanca}{1}%
+                \end{center}%
+
+            \end{minipage}\par\fi}
+
+
+    \renewcommand{\orientador}[2][Orientador(a):]{%
+    \renewcommand{\imprimirorientador}{#2}%
+    \renewcommand{\imprimirORIENTADOR}{\uppercase{#2}}%
+    \renewcommand{\imprimirorientadorRotulo}{#1}%
+    \renewcommand{\imprimirorientadorRotulolimpo}{\@sublimpadoispontos(#1:@null)}}%
+
+    \newcommand{\orientadora}[2][Orientadora:]{%
+\orientador[#1]{#2}}
+
+    \newsavebox{\@palavraschaves}
+    \newcommand{\palavrachave}[2][\@titulopalavraschave]{%
+        \ifnum\value{@flresumo}>0%
+            \addtocounter{@nkeyword}{1}%
+            \ifnum\value{@nkeyword}<2
+                \savebox{\@palavraschaves}{\textbf{#1: }\@sublimpaponto(#2.@null).}%
+                \renewcommand{\@dicapalavraschave}{\@excmdred{palavrachave}\@exargs{\@bluearg{segunda palavra, ou termo}}}%
+            \else%
+                \savebox{\@palavraschaves}{\raggedright\unhbox\@palavraschaves\ \@sublimpaponto(#2.@null).}%
+                \ifnum\value{@nkeyword}<3
+                    \renewcommand{\@dicapalavraschave}{\@excmdred{palavrachave}\@exargs{\@bluearg{terceira palavra, ou termo}}}%
+                \else%
+                    \ifnum\value{@nkeyword}<4
+                        \renewcommand{\@dicapalavraschave}{\@excmdred{palavrachave}\@exargs{\@bluearg{quarta palavra-chave \textbf{opcional}}}}%
+                    \else%
+                        \ifnum\value{@nkeyword}<5
+                            \renewcommand{\@dicapalavraschave}{\@excmdred{palavrachave}\@exargs{\@bluearg{última palavra-chava \textbf{opcional}}}}%
+                        \else%
+                            \renewcommand{\@dicapalavraschave}{}%
+                            \ifnum\value{@nkeyword}>5
+                                \renewcommand{\@dicapalavraschave}{\textcolor{red}{O número máximo de palavras-chaves deveria ser cinco (5)!}}%
+                            \fi%
+                        \fi%
+                    \fi%
+                \fi%
+            \fi%
+        \fi}
+
+    \renewcommand{\titulo}[2][@null]{%
+        \renewcommand{\imprimirtitulo}{#2}%
+        \renewcommand{\imprimirTITULO}{\uppercase{#2}}%
+        \title{#2}%
+        \def\@null{@null}%
+        \def\@op{#1}%
+        \ifx\@op\@null\else%
+            \ifthenelse{\equal{\imprimirsubtitulo}{}}{\renewcommand{\imprimirsubtitulo}{#1}\renewcommand{\imprimirSUBTITULO}{\uppercase{#1}}}%
+        \fi}
+
+    \newcommand{\subtitulo}[2][]{%
+        \renewcommand{\imprimirsubtitulo}{#2}%
+        \renewcommand{\imprimirSUBTITULO}{\uppercase{#2}}}
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Elementos importados do pacote elaborado por:
+    %
+    %  Alisson Lopes Furlani
+    %  https://www.overleaf.com/latex/templates/template-trabalhos-academicos-ufsc-a4/vtfjxrcrvnjh
+
+    % --- 
+    % Fontes dos títulos e seções
+    % --- 
+    % Fonte padrão utilizada no texto
+    %%\renewcommand{\normalsize}{\fontsize{12pt}{16pt}\selectfont}
+    \renewcommand{\familydefault}{\sfdefault}
+    % Fontes padroes de part, chapter, section, subsection e subsubsection
+    \renewcommand{\ABNTEXchapterfont}{\sffamily\fontseries{bx}\fontshape{n}\selectfont}
+    \renewcommand{\ABNTEXchapterfontsize}{\normalsize\selectfont}
+    \renewcommand{\ABNTEXpartfont}{\sffamily\fontseries{bx}\fontshape{n}\selectfont}
+    \renewcommand{\ABNTEXpartfontsize}{\Huge\selectfont}
+    \renewcommand{\ABNTEXsectionfont}{\sffamily\fontseries{m}\fontshape{n}\selectfont}
+    \renewcommand{\ABNTEXsectionfontsize}{\normalsize\selectfont}
+    \renewcommand{\ABNTEXsubsectionfont}{\sffamily\fontseries{b}\fontshape{n}\selectfont}
+    \renewcommand{\ABNTEXsubsectionfontsize}{\normalsize\selectfont}
+    \renewcommand{\ABNTEXsubsubsectionfont}{\sffamily\fontseries{m}\fontshape{n}\selectfont}
+    \renewcommand{\ABNTEXsubsubsectionfontsize}{\normalsize\selectfont}
+    \renewcommand{\ABNTEXsubsubsubsectionfont}{\sffamily\fontseries{m}\fontshape{it}\selectfont}
+    \renewcommand{\ABNTEXsubsubsubsectionfontsize}{\normalsize\selectfont}
+    % Tamanho da fonte para a epígrafe UFSC
+    \expandafter\def\expandafter\epigrafe\expandafter{\epigrafe\ABNTEXfontereduzida}
+
+    % --- 
+    % Sumários
+    % --- 
+    \setlength{\cftbeforechapterskip}{0pt}
+
+    \renewcommand{\cftpartfont}{\ABNTEXpartfont}
+    \renewcommand{\cftpartpagefont}{\cftpartfont}
+
+    \renewcommand{\cftchapterfont}{\ABNTEXchapterfont}
+    \renewcommand{\cftchapterpagefont}{\cftchapterfont}
+
+    \renewcommand{\cftsectionfont}{\ABNTEXsectionfont}
+    \renewcommand{\cftsectionpagefont}{\cftsectionfont}
+
+    \renewcommand{\cftsubsectionfont}{\ABNTEXsubsectionfont}
+    \renewcommand{\cftsubsectionpagefont}{\cftsubsectionfont}
+
+    \renewcommand{\cftsubsubsectionfont}{\ABNTEXsubsubsectionfont}
+    \renewcommand{\cftsubsubsectionpagefont}{\cftsubsubsectionfont}
+
+    \renewcommand{\cftparagraphfont}{\ABNTEXsubsubsubsectionfont}
+    \renewcommand{\cftparagraphpagefont}{\cftparagraphfont}
+    % --- 
+
+
+    % ---
+    % Possibilita criação de Quadros e Lista de quadros.
+    % Ver https://github.com/abntex/abntex2/issues/176
+    % ---
+    \newcommand{\quadroname}{Quadro}
+    \newcommand{\listofquadrosname}{Lista de quadros}
+    \newfloat[chapter]{quadro}{loq}{\quadroname}
+    \newlistof{listofquadros}{loq}{\listofquadrosname}
+    \newlistentry{quadro}{loq}{0}
+    % configurações para atender às regras da ABNT
+    \setfloatadjustment{quadro}{\centering}
+    \counterwithout{quadro}{chapter}
+    \renewcommand{\cftquadroname}{\quadroname\space}
+    \renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
+    \setfloatlocations{quadro}{hbtp} % Ver https://github.com/abntex/abntex2/issues/176
+    % ---
+
+    % ---
+    % Possibilita criação de Algoritmos e Lista de algoritmos.
+    % Ver https://github.com/abntex/abntex2/issues/176
+    % ---
+    \newcommand{\algoritmoname}{Algoritmo}
+    \newcommand{\listofalgoritmosname}{Lista de algoritmos}
+    \newfloat[chapter]{algoritmo}{loa}{\algoritmoname}
+    \newlistof{listofalgoritmos}{loa}{\listofalgoritmosname}
+    \newlistentry{algoritmo}{loa}{0}
+    % configurações para atender às regras da ABNT
+    \setfloatadjustment{algoritmo}{\centering}
+    \counterwithout{algoritmo}{chapter}
+    \renewcommand{\cftalgoritmoname}{\algoritmoname\space}
+    \renewcommand*{\cftalgoritmoaftersnum}{\hfill--\hfill}
+    \setfloatlocations{algoritmo}{hbtp}
+    % ---
+
+    % Muda equação para 'Equação (n)'
+    \counterwithout{equation}{chapter}
+
+
+
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Macros de impressão de elementos do texto
+    %
+
+    \renewcommand{\imprimircapa}[1][0.5ex]{%
+        \begin{capa}%
+            %         \OnehalfSpacing%
+            \SingleSpacing%
+            \begin{center}
+
+                \imprimirINSTITUICAO%
+
+                \imprimirCENTRO%
+
+                \imprimirCURSO%
+                \vfill
+
+                \vspace*{1ex}% referente à \imprimirlocal na metade de baixo
+
+                \vfill
+                \imprimirAUTOR%
+                \vfill
+
+                \vspace*{1ex}% referente à \imprimirano na metade de baixo
+
+                \vfill
+
+                \OnehalfSpacing%
+                \imprimirTITULO%
+                \abntex@ifnotempty{\imprimirsubtitulo}{:~\MakeTextUppercase{\imprimirsubtitulo}}% 
+                \vfill
+                \vfill
+
+                \vspace*{4em}% Referente à \imprimirINSTITUICAO+\imprimirCENTRO+\imprimirCURSO+\imprimirAUTOR na metade de cima
+
+                \vspace*{#1}%  ajuste fino via opção do comando
+
+                \vfill
+                \vfill
+
+                \SingleSpacing%
+                {%
+                    \imprimirlocal%
+
+                    \imprimirano%
+                }
+            \end{center}
+        \end{capa}
+        \renewcommand{\@flcapa}{\thepage}%
+    }
+
+
+    \renewcommand{\folhaderostocontent}{%
+        \begin{center}
+
+            %\vspace*{1cm}
+            \imprimirAUTOR
+            \addtocounter{@flfolhaderosto}{1}%
+
+            \vfill\vfill\vfill
+            \begin{center}
+                \imprimirTITULO%
+                \abntex@ifnotempty{\imprimirsubtitulo}{:~\imprimirSUBTITULO}% 
+            \end{center}
+
+            \vfill
+            \abntex@ifnotempty{\imprimirpreambulofolhaderosto}{%
+                \hspace{.45\textwidth}%
+                \begin{minipage}{.5\textwidth}
+                    \SingleSpacing
+                    \imprimirpreambulofolhaderosto%
+
+                    \vspace{1.1ex}
+                    \imprimirorientadorRotulo~\imprimirorientador%
+
+
+                    \abntex@ifnotempty{\imprimircoorientador}{\vspace{1.1ex}\imprimircoorientadorRotulo~\imprimircoorientador}%
+                \end{minipage}%
+                \vspace*{\fill}}%
+
+            \vfill%
+
+            \imprimirlocal%
+
+            \imprimirano%
+        \end{center}
+    }
+
+
+    \renewenvironment{folhadeaprovacao}[1][]{%
+        \setcounter{@flfolhadeaprovacao}{1}%
+        \setcounter{@nmembrosbanca}{0}%
+        \clearpage%
+        \PRIVATEbookmarkthis{#1}%
+        \def\tccctj@datadadefesa{\@excmdred{datadadefesa}\@exargs{\@bluearg{dia} \@bluearg{de mês} \@bluearg{de ano}}}%
+        \abntex@ifnotempty{\imprimirdatadadefesa}{\def\tccctj@datadadefesa{\imprimirdatadadefesa}}%
+        \begin{Spacing}{1.0}
+            \begin{center}
+                \imprimirAUTOR
+            \end{center}
+
+            \vspace*{2em}
+
+            \begin{center}
+                \imprimirTITULO%
+                \abntex@ifnotempty{\imprimirsubtitulo}{:~\imprimirSUBTITULO}%
+            \end{center}
+
+            \vspace*{2em}
+
+            \abntex@ifnotempty{\imprimirpreambulo}{%
+                \hfill
+                \begin{minipage}{.5\textwidth}
+                    \SingleSpacing
+                    \imprimirpreambulo
+
+                    \vspace{1em}
+                \end{minipage}}\par
+            \hfill\imprimirlocal~\imprimirUF, \tccctj@datadadefesa.
+
+            \vspace*{2em}
+            \textbf{Banca Examinadora:}
+            \begin{center}
+                % \membrodabanca[\imprimirorientadorRotulolimpo/Presidente]{\imprimirorientador}{\imprimirINSTITUICAO}
+                }%
+                {\if@semdicas{}\else{\ifnum\value{@nmembrosbanca}<2{\par\vspace*{3em}\@excmdred{membrodabanca}\@exargs{\@bluearg{nome},\@bluearg{filiação}}\vfill\,}\fi}\fi%
+
+                \ifnum\value{@nmembrosbanca}<6{\vspace*{1em}}\fi%
+                % \ifnum\value{@nmembrosbanca}<4{\vfill}\fi%
+                \ifnum\value{@nmembrosbanca}<4{\vfill}\fi%
+                \ifnum\value{@nmembrosbanca}<3{\vfill\vfill\vfill\vfill}\fi%
+            \end{center}\end{Spacing}\PRIVATEclearpageifneeded}
+    %
+
+
+    \let\olddedicatoria\dedicatoria%
+    \let\oldenddedicatoria\enddedicatoria%
+    \renewenvironment{dedicatoria}{%
+        \setcounter{@fldedicatoria}{1}%
+        \olddedicatoria\par
+        \begin{flushright}
+            {\ }
+
+            \vfill%
+
+            }{\end{flushright}\oldenddedicatoria}
+
+
+    \let\oldagradecimentos\agradecimentos%
+    \let\oldendagradecimentos\endagradecimentos%
+    \renewenvironment{agradecimentos}{%
+        \setcounter{@flagradecimentos}{1}%
+        \oldagradecimentos}{\oldendagradecimentos}
+
+
+    \let\oldepigrafe\epigrafe%
+    \let\oldendepigrafe\endepigrafe%
+    \renewenvironment{epigrafe}{%
+        \setcounter{@flepigrafe}{1}%
+        \oldepigrafe\par
+        \let\autor\autorepigrafe%
+        \let\autora\autorepigrafe%
+
+        \newcommand{\aspas}{%
+            \ifnum\value{@flepigrafe}>0{%
+                \ifnum\value{@flepigrafe}<2{%
+                    \parbox{1.5em}{\hspace*{-1.5em}\textcolor{gray}{\itshape\HUGE``}}\hspace*{-1.5em}%
+                    \setcounter{@flepigrafe}{2}%
+                    }\else{%
+                        \parbox{1.5em}{\textcolor{gray}{\itshape\HUGE''}}%
+                        \setcounter{@flepigrafe}{1}%
+                    }\fi%
+                }\fi}
+
+
+        {\ }
+
+        \vfill%
+        \hfill\hspace*{1ex}\begin{minipage}[t]{0.75\textwidth}
+            \itshape\normalsize}{%
+
+            \vspace*{1.5em}\hfill{\normalfont\imprimirautorepigrafe}
+        \end{minipage}\oldendepigrafe}
+
+
+    \renewenvironment{resumo}[1][\resumoname]{%
+        %% Bloco de teste para mudança do título das palavras-chave
+        \def\@opA{#1}%
+        \def\@opB{\resumoname}%
+        \ifx\@opA\@opB
+            \renewcommand{\@dicapalavraschaveop}{}%
+        \else%
+            \renewcommand{\@titulopalavraschave}{Keywords}%
+            \renewcommand{\@dicapalavraschaveop}{\textcolor{magenta}{[Keywords]}}%
+        \fi%
+        %% Fim do bloco de teste para mudança do título das palavras-chave
+        \addtocounter{@flresumo}{1}%
+        \setcounter{@nkeyword}{0}%
+        \PRIVATEbookmarkthis{#1}
+        \renewcommand{\abstractnamefont}{\chaptitlefont}
+        \renewcommand{\abstractname}{\ABNTEXchapterupperifneeded{#1}}
+        \begin{abstract}
+            \SingleSpacing%
+            \renewcommand{\@dicapalavraschave}{\@excmdred{palavrachave}\@dicapalavraschaveop\@exargs{\@bluearg{primeira palavra, ou termo}}}%
+            }{%
+
+            \setlength{\@auxA}{\keywordskip}%
+            \addtolength{\@auxA}{-\absparsep}%
+            \vspace*{\@auxA}%
+            \noindent%
+            \begin{minipage}{\textwidth}
+                \raggedright\unhbox\@palavraschaves%
+            \end{minipage}%
+            \if@semdicas{}\else\ifnum\value{@nkeyword}>0{\par\vspace*{2ex}}\fi\par\hspace{3em}\textcolor{gray}{\(\displaystyle\vdots\)}\\\hspace*{2em}\@dicapalavraschave\\\textcolor{gray}{\@excmd{end}\@exargs{resumo}}\fi%
+        \end{abstract}\PRIVATEclearpageifneeded}
+
+
+    \newcommand{\imprimirlistafiguras}[1][]{
+        %    \renewcommand{\listfigurename}{LISTA DE FIGURAS}%
+        \abntex@ifnotempty{#1}{\renewcommand{\listfigurename}{#1}}%
+        \pdfbookmark[0]{\listfigurename}{lof}
+        \listoffigures*
+        \cleardoublepage
+    }
+
+    \newcommand{\imprimirlistaquadros}{
+        \pdfbookmark[0]{\listofquadrosname}{loq}
+        \listofquadros*
+        \cleardoublepage
+    }
+
+    \newcommand{\imprimirlistatabelas}{
+        \pdfbookmark[0]{\listtablename}{lot}
+        \listoftables*
+        \cleardoublepage
+    }
+
+    \newcommand{\imprimirsumario}{
+        \pdfbookmark[0]{\contentsname}{toc}
+        \tableofcontents*
+        \cleardoublepage
+    }
+
+    \let\oldtextual\textual
+    \renewcommand{\textual}{%
+        \oldtextual%
+        \makeevenhead{abntheadings}{\ABNTEXfontereduzida\thepage}{}{}%
+        \makeoddhead{abntheadings}{}{}{\ABNTEXfontereduzida\thepage}%
+        \makeheadrule{abntheadings}{0pt}{0pt}}
+
+
+
+    \providecommand{\@dicazero}{%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Página de apresentação do pacote
+    %
+    %% Cabeçalho %%%%%%%%%%%%%%%%%%%%%%%%%%
+    \clearpage\noindent%
+    \begin{minipage}{0.55\textwidth}
+
+        \vspace*{-1.1ex}
+        \rule[-0.3ex]{18pt}{18pt}%
+        \hspace{2pt}%
+        {\color{blue}\rule[-0.3ex]{8pt}{18pt}}%
+        \hspace{4pt}%
+        \textbf{\Large TCC\,\(\cdot\)\,CTJ}\parbox{1em}{\vspace*{-7pt}\ \hfill\(\bullet\)\hfill\,}%
+        \parbox{4cm}{\color{blue}\vspace*{-7pt}\@tccctjvernum\(^{\color{gray}\ \@tccctjverdia\,\cdot\,\@tccctjvermes\,\cdot\,\@tccctjverano}\)}
+
+
+        \vspace*{2.0ex}
+        {\small UFSC\,\(\cdot\)\,Universidade Federal de Santa Catarina}
+    \end{minipage}
+    \hfill%
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright}
+            {\small Template em \LaTeX\ para\par
+                {\color{blue}Trabalhos de Conclusão de Curso} \par
+                {\color{gray} do Centro Tecnológico de Joinville}}
+        \end{flushright}
+    \end{minipage}
+    {\color{blue}\rule[-1.7em]{1.2pt}{4.2em}}%
+    \hspace*{1pt}%
+    \rule[-1.7em]{3pt}{4.2em}%
+
+    %% Mensagem 1 %%%%%%%%%%%%%%%%%%%%%%%%%
+    \vspace*{1cm}%
+    \noindent%
+    {\large\textbf{Descrição}}
+
+    \vspace*{0.5ex}
+    \noindent%
+    Você está usando o pacote tcc\(\cdot\)ctj que contempla um conjunto de macros e configurações  elaboradas para que seu Trabalho de Conclusão de Curso escrito em \LaTeX\ atenda, de maneira mais fácil, as diretrizes de formatação estabelecidas pela BU.
+    Evidentemente, \textbf{\textcolor{blue}{esta  página} \textcolor{red}{de dicas}} não deverá fazer parte da versão final de seu trabalho.
+    Esta e quaisquer outras \textcolor{blue}{dicas} serão suprimidas da compilação da versão final de seu documento quando \textbf{{\color{blue}a opção:}}\,\textsf{\textcolor{red}{semdicas}} for especificada no chamamento do pacote, i.e.:
+    %
+    %
+    \begin{center}
+        \begin{tabularx}{.99\textwidth}{rX}
+            % \toprule
+            \@excmd{usepackage}\@exargs{\textcolor{blue}{\@tccctjnome}}                            & O pacote apresentará esta página e demais dicas                            \\
+            \@excmd[\textcolor{red}{semdicas}]{usepackage}\@exargs{\textcolor{blue}{\@tccctjnome}} & Esta página, e quaisquer outras dicas serão suprimidas na compilação final \\
+            % \bottomrule
+        \end{tabularx}
+    \end{center}
+
+    % intro
+    Ao trabalhar com documentos em \LaTeX, parte-se da premissa de que devemos nos focar no \emph{conteúdo}, e não na forma do documento.
+    % descrição dos arquivos
+    Diante isso, orienta-se que apenas os seguintes arquivos sejam modificados:
+    %
+    \begin{description}
+        \item[Arquivo principal] \texttt{main.tex}.
+        \item[Arquivo contendo as referências bibliográficas] \texttt{ref.bib}.
+    \end{description}
+    %
+    Os demais arquivos do projeto contêm configurações relacionadas à formatação do template, e não devem ser alterados; a citar:
+    %
+    \begin{description}
+        \item Arquivo com o estilo do documento \texttt{tccctj.sty}.
+        \item Arquivo com o estilo das referências bibliográficas \texttt{abntex2-alf-ufsc.bst}.
+    \end{description}
+    % múltiplos arquivos
+    Por fim, embora o template considere o corpo do trabalho contido num único arquivo principal, também é possível separar o documento em vários arquivos e pastas\footnote{Instruções sobre como trabalhar com múltiplos arquivos podem ser vistas no artigo do Overleaf intitulado \href{https://www.overleaf.com/learn/latex/Multi-file_LaTeX_projects}{Multi-file LaTeX projects}.}.
+
+    }
+
+
+
+
+
+    \newcommand{\@caixaok}[1][]{\hspace*{-2.6cm}\parbox{2.5cm}{\textbf{\textcolor{gray}{[\hfill\textcolor{magenta}{#1}\hfill]}}\hspace*{1.2cm}}}
+    \newcommand{\@oknum}[3][OK]{\@caixaok[\ifnum\value{#2}>#3{#1}\fi]}
+    \newcommand{\@passo}[1][]{\item\@caixaok[\abntex@ifnotempty{#1}{OK}]}
+    % 
+    \newcommand{\@tutorial}{%
+        \vspace{4em}\noindent%
+        {\large\textbf{Tutorial}}
+
+        Passo-a-passo para elaboração do texto básico.
+
+        \vspace*{1em}\noindent%
+        {\large\textbf{Preâmbulo \TeX}}
+
+        No preâmbulo do seu arquivo \textsf{.tex}, i.e. antes de \@excmd{begin}\@exargs{document}, defina:
+        \begin{enumerate}
+            \@passo[\imprimirautor]      \@excmdred{autor}\@exargs{\@bluearg{seu nome}} ou \@excmdred{autora}\@exargs{\@bluearg{seu nome}}
+            \@passo[\imprimirorientador] \@excmdred{orientador}\@exargs{\@bluearg{nome do orientador}} ou \@excmdred{orientadora}\@exargs{\@bluearg{nome da orientadora}}
+            \subitem                     Se houver, analogamente: \@excmdred{coorientador}\@exargs{\(\cdots\)} ou \@excmdred{coorientadora}\@exargs{\(\cdots\)}
+            \@passo[\imprimircurso]      \@excmdred{curso}\@exargs{\@bluearg{Bacharelado em Engenharia...}}
+            \@passo[\imprimirtitulacao]  \@excmdred{titulacao}\@exargs{\@bluearg{Bacharel/Licenciado/Mestre em Engenharia...}}
+            \@passo[\imprimirtitulo]     \@excmdred{titulo}\@exargs{\@bluearg{Título de seu trabalho}}
+            \subitem                     Se houver: \@excmdred{subtitulo}\@exargs{\(\cdots\)}
+            \@passo[\imprimirdatadadefesa] \@excmdred{datadadefesa}\@exargs{\@bluearg{dia},\@bluearg{mês por extenso},\@bluearg{ano}}
+            \subitem  \textbf{\textcolor{red}{Atenção: }} \parbox{0.75\textwidth}{Não é a data da impressão, ou entrega do texto à banca. Mas, a data da banca de defesa.}
+        \end{enumerate}
+
+        %     \vspace*{1em}\noindent%
+        \clearpage\noindent%
+        {\large\textbf{Pré texto}}
+
+        O pré texto é caracterizado por um conjunto de páginas que antecedem a redação do trabalho, propriamente dita. Este template dispõem de um conjunto de macros que preparam essas páginas automaticamente a partir dos dados fornecidos no Preâmbulo \TeX, além de alguns outros que serão comentados em momento oportuno.
+
+        Para gerar o pré texto, você deve seguir a seguinte sequência de comandos em seu arquivo \textsf{.tex} logo após \@excmd{begin}\@exargs{document}:
+        \begin{enumerate}
+            \@passo[\@flcapa]                \@excmdred{imprimircapa}
+            \@passo[\Alph{@flfolhaderosto}] \@excmdred{imprimirfolhaderosto}
+
+            \@passo[\Alph{@nmembrosbanca}] \@excmd{begin}\@exargs{\textcolor{red}{folhadeaprovacao}}
+            \subitem  \@oknum{@nmembrosbanca}{1}      \@excmdred{membrodabanca}\@exargs{\@bluearg{nome do orientador(a)/presidente},\@bluearg{}}
+            \subitem  \@oknum{@nmembrosbanca}{2}      \@excmdred{membrodabanca}\@exargs{\@bluearg{nome do 2\(^\mathrm{o}\) membro},\@bluearg{filiação do 2\(^\mathrm{o}\) membro}}
+            \subitem \hspace{4em}\(\vdots\)
+            \subitem  \@oknum[\arabic{@nmembrosbanca}]{@nmembrosbanca}{3}  \@excmdred{membrodabanca}\@exargs{\@bluearg{nome do último membro},\@bluearg{filiação do último membro}}
+            \item[]\@excmd{end}\@exargs{\textcolor{red}{folhadeaprovacao}}
+
+            \@passo[\Alph{@fldedicatoria}] \@excmd{begin}\@exargs{\textcolor{red}{dedicatoria}}
+            \subitem  \emph{sua(s) dedicatória(s)...}
+            \item[]\@excmd{end}\@exargs{\textcolor{red}{dedicatoria}}
+
+            \@passo[\Alph{@flagradecimentos}] \@excmd{begin}\@exargs{\textcolor{red}{agradecimentos}} \emph{ é uma página \color{blue} opcional}%\emph{porém \color{red} \textbf{obrigatória} se houver bolsa ou financiamento de pesquisa}
+            \subitem  \emph{seus agradecimentos...}
+            \subitem  \textbf{\textcolor{red}{Atenção: }}Se houver financiamento da pesquisa ou bolsa, o agradecimento \textcolor{red}{\textbf{é obrigatório}}
+            \item[]\@excmd{end}\@exargs{\textcolor{red}{agradecimentos}}
+
+
+            \@passo[\Alph{@flepigrafe}] \@excmd{begin}\@exargs{\textcolor{red}{epigrafe}}
+            \subitem  \@excmdred{aspas} \emph{citação escolhida} \@excmdred{aspas}
+            \subitem  \imprimirautorepigrafe
+            \item[]\@excmd{end}\@exargs{\textcolor{red}{epigrafe}}
+
+            \@passo[\Alph{@flresumo}] \@excmd{begin}\@exargs{\textcolor{red}{resumo}}
+            \subitem  redação do resumo em \textbf{parágrafo único!}
+            \subitem  \@excmdred{palavrachave}\@exargs{\@bluearg{primeira palavra, ou termo}}
+            \subitem  \@excmdred{palavrachave}\@exargs{\@bluearg{segunda palavra, ou termo}}
+            \subitem \hspace{4em}\(\vdots\)
+            \subitem  \@excmdred{palavrachave}\@exargs{\@bluearg{quinta palavra, ou termo}}
+            \item[]\@excmd{end}\@exargs{\textcolor{red}{resumo}}
+
+
+        \end{enumerate}}
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Instruções adicionais para ajuste da formatação de modo
+    %% a atender as normas do TCC
+    %
+
+    % Corrige a hifenização de palavras acentuadas, conforme: http://latex.net.br/FAQ-hyphenaccents.html
+    \RequirePackage[T1]{fontenc}
+
+
+    \addto\captionsbrazil{%
+        \renewcommand{\listfigurename}{Lista de Figuras}}
+
+    \addto\captionsfrench{% francês
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        % Averiguar um-a-um quanto a necessidade de se definir
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %% ajusta nomes padroes do babel
+        %  \renewcommand{\bibname}{R\'ef\'erence}
+        %  \renewcommand{\indexname}{Indice}
+        %  \renewcommand{\listfigurename}{Liste des figures}
+        %  \renewcommand{\listtablename}{Liste des tables}
+        %  \renewcommand{\folhaderostoname}{Titre de page}
+        %  \renewcommand{\epigraphname}{\'Epigraphe}
+        %  \renewcommand{\dedicatorianame}{D\'evouement}
+        %  \renewcommand{\errataname}{Feuille d'errata}
+        \renewcommand{\agradecimentosname}{Remerciements}
+        \renewcommand{\anexoname}{ANNEXE}
+        \renewcommand{\anexosname}{ANNEXES}
+        \renewcommand{\apendicename}{APPENDICE}
+        \renewcommand{\apendicesname}{APPENDICES}
+        %  \renewcommand{\orientadorname}{Conseiller:}
+        %  \renewcommand{\coorientadorname}{Co-conseiller:}
+        %  \renewcommand{\folhadeaprovacaoname}{Approbation}
+        \renewcommand{\resumoname}{R\'esum\'e}
+        %  \renewcommand{\listadesiglasname}{List des abbreviations et acronymes}
+        %  \renewcommand{\listadesimbolosname}{List des symboles}
+        %  \renewcommand{\fontename}{Source}
+        %  \renewcommand{\notaname}{Note}
+        %  %% ajusta nomes usados com a macro \autoref
+        %  \renewcommand{\pageautorefname}{page}
+        %  \renewcommand{\sectionautorefname}{section}
+        %  \renewcommand{\subsectionautorefname}{soussection}
+        %  \renewcommand{\subsubsectionautorefname}{soussection}
+        %  \renewcommand{\paragraphautorefname}{soussection}
+    }
+
+    \RequirePackage{indentfirst} % coloquei porque em alguns casos não estava ocorrendo a indentação. ver se não pode gerar algum problema
+
+    \setlength\parindent{1.5cm} % define tamanho da indentação do parágrafo: https://tex.stackexchange.com/questions/56390/how-to-define-the-size-of-paragraph-indent
+
+
+    % Fonte em caixa alta no sumário para section
+    % https://groups.google.com/g/abntex2/c/ZYwE4t9uTFM
+    \makeatletter
+
+    \let\oldcontentsline\contentsline
+
+    \def\contentsline#1#2{%
+    \expandafter\ifx\csname l@#1\endcsname\l@section
+        \expandafter\@firstoftwo%
+    \else%
+        \expandafter\@secondoftwo%
+    \fi%
+    {%
+    \oldcontentsline{#1}{\MakeTextUppercase{#2}}%
+    }{%
+    \oldcontentsline{#1}{#2}%
+    }%
+    }
+    \makeatother
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Instruções para ajuste das referências bibliográficas
+
+    \RequirePackage[alf,abnt-etal-list=5,abnt-emphasize=bf,abnt-last-names=bibtex,abnt-etal-cite=2,abnt-thesis-year=both]{abntex2cite} % É possível adicionar a opção bibjustif para justificar a folha de referências.
+    % \bibliographystyle{abntex2-alf-ufsc} % será oferecido como patch para o template seja oferecido na forma de arquivo único tccctj.sty
+                                            % mas precisa ser corrigido de maneira categorica numa próxima versão
+
+
+
+
+    % Para remover símbolo <> nas urls; https://github.com/abntex/abntex2/issues/210
+    \ProvidesPackage{url6023}
+    \makeatletter
+    \@ifpackageloaded{url}{%
+        \addtociteoptionlist{abnt-url-package=url}
+        \def\UrlLeft{}
+        \def\UrlRight{}
+        \urlstyle{same}}
+    \makeatother
+
+
+
+
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %
+    %% Redefinição do ambiente documento para automatização
+    %% das dicas
+    %
+
+    \let\@olddoc\document
+    \let\@oldenddoc\enddocument
+
+    \if@semdicas
+        \renewcommand{\@bluearg}[2][]{}%
+        \renewcommand{\@excmd}[2][]{}%
+        \renewcommand{\@excmdred}[2][]{}%
+        \renewcommand{\@exargs}[2][]{}\fi%
+
+
+
+
+    \renewenvironment{document}{\@olddoc}%
+    {\if@semdicas{}\else{\@dicazero\clearpage\@tutorial}\fi\@oldenddoc}
