@@ -8,7 +8,7 @@ Primeiro, foi necessário um estudo sobre a radiação em LEO - \textit{Low Eart
 
 \section{Radiação em LEO e Componentes COTS}
 
-Estando em solo terrestre, os eletrônicos atuais estão bem protegidos contra a maior parte da radiação incidente do universo. No caso dos satélites orbitais, a proteção atmosférica é atenuada pela órbita, mesmo para aqueles que operam em LEO. Nesse caso, a radiação pode ser suficientemente significativa para causar a mudança do comportamento eletromagnético dos materiais, causando efeitos como falhas, aquisição ou execução errada de comandos e distorção da corrente elétrica (MAYANBARI, 2011).  Esses danos são divididos em dois grupos (JUNQUEIRA, 2020): os acumulativos como o TID (\textit{Total Ionizing Dose}), e os SEE (\textit{Single Event Effects}), que indicam o acontecimento de eventos únicos. 
+Estando em solo terrestre, os eletrônicos atuais estão bem protegidos contra a maior parte da radiação incidente do universo. No caso dos satélites orbitais, a proteção atmosférica é atenuada pela distância em relação ao solo, mesmo para aqueles que operam em LEO. Nesse caso, a radiação pode ser suficientemente significativa para causar a mudança do comportamento eletromagnético dos materiais, causando efeitos como falhas, aquisição ou execução errada de comandos e distorção da corrente elétrica (MAYANBARI, 2011).  Esses danos são divididos em dois grupos (JUNQUEIRA, 2020): os acumulativos como o TID (\textit{Total Ionizing Dose}), e os SEE (\textit{Single Event Effects}), que indicam o acontecimento de eventos únicos. 
 
 Ainda segundo Junqueira (2020), o TID se caracteriza principalmente pela formação de pares elétron-lacuna, onde o primeiro aumenta a condutividade do material e o segundo contribui para oxidação, mudando as características elétricas do componente com o tempo.  Já os SEE ocorrem quando um íon atravessa um componente crítico, gerando uma linha de ionização que pode ou não ser destrutiva. 
 
@@ -28,7 +28,7 @@ Além disso, contava com um microprocessador de 16 bits, memórias flash (IS25LP
 
 \subsection{FloripaSat-2}
 % https://ieeexplore.ieee.org/abstract/document/10078027
-O FloripaSat-2 é a segunda geração da plataforma \textit{open-source} desenvolvida pelo FloripaSat-1, trazendo melhorias para os três módulos principais.
+O FloripaSat-2 é a segunda geração da plataforma \textit{open-source} desenvolvida pelo SpaceLab, baseando-se no projeto FloripaSat-1 e trazendo melhorias para os três módulos principais.
 
 Especificamente para o OBDH, foi introduzida uma memória FRAM e uma NOR flash, ao invés das flashs e cartão microSD anteriores, o que mostra uma melhoria clara de capacidade e confiabilidade. 
 
@@ -94,7 +94,9 @@ Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenç�
 	\fonte{George e Wilson, 2018, página 463.}
 \end{table}
 
-Comparando ambas tabelas, é possível verificar que a maioria dos processadores apresentados são de duas fabricantes: Xilinx (especialmente chips da família Zynq 7000) e Microchip (incluindo Atmel). Além disso, a maior parte dos projetos comerciais vistos apresentam memórias FRAM, que possuem um número máximo de ciclos de leitura e escrita muito elevada, além de memórias Flash. Outro destaque foi a presença de sensores de tensão e corrente, bem como magnetômetros e giroscópios.
+Comparando ambas tabelas, é possível verificar que a maioria dos processadores apresentados são de duas fabricantes: Xilinx (especialmente \textit{chips} da família Zynq 7000) e Microchip (incluindo Atmel). Além disso, a maior parte dos projetos comerciais vistos apresentam memórias FRAM, que possuem um número máximo de ciclos de leitura e escrita muito elevada, além de memórias Flash. Outro destaque foi a presença de sensores de tensão e corrente, bem como magnetômetros e giroscópios.
+
+Com isso, é possível começar a projetar o \textit{hardware} do OBDH, utilizando as diretrizes citadas e as heranças de voo, escolhendo os componentes e respeitando os requisitos impostos para o projeto.
 
 
 

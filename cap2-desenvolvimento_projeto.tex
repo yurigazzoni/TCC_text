@@ -1,0 +1,71 @@
+% ----------------------------------------------------------
+\chapter{Desenvolvimento do Projeto}
+% ----------------------------------------------------------
+
+Após estudar os desdobramentos dos efeitos de órbita baixa e entender o que é necessário para se realizar um projeto confiável de computador de bordo de um nanossatélite, foi necessária a compreensão dos pré-requisitos de projeto. Com isso, foram escolhidos os componentes principais da placa, e a partir deles, um esquemático elétrico foi construído, propondo enfim um hardware confiável, robusto e versátil.  
+
+\section{Pré-Requisitos de Projeto}
+
+Como dito, foi preciso entender os pré-requisitos impostos para o OBDH da terceira geração do SpaceLab. Abaixo, na Tabela \ref{tab:Tab_Req}, se encontram os requisitos gerais do projeto, em conjunto com o pretexto e com o nível de prioridade.
+
+\begin{longtable}{@{}p{5cm}p{5cm}p{3.5cm}@{}}
+    \centering
+	\ABNTEXfontereduzida
+	\label{tab:Tab_Req}\tabularnewline
+	\caption{Requisitos do projeto.}\tabularnewline
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+	\hline
+	\textbf{\centering{Descrição}} & \textbf{\centering{Pretexto}} & \textbf{\centering{Prioridade}} \tabularnewline
+        \hline
+        O módulo OBDH deve ser compatível com o padrão CubeSat & Assegura compatibilidade com outros satélites desenvolvidos no SpaceLab & Alta \tabularnewline
+        
+       \hline
+        O módulo OBDH deve operar corretamente entre -40°C e 85°C & Para operar com segurança em um ambiente LEO & Alta \tabularnewline
+
+       \hline
+        O módulo OBDH deve possuir um microcontrolador capaz de usar um sistema Linux & Para gerenciar e coordenar operações dentro e fora do módulo, sendo capaz de realizar tarefas complexas  & Alta \tabularnewline
+
+       \hline
+        O módulo OBDH deve possuir uma memória DDR com capacidade de 512Mb (preferencialmente com ECC)  & Memória suficiente para operações do OBDH e armazenamento de dados  & Alta\tabularnewline
+
+        \hline
+        O módulo OBDH deve possuir uma memória FRAM para armazenar parâmetros de configuração & Provê memória não-volátil e duradoura, menos sucetível à radiação & Alta \tabularnewline 
+
+        \hline
+        O módulo OBDH deve possuir uma memória Flash para armazenar pacotes (preferencialmente com ECC) & Para armazenar dados e pacotes recebidos & Alta\tabularnewline 
+
+        \hline
+        O módulo OBDH deve possuir um WDT para reiniciar o microcontrolador em caso de falha de \textit{software} & Reinicia automaticamente o microcontrolador caso haja a falha  & Alta \tabularnewline
+
+        \hline
+        O módulo OBDH deve possuir sensores de medição de tensão e corrente em suas tensões & Para monitoramento de potência consumida & Alta\tabularnewline
+
+        \hline
+        O módulo OBDH deve possuir proteção de sobrecorrente (20\% acima do valor nominal) & Para proteção contra \textit{latch-up}  & Alta \tabularnewline
+
+        \hline
+        O módulo OBDH deve possuir um giroscópio para medição de velocidade angular & Para permitir controle ativo do satélite  & Alta \tabularnewline 
+
+       \hline
+        O módulo OBDH deve possuir um magnetômetro & Para permitir controle ativo do satélite  & Alta \tabularnewline
+
+        \hline
+        O módulo OBDH deve possuir uma interface RS-422 para transmissão de mensagens de \textit{debug/log} e receber parâmetros de configuração & Comunicação de longa distância com maior imunidade ao ruído e maior taxa de dados (comparando com UART)  & Alta \tabularnewline
+
+       \hline
+        O módulo OBDH deve possuir uma interface CAN para receber e transmitir comandos e dados & Comunicação robusta e com suporte a múltiplos sistemas do CubeSat  & Alta\tabularnewline
+
+        \hline
+        O módulo OBDH deve possuir uma interface acessível externamente para programação do microcontrolador & Para o módulo ser facilmente programado pelo time  & Alta \tabularnewline
+
+        \hline
+        O módulo OBDH deve possuir uma interface para uma \textit{daughter board} & Para prover suporte a outras interfaces e periféricos  & Baixa \tabularnewline
+
+        \hline
+        O módulo OBDH deve possuir um sensor de temperatura com precisão menor ou igual a 1°C & Para prevenir danos de temperaturas extremas & Baixa\tabularnewline
+
+        \hline
+        O módulo OBDH deve possuir uma interface RS-485 para receber e transmitir comandos e dados  & Para transmissão robusta de dados com módulos externos & Baixa \tabularnewline
+       \hline
+	\centering{\fonte{Elaboração própria.}}
+\end{longtable}
