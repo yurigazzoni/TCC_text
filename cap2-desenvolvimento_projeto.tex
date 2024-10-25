@@ -69,3 +69,45 @@ Como dito, foi preciso entender os pré-requisitos impostos para o OBDH da terce
        \hline
 	\centering{\fonte{Elaboração própria.}}
 \end{longtable}
+
+Com as definições apresentadas na Tabela \ref{tab:Tab_Req}, foi então necessária a definição da arquitetura do hardware, ou seja, os componentes e sua interconexões, bem como as interfaces de comunicação e saídas necessárias.
+
+\section{Arquitetura}
+
+A partir dos requisitos, o primeiro passo foi definir de forma geral como seria o funcionamento do \textit{hardware} do projeto. Na Figura \ref{fig:arq_geral}, pode-se verificar um esquema inicial de proposta de arquitetura, usando os pontos descritos anteriormente.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=0.7]{images/arquitetura geral.png}
+    \caption{Arquitetura proposta.}
+    \label{fig:arq_geral}
+\end{figure}
+
+Como podemos verificar, o microprocessador será crucial e deverá ter pinos suficientes para interface com todas as memórias, sensores e para se comunicar com os outros módulos do CubeSat. Além disso, a parte dedicada às tensões usadas deverá ser cuidadosamente feita, para suportar a potência dissipada por todos os componentes da placa de circuito impresso. A escolha de cada componente será descrita nas seções a seguir, respeitando sempre os seguintes critérios:
+
+\begin{itemize}
+	\item O componente deve funcionar corretamente nas temperaturas entre -40°C e 85°C;
+	\item Circuitos integrados devem possuir herança de voo sempre que possível;
+	\item Caso o circuito integrado necessite de um circuito específico, o mesmo deve conter itens preferencialmente dispostos na ECSS-Q-ST-60C, na NPSL ou similar aos mesmos, especialmente componentes discretos (capacitores, resistores, indutores, diodos, transistores, entre outros);
+\end{itemize}
+
+\subsection{Microcontrolador}
+
+Como visto na Tabela \ref{tab:Tab_Missoes}, a fabricante com maior herança de voo estudada é a Xilinx, em especial os chips da família Zynq 7000, que são SoCs (\textit{System on a Chip}). Após um estudo próprio, o SoC Zynq 7030 se mostrou mais adequado pelas seguintes características:
+
+\begin{itemize}
+	\item Foi usado em missões extensivas em pequenos satélites (Gomspace, 2024), ou seja, possui herança de voo em missões similares em LEO e em CubeSats;
+	\item Possui um envelopamento com 484 pinos, suficiente para prover as conexões necessárias para todas as interfaces requeridas (UG865, 2021);
+	\item Capaz de rodar um sistema Linux (KADI et al.,2013);
+	\item Por ser um SoC, possui alta adaptabilidade e flexibilidade, disponibilizando no mesmo chip uma FPGA (PL, \textit{Programmable Logic}) e um microprocessador (PS, \textit{Processing System});
+\end{itemize}
+
+\subsection{Memórias}
+
+As memórias serão necessárias para realizar operações, armazenar dados externos e internos e armazenar parâmetros de configuração do OBDH e de outros subsistemas do CubeSat. Para cada uma dessas funções uma memória diferente é necessária, seguindo suas características principais, sendo elas: tempo de acesso, tamanho do armazenamento e volatilidade.
+
+\subsubsection{Memórias voláteis}
+
+
+
+

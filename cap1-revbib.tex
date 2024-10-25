@@ -2,9 +2,11 @@
 \chapter{Revisão Bibliográfica}
 % ----------------------------------------------------------
 
-Para atingir o objetivo de projetar o \textit{hardware} de um computador de bordo robusto, foi preciso buscar na literatura acadêmica o estado da arte que tange o projeto de OBDHs (\textit{On-Board Data Handling}) para satélites de pequeno porte. 
+Para atingir o objetivo de projetar o \textit{hardware} de uma PCB (\textit{Printed Circuit Board}) de um computador de bordo robusto, foi preciso buscar na literatura acadêmica o estado da arte que tange o projeto de OBDHs (\textit{On-Board Data Handling}) para satélites de pequeno porte, especialmente para CubeSats (satélites de baixo custo, dimensões padronizadas e que utilizam componentes comerciais) (CUBESATS ..., 2022).
  
-Primeiro, foi necessário um estudo sobre a radiação em LEO - \textit{Low Earth Orbit} (órbitas com raio menor que 1000 km, segundo ESA, 2024), para que a escolha dos componentes do projeto seja a melhor possível. Com esse estudo, buscaram-se formas de mitigar os efeitos mais conhecidos e verificar como instituições têm lidado com componentes do tipo \textit{commercial-off-the-shelf} (COTS). Além disso, foram analisadas as placas de OBDH dos projetos do FloripaSat-1 e FloripaSat-2, desenvolvidas pelo SpaceLab da UFSC. Por fim, outros projetos comerciais foram estudados para obtenção de noções sobre a arquitetura e componentes usados. Um panorama geral foi feito, verificando-se principalmente os componentes principais e mais críticos, ou seja, processadores, memórias voláteis e não-voláteis e outros periféricos.
+Primeiro, foi necessário um estudo sobre a radiação em LEO - \textit{Low Earth Orbit} (órbitas com raio menor que 1000 km, segundo ESA, 2024), para que a escolha dos componentes do projeto seja a melhor possível. Com esse estudo, buscaram-se formas de mitigar os efeitos mais conhecidos e verificar como instituições têm lidado com componentes do tipo \textit{commercial-off-the-shelf} (COTS).% Além disso, também foi dada a fundamentação dos conversores de potência, tipos de memória, microprocessadores e interfaces de comunicação.
+
+Depois, foram analisadas as placas de OBDH dos projetos do FloripaSat-1 e FloripaSat-2, desenvolvidas pelo SpaceLab da UFSC. Por fim, outros projetos comerciais foram estudados para obtenção de noções sobre a arquitetura e componentes usados. Um panorama geral foi feito, verificando-se principalmente os componentes principais e mais críticos, ou seja, processadores, memórias voláteis e não-voláteis e outros periféricos.
 
 \section{Radiação em LEO e Componentes COTS}
 
@@ -15,6 +17,18 @@ Ainda segundo Junqueira (2020), o TID se caracteriza principalmente pela formaç
 Por esse motivo, quando são escolhidos os componentes críticos para o \textit{hardware} de um \textit{CubeSat}, em sua maioria COTS, deve-se levar em consideração algumas diretrizes cruciais. Segundo Carmo et al. (2021), o componente escolhido precisa atender os requisitos operacionais, concomitante ao gerenciamento de riscos com mitigações e blindagens. 
 
 Com isso, é possível ver três formas confiáveis de escolher cada componente: usando as diretrizes da ESA (\textit{European Space Agency}), as da NASA (\textit{National Aeronautics and Space Administration}) e também através da herança de voo, ou seja, escolhendo componentes que já estiveram em missões semelhantes ou mais críticas. Nos dois primeiros casos, a consulta é através da norma ECSS-Q-ST-60C para a ESA e da lista NPSL (\textit{NASA Part Selection List}) para a NASA.  No caso da herança de voo, outros projetos devem ser analisados e consultados, o que será feito na seção a seguir.
+
+%\section{Conversores de potência}
+
+%Também chamados de conversores DC-DC, são uma peça crucial em um projeto de PCB. Através de uma tensão de entrada, conseguem convertê-la em tensões maiores ou menores, conforme a necessidade do projetista. Existem diferentes tipos de conversores DC-DC, e tratar-se-á apenas dos conversores chaveados \textit{step-up} e \textit{step-down} nessa seção. 
+
+%\subsection{Conversores \textit{step-up}}
+
+%\section{Memória}
+
+%\section{Microprocessadores}
+
+%\section{Interfaces de comunicação}
 
 \section{Projetos anteriores}
 
