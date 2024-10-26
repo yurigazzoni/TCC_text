@@ -1,8 +1,8 @@
 % ----------------------------------------------------------
-\chapter{Desenvolvimento do Projeto}
+\chapter{Arquitetura}
 % ----------------------------------------------------------
 
-Após estudar os desdobramentos dos efeitos de órbita baixa e entender o que é necessário para se realizar um projeto confiável de computador de bordo de um nanossatélite, foi necessária a compreensão dos pré-requisitos de projeto. Com isso, foram escolhidos os componentes principais da placa, e a partir deles, um esquemático elétrico foi construído, propondo enfim um hardware confiável, robusto e versátil.  
+Após estudar os desdobramentos dos efeitos de órbita baixa e entender o que é necessário para se realizar um projeto confiável de computador de bordo de um nanossatélite, foi necessária a compreensão dos pré-requisitos de projeto. Com isso, foram escolhidos os componentes principais da placa, propondo-se uma arquitetura para o sistema, propondo um hardware confiável, robusto e versátil.  
 
 \section{Pré-Requisitos de Projeto}
 
@@ -99,7 +99,7 @@ Como visto na Tabela \ref{tab:Tab_Missoes}, a fabricante com maior herança de v
 	\item Foi usado em missões extensivas em pequenos satélites (Gomspace, 2024), ou seja, possui herança de voo em missões similares em LEO e em CubeSats;
 	\item Possui um envelopamento com 484 pinos, suficiente para prover as conexões necessárias para todas as interfaces requeridas (UG865, 2021);
 	\item Capaz de rodar um sistema Linux (KADI et al.,2013);
-	\item Por ser um SoC, possui alta adaptabilidade e flexibilidade, disponibilizando no mesmo chip uma FPGA (PL, \textit{Programmable Logic}) e um microprocessador (PS, \textit{Processing System});
+	\item Por ser um SoC, possui alta adaptabilidade e flexibilidade, disponibilizando no mesmo chip uma FPGA (\textit{Field-Programmable Gate Array}) e um microprocessador, denominados respectivamente de PL e PS;
 \end{itemize}
 
 \subsection{Memórias}
@@ -108,6 +108,68 @@ As memórias serão necessárias para realizar operações, armazenar dados exte
 
 \subsubsection{Memórias voláteis}
 
+Partindo do princípio que a robustez e versatilidade estão alinhadas com a velocidade da memória, bem como sua capacidade de armazenamento máximo, a principal opção se tornou as memórias do tipo DDR (\textit{Double Data Rate}), que utilizam ambas a borda de subida e de descida para transferência de dados, atingindo o dobro de largura de banda de uma memória com SDR (\textit{Single Data Rate}) para uma mesma frequência de relógio (JEDEC, 2008). Essa relação pode ser ilustrada pela Figura \ref{fig:sdrvsddr}, onde pode-se verificar a transferência de dados do sinal DQ em relação ao sinal de relógio (bCLK e CLK) para SDR e DDR.
 
+\begin{figure}[htp]
+    \centering
+    \includegraphics[scale=1]{images/ddrsdr.png}
+    \caption{Comparação entre DDR e SDR (KLEHN E BROX, 2003).}
+    \label{fig:sdrvsddr}
+\end{figure}
+ 
+Por essa razão, foi escolhida uma memória do tipo DDR3, com capacidade de 2Gb e frequência de operação de 800 MHz.
 
+\subsubsection{Memórias não voláteis}
 
+No caso das memórias não voláteis, é necessária uma atenção especial ao tipo de dado que será armazenado em cada uma delas. Para o caso de dados críticos, é preciso de uma memória que possua alta resistência aos efeitos da radiação, mantendo-se um compromisso com os tempos de escrita e leitura. Por sua vez, para dados de inicialização são mais críticos os tempos de leitura, enquanto para uma memória de dados mais gerais, o importante é o armazenamento total. Por meio desses critérios, foi possível avaliar, por meio da Tabela \ref{tab:memnvol}, o tipo de memória ideal para cada caso.
+
+\begin{table}[H]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:memnvol}Tabela comparativa de memórias não voláteis.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{2cm} >{\centering}p{3cm} >{\centering}p{3cm} >{\centering}p{3cm}>{\centering}p{3cm} @{}}
+    
+		\toprule
+		\textbf{Memória} & \textbf{Tempo de leitura} & \textbf{Tempo de escrita} & \textbf{Tolerância à radiação} & \textbf{Armazenamento máximo} \tabularnewline 
+        \midrule
+        Flash NOR & Rápido & Lento & Ruim & Regular\tabularnewline
+        
+        \midrule
+        Flash NAND & Rápido & Lento & Ruim & Bom \tabularnewline 
+
+        \midrule
+        FRAM & Rápido & Rápido & Bom & Ruim \tabularnewline 
+        
+        \bottomrule
+	\end{tabular}
+	\fonte{Adaptado de GERARDIN E PACCAGNELLA, 2010.}
+\end{table}
+
+Com isso, foi então escolhida uma FRAM (\textit{Ferroelectric Random-Access Memory}) para armazenar dados críticos, uma Flash NAND para armazenamento de dados gerais e uma Flash NOR para armazenar o boot do sistema Linux no SoC.
+
+\subsection{Conversores DC-DC}
+Nos sistemas CubeSat do SpaceLab da UFSC, o módulo responsável pelo fornecimento de potência é o chamado EPS (MARCELINO, 2024). A partir disso, partindo do pressuposto que haverá uma tensão fornecida de 3,3 V, pode-se inferir a cascata de potência a partir do mesmo. Para o caso do Zynq e da memória DDR3, circuitos integrados são necessários para gerar as seguintes tensões: 
+
+\begin{itemize}
+	\item Zynq: 1 V e 1,8 V; 
+	\item DDR3: 1,35 V e 0,675 V.
+\end{itemize}
+
+Todos os demais periféricos devem aceitar uma tensão de alimentação de 3,3 V. Outro ponto importante são os circuitos de proteção contra \textit{latch-up}, um efeito similar a um curto-circuito na trilha de alimentação de circuitos CMOS (AN-600, 1989). 
+
+\subsection{Sensores e Periféricos}
+
+\subsection{Conectores}
+
+\section{Interfaces de comunicação}
+
+\subsection{I2C}
+
+\subsection{SPI}
+
+\subsection{CAN}
+
+\subsection{UART}
+
+\section{Visualização da Arquitetura Proposta}
