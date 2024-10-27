@@ -35,7 +35,7 @@ Como dito, foi preciso entender os pré-requisitos impostos para o OBDH da terce
         O módulo OBDH deve possuir uma memória Flash para armazenar pacotes (preferencialmente com ECC) & Para armazenar dados e pacotes recebidos & Alta\tabularnewline 
 
         \hline
-        O módulo OBDH deve possuir um WDT para reiniciar o microcontrolador em caso de falha de \textit{software} & Reinicia automaticamente o microcontrolador caso haja a falha  & Alta \tabularnewline
+        O módulo OBDH deve possuir um WDT (\textit{Watchdog Timer}) para reiniciar o microcontrolador em caso de falha de \textit{software} & Reinicia automaticamente o microcontrolador caso haja a falha  & Alta \tabularnewline
 
         \hline
         O módulo OBDH deve possuir sensores de medição de tensão e corrente em suas tensões & Para monitoramento de potência consumida & Alta\tabularnewline
@@ -76,11 +76,12 @@ Com as definições apresentadas na Tabela \ref{tab:Tab_Req}, foi então necess�
 
 A partir dos requisitos, o primeiro passo foi definir de forma geral como seria o funcionamento do \textit{hardware} do projeto. Na Figura \ref{fig:arq_geral}, pode-se verificar um esquema inicial de proposta de arquitetura, usando os pontos descritos anteriormente.
 
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/arquitetura geral.png}
-    \caption{Arquitetura proposta.}
+    \includegraphics[scale=0.8]{images/arquitetura geral.png}
+    \caption{Esquema geral de arquitetura.}
     \label{fig:arq_geral}
+    \fonte{Elaboração própria.}
 \end{figure}
 
 Como podemos verificar, o microprocessador será crucial e deverá ter pinos suficientes para interface com todas as memórias, sensores e para se comunicar com os outros módulos do CubeSat. Além disso, a parte dedicada às tensões usadas deverá ser cuidadosamente feita, para suportar a potência dissipada por todos os componentes da placa de circuito impresso. A escolha de cada componente será descrita nas seções a seguir, respeitando sempre os seguintes critérios:
@@ -110,11 +111,12 @@ As memórias serão necessárias para realizar operações, armazenar dados exte
 
 Partindo do princípio que a robustez e versatilidade estão alinhadas com a velocidade da memória, bem como sua capacidade de armazenamento máximo, a principal opção se tornou as memórias do tipo DDR (\textit{Double Data Rate}), que utilizam ambas a borda de subida e de descida para transferência de dados, atingindo o dobro de largura de banda de uma memória com SDR (\textit{Single Data Rate}) para uma mesma frequência de relógio (JEDEC, 2008). Essa relação pode ser ilustrada pela Figura \ref{fig:sdrvsddr}, onde pode-se verificar a transferência de dados do sinal DQ em relação ao sinal de relógio (bCLK e CLK) para SDR e DDR.
 
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=1]{images/ddrsdr.png}
-    \caption{Comparação entre DDR e SDR (KLEHN E BROX, 2003).}
+    \caption{Comparação entre DDR e SDR.}
     \label{fig:sdrvsddr}
+    \fonte{KLEHN E BROX, 2003.}
 \end{figure}
  
 Por essa razão, foi escolhida uma memória do tipo DDR3, com capacidade de 2Gb e frequência de operação de 800 MHz.
@@ -153,23 +155,94 @@ Nos sistemas CubeSat do SpaceLab da UFSC, o módulo responsável pelo fornecimen
 
 \begin{itemize}
 	\item Zynq: 1 V e 1,8 V; 
-	\item DDR3: 1,35 V e 0,675 V.
+	\item DDR3L: 1,35 V e 0,675 V.
 \end{itemize}
 
 Todos os demais periféricos devem aceitar uma tensão de alimentação de 3,3 V. Outro ponto importante são os circuitos de proteção contra \textit{latch-up}, um efeito similar a um curto-circuito na trilha de alimentação de circuitos CMOS (AN-600, 1989). 
 
 \subsection{Sensores e Periféricos}
+Como dito nos pré-requisitos, alguns sensores precisam estar presentes no OBDH. Entre eles:
 
-\subsection{Conectores}
-
-\section{Interfaces de comunicação}
-
-\subsection{I2C}
-
-\subsection{SPI}
-
-\subsection{CAN}
-
-\subsection{UART}
+\begin{itemize}
+	\item Um monitor de tensão, para todas as tensões importantes do sistema;
+	\item Um sensor de corrente para a tensão de entrada do módulo;
+	\item Um giroscópio para medir a velocidade angular em órbita;
+	\item Um magnetômetro para medição do campo magnético da Terra em órbita;
+	\item Um WDT para reiniciar o sistema em caso de falha de software.
+\end{itemize}
 
 \section{Visualização da Arquitetura Proposta}
+
+Depois das decisões tomadas, foi possível montar um diagrama, apresentado na Figura \ref{fig:arq}, que mostra cada circuito do computador de bordo. Aqui, por simplicidade, foram suprimidos os transceptores do protocolo CAN (\textit{Controller Area Network}) e a parte de potência do módulo. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/arquitetura final.png}
+    \caption{Arquitetura proposta para o OBDH.}
+    \label{fig:arq}
+    \fonte{Elaboração própria.}
+\end{figure}
+
+Também foram levadas em consideração as interfaces disponibilizadas pelo SoC, os componentes escolhidos e os conectores necessários. Os componentes escolhidos se encontram na Tabela \ref{tab:componentes}, conjuntamente com as interfaces requeridas para cada um, suas tensões de alimentação e suas correntes máximas no terminal de alimentação, no pior caso especificado pelo fabricante.
+
+\begin{table}[H]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:componentes}Informações sobre os componentes escolhidos.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{2cm} >{\centering}p{4cm} >{\centering}p{2cm} >{\centering}p{3cm}>{\centering}p{3cm} @{}}
+    
+		\toprule
+		\textbf{Componente} & \textbf{Número do Fabricante} & \textbf{Interface} & \textbf{Tensão de Alimentação} & \textbf{Corrente máxima} \tabularnewline 
+        \midrule
+        FRAM & CY15B104QN-50SXI & SPI & 3,3 V & 3,7 mA \tabularnewline
+        
+        \midrule
+        Flash NOR & MT25QL128ABB1ESE-0AUT & QSPI & 3,3 V & 55 mA \tabularnewline 
+
+        \midrule
+        Flash NAND & MT29F1G01ABAFDSF-AAT:F & SPI & 3,3 V & 35 mA \tabularnewline 
+
+        \midrule
+        DDR3L & MT41K256M8DA-125:K & Paralela & 1,35 V & 182 mA \tabularnewline 
+
+        \midrule
+        WDT & TPS3823-33QDBVRQ1 & - & 3,3 V & 10 mA \tabularnewline 
+
+        \midrule
+        Monitor de Temperatura e Tensão & LTC2991IMS\#TRPBF & I2C & 3,3 V &  1,5 mA \tabularnewline 
+
+        \midrule
+        Sensor de Corrente & INA180A2IDBVR & - & 3,3 V & 1 mA \tabularnewline 
+
+        \midrule
+        Giroscópio & A3G4250D & I2C & 3,3 V & 7 mA \tabularnewline 
+
+        \midrule
+        Magnetômetro & MMC5983MA & I2C & 3,3 V & 0,45 mA \tabularnewline 
+
+        \midrule
+        Buffer I2C & TCA4311ADR & I2C & 3,3 V & 7 mA \tabularnewline 
+
+        \midrule
+        Transceptor CAN & A3G4250D & CAN & 3,3 V & 60 mA \tabularnewline 
+
+        \midrule
+        Transceptor RS-485 & THVD1451DR & Serial & 3,3 V & 3 mA \tabularnewline 
+
+        \midrule
+        Conversor DC-DC & TPS82085SILR & - & 3,3 V & - \tabularnewline 
+
+        \midrule
+        Conversor DC-DC para DDR3 & TPS51200DRCR & - & 3,3 V & - \tabularnewline 
+
+        \midrule
+        Conversor DC-DC para DDR3 & TPS51200DRCR & - & 3,3 V & - \tabularnewline 
+
+        \midrule
+        \textit{Load Switch} & TPS22920YZPR & - & 3,3 V & 0,2 mA \tabularnewline 
+        
+        \bottomrule
+	\end{tabular}
+	\fonte{Elaboração própria.}
+\end{table}
