@@ -234,15 +234,46 @@ Também foram levadas em consideração as interfaces disponibilizadas pelo SoC,
         Conversor DC-DC & TPS82085SILR & - & 3,3 V & - \tabularnewline 
 
         \midrule
-        Conversor DC-DC para DDR3 & TPS51200DRCR & - & 3,3 V & - \tabularnewline 
-
-        \midrule
-        Conversor DC-DC para DDR3 & TPS51200DRCR & - & 3,3 V & - \tabularnewline 
+        Conversor DC-DC para DDR3 & TPS51200DRCR & - & 3,3 V & 1 mA \tabularnewline 
 
         \midrule
         \textit{Load Switch} & TPS22920YZPR & - & 3,3 V & 0,2 mA \tabularnewline 
         
         \bottomrule
 	\end{tabular}
+	\fonte{Elaboração própria com base nos Datasheets de cada componente.}
+\end{table}
+
+\subsection{Estimativa de Potência Consumida}
+
+A fim de garantir o funcionamento correto dos conversores DC-DC e seus respectivos periféricos, foi necessária uma estimativa da potência total consumida por todas as tensões disponíveis no módulo. Para isso, foi utilizada a Tabela \ref{tab:componentes}, bem como o datasheet de cada componente. No caso do SoC, sua fabricante disponibiliza uma planilha (XPE, 2019) para estimativas de potência em cada tensão de alimentação. 
+
+Com isso, foram obtidos os valores da Tabela \ref{tab:estpow}, considerando uma eficiência de conversão de 85\% (TPS82085, 2019), já incluindo as estimativas de potência e os piores casos descritos anteriormente.
+
+\begin{table}[H]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:estpow}Estimativas de potência consumida.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{2cm} >{\centering}p{4cm} >{\centering}p{4cm} >{\centering}p{4cm}@{}}
+    
+		\toprule
+		\textbf{Tensão [V]} & \textbf{Potência Dissipada na Tensão [W]} & \textbf{Potência dissipada na tensão de 3,3 V [W]} & \textbf{Corrente máxima da trilha [A]} \tabularnewline 
+        \midrule
+         1,00 & 2,20 & 2,59 & 2,20 \tabularnewline
+        
+        \midrule
+        1,35 & 0,25 & 0,29 & 0,18 \tabularnewline 
+
+        \midrule
+        1,80 & 0,63 & 0,74 & 0,35 \tabularnewline
+
+        \midrule
+        3,3 & 7,5 & - & 2,27  \tabularnewline        
+
+        \bottomrule
+	\end{tabular}
 	\fonte{Elaboração própria.}
 \end{table}
+
+Através dessas estimativas, pode-se confirmar que o sistema de potência proposto suporta os componentes escolhidos e suas tensões e variações, mesmo quando se considera o pior caso.
