@@ -124,7 +124,7 @@ Por fim, para ligar a tensão de 3,3 V fornecida para o SoC, é necessário um �
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
 
-Paralelamente, para a memória DDR3L, são necessários um conversor para a alimentação, de 1,35 V, e um conversor para a tensão de referência e de terminação. Esses circuitos estão dispostos respectivamente nas Figuras \ref{fig:1v35supp} e \ref.
+Paralelamente, para a memória DDR3L, são necessários um conversor para a alimentação, de 1,35 V, e um conversor para a tensão de referência e de terminação. Esses circuitos estão dispostos respectivamente nas Figuras \ref{fig:1v35supp} e \ref{fig:1v35ref}.
 
 \begin{equation}
 	V_{out} = 0,8 * (1 + R_1/R_2) = 0,8 * (1+ 47k/68k) = 1,353 V
@@ -148,11 +148,143 @@ Paralelamente, para a memória DDR3L, são necessários um conversor para a alim
 
 \section{SoC}
 
-No caso do SoC Zynq 7030, temos no total seis blocos operacionais, que incluem o funcionamento do PL e do PS, bem como as configurações e o bloco dedicado ao controlador da memória DDR (UG585, 2023). A seguir, estão dispostas as descrições funcionais e circuitos necessários para o funcionamento correto desse SoC, separados por bloco funcional.
+No caso do SoC Zynq 7030, temos no total seis blocos operacionais, que incluem o funcionamento do PL e do PS, bem como as configurações e o bloco dedicado ao controlador da memória DDR (UG585, 2023). A seguir, estão dispostas as descrições funcionais e circuitos necessários para o funcionamento correto desse SoC, separados por cada um dos blocos citados.
 
 \subsection{Bloco de Configuração}
 
+O banco zero do SoC é o responsável por algumas opções e sinais de configuração. Abaixo, na Tabela \ref{tab:config}, se encontra a descrição funcional de cada pino desse banco, esquematizado na Figura \ref{fig:config}. Esse esquemático, bem como seus resistores de \textit{pull-up} (Figura \ref{fig:pullupconfig}), foram baseados na documentação técnica fornecida pela Xilinx (UG865, 2023) (UG470, 2023) (UG933, 2019) (DS191, 2018).
+
+
+\begin{table}[H]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:config}Descrição funcional dos pinos de configuração.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{4cm} >{\centering}p{8cm} @{}}
+    
+		\toprule
+		\textbf{Nome} & \textbf{Função} \tabularnewline 
+        \midrule
+         DXN e DXP & Terminais do diodo interno para medição de temperatura. \tabularnewline
+         \midrule
+
+         VREFP e VREFN & Tensões de referência do conversor analógico digital (XADC) do SoC. \tabularnewline
+
+       \midrule
+        VP e VN & Entrada extra do XADC. \tabularnewline
+
+       \midrule
+        VCCBAT & Não utilizada. Fonte da bateria. \tabularnewline
+
+       \midrule
+        TCK, TMS, TDI e TDO & Sinais da interface JTAG.  \tabularnewline
+
+       \midrule
+        INIT\_B & Indica inicialização da memória interna de configuração. \tabularnewline
+
+       \midrule
+       PROGRAM\_B & Reset assíncrono da lógica de configuração. \tabularnewline
+
+       \midrule
+        CFGBVS & Pino que seleciona o tipo de IO do banco 0. \tabularnewline
+
+       \midrule
+        DONE & Indica que a configuração foi terminada e feita corretamente. \tabularnewline
+
+       \midrule
+        VCCADC e GNDADC & Alimentação do XADC. \tabularnewline
+
+       \midrule
+        RSVDVCC e RSVDGND & Pinos de alimentação reservados. \tabularnewline
+
+        \bottomrule
+	\end{tabular}
+	\fonte{Elaboração própria com base na documentação técnica do fabricante.}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/zynqconfig.png}
+    \caption{Banco de configuração do SoC.}
+    \label{fig:config}
+    \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/pullupconfig.png}
+    \caption{Resistores de \textit{pull-up} necessários.}
+    \label{fig:pullupconfig}
+    \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
+\end{figure}
+
+Além disso, para a alimentação do XADC, foi necessário um circuito de filtragem, disposto na Figura \ref{fig:xadcfilter}, como requerido por (UG480, 2022).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/xadcfilter.png}
+    \caption{Filtro da alimentação analógica do SoC.}
+    \label{fig:xadcfilter}
+    \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
+\end{figure}
+
+
 \subsection{Blocos do PS}
+
+No caso do sistema de processamento (PS), temos dois bancos principais. O primeiro, denominado MIO (\textit{Multiplexed In-Out}), é onde se encontram os controladores das interfaces de comunicação, bem como a entrada de relógio e a escolha do \textit{boot}. No caso desse projeto, foi-se decidido que o SoC poderá inicializar de duas formas, sendo a primeira pela interface JTAG e a segunda pela memória Flash NOR (QSPI), escolhidos pelos resistores R48 e R51. O banco MIO e seus modos de inicialização estão dispostos nas Figuras \ref{fig:psmio} e \ref{fig:boot}. O outro banco do PS (112) não é utilizado nesse projeto.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/psmio.png}
+    \caption{Banco MIO do SoC com suas respectivas entradas e saídas.}
+    \label{fig:psmio}
+    \fonte{Elaboração própria com base na Tabela MIO-at-a-glance (UG585, 2023).}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/bootmode.png}
+    \caption{Modos de inicialização do SoC.}
+    \label{fig:boot}
+    \fonte{Elaboração própria com base em (UG585, 2023).}
+\end{figure}
+
+Por fim, Na Tabela \ref{tab:interfaces}, pode-se verificar qual a função de cada barramento de comunicação, em conformidade com a Figura \ref{fig:arq}. 
+
+\begin{table}[H]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:interfaces}Descrição das interfaces disponibilizadas.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{4cm} >{\centering}p{8cm} @{}}
+    
+		\toprule
+		\textbf{Interface} & \textbf{Função} \tabularnewline 
+        \midrule
+         SPI0 & Interface SPI para circuitos internos ao módulo OBDH. \tabularnewline
+        \midrule
+         SPI1 & Interface SPI para circuitos externos ao módulo OBDH.  \tabularnewline
+        \midrule
+         QSPI0 & Interface Quad-SPI para memória de inicialização. \tabularnewline
+        \midrule
+        I2C0  & Interface I2C para circuitos internos ao módulo OBDH. \tabularnewline
+        \midrule
+        I2C1  & Interface I2C para circuitos externos ao módulo OBDH.  \tabularnewline
+        \midrule
+        CAN0 & Interface CAN para circuitos externos ao módulo OBDH. \tabularnewline
+        \midrule
+        CAN1 & Interface CAN para o módulo \textit{daughter}. \tabularnewline
+        \midrule
+         UART0 & Conexão serial para \textit{debugging}. \tabularnewline
+        \midrule
+         UART1 & Conexão serial para o transceiver RS-485. \tabularnewline
+        \midrule
+         PS\_GPIO & Sinais de propósito geral de entrada e saída. \tabularnewline
+
+        \bottomrule
+	\end{tabular}
+	\fonte{Elaboração própria com base na documentação técnica do fabricante.}
+\end{table}
 
 \subsection{Blocos do PL}
 
