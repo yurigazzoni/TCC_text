@@ -231,7 +231,7 @@ Além disso, para a alimentação do XADC, foi necessário um circuito de filtra
 
 \subsection{Blocos do PS}
 
-No caso do sistema de processamento (PS), temos dois bancos principais. O primeiro, denominado MIO (\textit{Multiplexed In-Out}), é onde se encontram os controladores das interfaces de comunicação, bem como a entrada de relógio e a escolha do \textit{boot}. No caso desse projeto, foi-se decidido que o SoC poderá inicializar de duas formas, sendo a primeira pela interface JTAG e a segunda pela memória Flash NOR (QSPI), escolhidos pelos resistores R48 e R51. O banco MIO e seus modos de inicialização estão dispostos nas Figuras \ref{fig:psmio} e \ref{fig:boot}. O outro banco do PS (112) não é utilizado nesse projeto.
+No caso do sistema de processamento (PS), existem três bancos principais. O primeiro, denominado MIO (\textit{Multiplexed In-Out}), é onde se encontram os controladores das interfaces de comunicação, bem como a entrada de relógio e a escolha do \textit{boot}. No caso desse projeto, foi-se decidido que o SoC poderá inicializar de duas formas, sendo a primeira pela interface JTAG e a segunda pela memória Flash NOR (QSPI), escolhidos pelos resistores R48 e R51. O banco MIO e seus modos de inicialização estão dispostos nas Figuras \ref{fig:psmio} e \ref{fig:boot}.
 
 \begin{figure}[H]
     \centering
@@ -286,10 +286,124 @@ Por fim, Na Tabela \ref{tab:interfaces}, pode-se verificar qual a função de ca
 	\fonte{Elaboração própria com base na documentação técnica do fabricante.}
 \end{table}
 
+Também como mencionado, o projeto terá como memória volátil uma memória do tipo DDR3. Para que se consiga controlá-la, o SoC disponibiliza um banco dedicado para a memória DDR, disposto na  Figura \ref{fig:psddr}. Seus pinos são nomeados conforme (JEDEC, 2008) e suas funções são descritas na Tabela \ref{tab:psddr}. O terceiro banco não é utilizado nesse projeto.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/psddr.png}
+    \caption{Banco da Memória DDR do PS.}
+    \label{fig:psddr}
+    \fonte{Elaboração própria com base em (UG585, 2023) e (UG933, 2019).}
+\end{figure}
+
+\begin{table}[H]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:psddr}Descrição dos pinos da memória DDR3.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{4cm} >{\centering}p{8cm} @{}}
+    
+		\toprule
+		\textbf{Nome} & \textbf{Descrição} \tabularnewline 
+        \midrule
+         DDR\_ADRx & Barramento de endereço da memória. \tabularnewline
+        \midrule
+         DDR\_DQx & Barramento de dados da memória. \tabularnewline
+        \midrule
+         DDR\_DMx & Sinal da máscara da interface. \tabularnewline
+        \midrule
+        DDR\_BAx  & Barramento de endereço do banco da memória. \tabularnewline
+        \midrule
+        DDR\_DQSx  & Sinal diferencial de \textit{Data Strobe}. \tabularnewline
+        \midrule
+        DDR\_CK & Barramento diferencial do relógio da memória. \tabularnewline
+        \midrule
+        DDR\_ODT & Sinal de saída de terminação dinâmica. \tabularnewline
+        \midrule
+        DDR\_CS\# & Sinal de \textit{Chip Select}. \tabularnewline
+        \midrule
+        DDR\_CKE & Sinal de \textit{enable} do relógio. \tabularnewline
+        \midrule
+        DDR\_WE\# & Sinal de \textit{Write Enable}. \tabularnewline
+        \midrule
+        DDR\_CAS & Sinal de endereço da coluna da memória. \tabularnewline
+         \midrule
+        DDR\_RAS & Sinal de endereço da linha da memória. \tabularnewline
+        \midrule
+        DDR\_DRST & Sinal de \textit{Reset}. \tabularnewline
+        \bottomrule
+	\end{tabular}
+	\fonte{Elaboração própria com base em (UG585, 2023) e (JEDEC, 2008).}
+\end{table}
+
 \subsection{Blocos do PL}
 
-\subsection{Bloco Controlador da Memória DDR}
+O lado da FPGA do SoC, chamada de PL, é crucial para se ter um hardware versátil. Para isso, houve uma tentativa de usar a maior parte dos pinos possível, principalmente para o barramento externo. Nesses bancos também se encontram as entradas diferenciais do XADC do SoC. Nas Figuras \ref{fig:plhr} e \ref{fig:plhp} se encontram os esquemáticos dos bancos HR (\textit{High Range}) e HP (\textit{High Performance}), respectivamente. Na Tabela \ref{plzynq}, por sua vez, se encontra a descrição funcional dos pinos por nome.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/plhr.png}
+    \caption{Banco HR do PL.}
+    \label{fig:plhr}
+    \fonte{Elaboração própria com base em (UG585, 2023).}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/plhp.png}
+    \caption{Banco HP do PL.}
+    \label{fig:plhp}
+    \fonte{Elaboração própria com base em (UG585, 2023).}
+\end{figure}
+
+\begin{table}[H]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:plzynq}Descrição dos sinais dos bancos do PL.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{4cm} >{\centering}p{8cm} @{}}
+    
+		\toprule
+		\textbf{Nome} & \textbf{Descrição} \tabularnewline 
+        \midrule
+         PL\_ADx & Entrada diferencial enumerada do XADC. \tabularnewline
+        \midrule
+         PL\_Lx & Sinal LVDS, presente apenas no banco HP. \tabularnewline
+        \midrule
+         PL\_HPIOx & Sinal de entrada e saída genérico do banco HP.  \tabularnewline
+        \midrule
+        PL\_HRIOx  & Sinal de entrada e saída genérico do banco HR. \tabularnewline
+        \midrule
+        PL\_xx\_SRCCx & Pino capaz de gerar sinal de relógio do tipo \textit{Single Region}. \tabularnewline
+        \midrule
+        PL\_xx\_MRCCx & Pino capaz de gerar sinal de relógio do tipo \textit{Multi Region}. \tabularnewline
+        \bottomrule
+	\end{tabular}
+	\fonte{Elaboração própria com base em (UG585, 2023).}
+\end{table}
 
 \subsection{Pinos de Potência}
+
+Por fim, os pinos de potência devem ser alimentados corretamente. Além disso, é recomendado por (UG933, 2019) que todos os pinos tenham capacitores de desacoplamento o mais perto possível de seus respectivos pinos. Esse circuito e seus capacitores estão dispostos nas Figuras \ref{fig:zpower} e \ref{fig:zcaps}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/zynqpower.png}
+    \caption{Pinos de potência do SoC.}
+    \label{fig:zpower}
+    \fonte{Elaboração própria com base em (UG585, 2023) e (UG933, 2019).}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/zynqcaps.png}
+    \caption{Capacitores de desacoplamento recomendados.}
+    \label{fig:zcaps}
+    \fonte{(UG933, 2019).}
+\end{figure}
+
+\section{Memórias}
+
+\section{Periféricos}
 
 \section{Conexões entre blocos}
