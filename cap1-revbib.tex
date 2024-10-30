@@ -34,7 +34,7 @@ Com isso, é possível ver três formas confiáveis de escolher cada componente:
 
 \subsection{FloripaSat-1}
 % https://ieeexplore.ieee.org/abstract/document/9085277
-O FloripaSat-1 é uma plataforma \textit{open-source} para nanossatélites. Essa plataforma consiste em três módulos: um módulo de fornecimento de potência (EPS), um computador de bordo (OBDH) e um módulo de telemetria e comunicação (TTC).
+O FloripaSat-1 é uma plataforma \textit{open-source} para nanossatélites. Essa plataforma consiste em três módulos: um módulo de fornecimento de potência (EPS), um computador de bordo (OBDH) e um módulo de telemetria e comunicação (TTC) (MARCELINO et al., 2020).
 
 Seu OBDH foi feito para realização da interface e comunicação entre os módulos e \textit{payloads}. Aqui, destacam-se os sensores presentes: uma \textit{Inertial Measurement Unit} (com giroscópio, magnetômetro e acelerômetro), a interface com os sensores dos painéis solares e as medições de tensão e corrente de entrada do próprio módulo.
 
@@ -42,11 +42,17 @@ Além disso, contava com um microprocessador de 16 bits, memórias flash (IS25LP
 
 \subsection{FloripaSat-2}
 % https://ieeexplore.ieee.org/abstract/document/10078027
-O FloripaSat-2 é a segunda geração da plataforma \textit{open-source} desenvolvida pelo SpaceLab, baseando-se no projeto FloripaSat-1 e trazendo melhorias para os três módulos principais.
+O FloripaSat-2 é a segunda geração da plataforma \textit{open-source} desenvolvida pelo SpaceLab, baseando-se no projeto FloripaSat-1 e trazendo melhorias para os três módulos principais (MARCELINO et al., 2024). O diagrama de blocos do CubeSat proposto está disposto na Figura \ref{fig:floripasat2}, onde pode-se verificar as interfaces do OBDH com o restante do módulo.
 
-Especificamente para o OBDH, foi introduzida uma memória FRAM e uma NOR flash, ao invés das flashs e cartão microSD anteriores, o que mostra uma melhoria clara de capacidade e confiabilidade. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/floripasat2.png}
+    \caption{Diagrama de blocos da plataforma FloripaSat2.}
+    \label{fig:floripasat2}
+    \fonte{MARCELINO et al., 2024.}
+\end{figure}
 
-Outras duas melhorias importantes foram, primeiramente, a adição de um conector para eventualmente conectar uma \textit{daughter board} à placa, e, segundamente, a adição de \textit{buffers} às trilhas de I2C entre os módulos. Isso acrescenta flexibilidade e confiabilidade ao OBDH da segunda geração.
+Especificamente para o OBDH, forami introduzidas uma memória FRAM e uma Flash NOR, ao invés das Flashs e cartão microSD anteriores, o que mostra uma melhoria clara de capacidade e confiabilidade. Outras duas melhorias importantes foram, primeiramente, a adição de um conector para eventualmente conectar uma \textit{daughter board} à placa, e, segundamente, a adição de \textit{buffers} às trilhas de I2C entre os módulos. Isso acrescenta flexibilidade e confiabilidade ao OBDH da segunda geração.
 
 \subsection{Projetos Comerciais}
 
@@ -105,12 +111,56 @@ Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenç�
         
         \bottomrule
 	\end{tabular}
-	\fonte{George e Wilson, 2018, página 463.}
+	\fonte{Elaboração própria com base em George e Wilson, 2018, página 463.}
 \end{table}
 
 Comparando ambas tabelas, é possível verificar que a maioria dos processadores apresentados são de duas fabricantes: Xilinx (especialmente \textit{chips} da família Zynq 7000) e Microchip (incluindo Atmel). Além disso, a maior parte dos projetos comerciais vistos apresentam memórias FRAM, que possuem um número máximo de ciclos de leitura e escrita muito elevada, além de memórias Flash. Outro destaque foi a presença de sensores de tensão e corrente, bem como magnetômetros e giroscópios.
 
-Com isso, é possível começar a projetar o \textit{hardware} do OBDH, utilizando as diretrizes citadas e as heranças de voo, escolhendo os componentes e respeitando os requisitos impostos para o projeto.
+Além disso, projetos como o OBDH Nanomind Z7000 (Gomspace Nanomind Z7000 Datasheet, 2019) demonstraram sua efetividade em diversas missões, como FSSCAT (CAMPS et al., 2018), ORCA (BARLES et al., 2022) e CubeMAP (WEIDMANN et al., 2020), o que mostra a confiabilidade e herança de voo de \textit{hardwares} contendo o SoCs da família Zynq 7000. Na Figura \ref{fig:nanomind}, podemos verificar o diagrama de blocos do anteriormente citado Nanomind Z7000.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/nanomind z7000.png}
+    \caption{Diagrama de blocos do OBDH Nanomind Z7000.}
+    \label{fig:nanomind}
+    \fonte{Gomspace Nanomind Z7000 Datasheet, 2019.}
+\end{figure}
+
+\subsection{Projetos Acadêmicos}
+
+Outro ponto são os OBDHs propostos em publicações acadêmicas. Serão estudados quatro casos de design de OBDH, ainda no contexto de nanossatélites. 
+
+No primeiro caso, o OBDH foi feito para ser compacto e reconfigurável, como o projeto proposto nesse trabalho. O sistema foi pensado para conter um processador, SDRAMs, uma Flash NOR, uma Flash NAND, uma FPGA e algumas interfaces externas (ZHOU et al., 2018). O diagrama de blocos do OBDH proposto pelos autores está disposto na Figura \ref{fig:zhou}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/zhou.png}
+    \caption{Diagrama de blocos do OBDH proposto por ZHOU et al., 2018.}
+    \label{fig:zhou}
+    \fonte{ZHOU et al., 2018.}
+\end{figure}
+
+Na segunda publicação estudada, o OBDH é parte de um sistema que implementa um sistema operacional em tempo real (RTOS), outro objetivo desse trabalho. Nesse caso, o OBDH é capaz de verificar telecomandos, sincronizar sistemas, reportar eventos e monitorar parâmetros (PUTRA, 2021). Seu diagrama de blocos do \textit{hardware} está disposto na Figura \ref{fig:putra}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/putra.png}
+    \caption{Diagrama de blocos do OBDH proposto por PUTRA, 2021.}
+    \label{fig:putra}
+    \fonte{PUTRA, 2021.}
+\end{figure}
+
+No terceiro caso, a missão incluía a pesquisa e observação em órbita média (MEO), ou seja, em condições mais críticas do que o propósito do OBDH projetado nesse trabalho. Mesmo assim, as noções da arquitetura proposta são muito parecidas com o estado da arte comercial para LEO, usando inclusive um SoC da família Zynq 7000 (LOFFLER, 2021). O diagrama de blocos do OBDH proposto nesse trabalho está disposto na Figura \ref{fig:loffler}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/loffler.png}
+    \caption{Diagrama de blocos do OBDH proposto por LOFFLER et al., 2021.}
+    \label{fig:loffler}
+    \fonte{LOFFLER et al., 2021.}
+\end{figure}
+
+Nos três casos existem semelhanças na arquitetura, incluindo memórias usadas e interfaces de comunicação. Com isso, juntamente com o estudo dos projetos FloripaSat-1 e FloripaSat-2 e projetos comerciais, é possível começar a projetar o \textit{hardware} do OBDH, utilizando as diretrizes citadas e as heranças de voo, tomando como base os projetos citados, escolhendo os componentes e respeitando os requisitos impostos.
 
 
 
