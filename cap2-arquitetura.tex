@@ -2,73 +2,73 @@
 \chapter{Arquitetura}
 % ----------------------------------------------------------
 
-Após estudar os desdobramentos dos efeitos de órbita baixa e entender o que é necessário para se realizar um projeto confiável de computador de bordo de um nanossatélite, foi necessária a compreensão dos pré-requisitos de projeto. Com isso, foram escolhidos os componentes principais da placa, propondo-se uma arquitetura para o sistema, ou seja, para um hardware confiável, robusto e versátil.  
+Após estudar os desdobramentos dos efeitos de órbita baixa e entender o que é necessário para se realizar um projeto confiável de computador de bordo de um nanossatélite através de projetos anteriores, foi necessária a compreensão dos requisitos de projeto. Com isso, foram escolhidos os componentes principais da placa, propondo-se uma arquitetura para o sistema para um \textit{hardware} confiável, robusto e versátil.  
 
-\section{Pré-Requisitos de Projeto}
+\section{Requisitos de Projeto}
 
-Como dito, foi preciso entender os pré-requisitos impostos para o OBDH da terceira geração do SpaceLab. Abaixo, na Tabela \ref{tab:Tab_Req}, se encontram os requisitos gerais do projeto, em conjunto com o pretexto e com o nível de prioridade.
+Como dito, foi preciso entender os pré-requisitos impostos para o OBDH da terceira geração do SpaceLab. Abaixo, na Tabela \ref{tab:Tab_Req}, se encontram os requisitos gerais do projeto, em conjunto com a \textit{rationale} e com o método de verificação (NASA Product Verification, 2024).
 
-\begin{longtable}{@{}p{5cm}p{5cm}p{3.5cm}@{}}
+\begin{longtable}{@{}>{\centering}p{1.5cm}p{4cm}p{4cm}p{4.7cm}@{}}
     \centering
 	\ABNTEXfontereduzida
 	\label{tab:Tab_Req}\tabularnewline
 	\caption{Requisitos do projeto.}\tabularnewline
 	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
 	\hline
-	\textbf{\centering{Descrição}} & \textbf{\centering{Pretexto}} & \textbf{\centering{Prioridade}} \tabularnewline
+	\multicolumn{1}{c}{\textbf{Índice}} & \multicolumn{1}{c}{\textbf{Descrição}} & \multicolumn{1}{c}{\textbf{Rationale}} & \multicolumn{1}{c}{\textbf{Método de Verificação}} \tabularnewline
         \hline
-        O módulo OBDH deve ser compatível com o padrão CubeSat & Assegura compatibilidade com outros satélites desenvolvidos no SpaceLab & Alta \tabularnewline
+        1 & O módulo OBDH deve ser compatível com o padrão CubeSat & Assegura compatibilidade com outros satélites desenvolvidos no SpaceLab & Inspeção \tabularnewline
         
        \hline
-        O módulo OBDH deve operar corretamente entre -40°C e 85°C & Para operar com segurança em um ambiente LEO & Alta \tabularnewline
+        2 & O módulo OBDH deve operar corretamente entre -40°C e 85°C & Para operar com segurança em um ambiente LEO & Teste e Análise \tabularnewline
 
        \hline
-        O módulo OBDH deve possuir um microcontrolador capaz de usar um sistema Linux & Para gerenciar e coordenar operações dentro e fora do módulo, sendo capaz de realizar tarefas complexas  & Alta \tabularnewline
+       3 & O módulo OBDH deve possuir um microcontrolador capaz de usar um sistema Linux & Para gerenciar e coordenar operações dentro e fora do módulo, sendo capaz de realizar tarefas complexas  & Inspeção \tabularnewline
 
        \hline
-        O módulo OBDH deve possuir uma memória DDR com capacidade de 512Mb (preferencialmente com ECC)  & Memória suficiente para operações do OBDH e armazenamento de dados  & Alta\tabularnewline
+        4 & O módulo OBDH deve possuir uma memória DDR com capacidade de 512Mb (preferencialmente com ECC)  & Memória suficiente para operações do OBDH e armazenamento de dados  & Inspeção\tabularnewline
 
         \hline
-        O módulo OBDH deve possuir uma memória FRAM para armazenar parâmetros de configuração & Provê memória não-volátil e duradoura, menos sucetível à radiação & Alta \tabularnewline 
+       5 & O módulo OBDH deve possuir uma memória FRAM para armazenar parâmetros de configuração & Provê memória não-volátil e duradoura, menos sucetível à radiação & Inspeção \tabularnewline 
 
         \hline
-        O módulo OBDH deve possuir uma memória Flash para armazenar pacotes (preferencialmente com ECC) & Para armazenar dados e pacotes recebidos & Alta\tabularnewline 
+        6 & O módulo OBDH deve possuir uma memória Flash para armazenar pacotes (preferencialmente com ECC) & Para armazenar dados e pacotes recebidos & Inspeção \tabularnewline 
 
         \hline
-        O módulo OBDH deve possuir um WDT (\textit{Watchdog Timer}) para reiniciar o microcontrolador em caso de falha de \textit{software} & Reinicia automaticamente o microcontrolador caso haja a falha  & Alta \tabularnewline
+       7 & O módulo OBDH deve possuir um WDT (\textit{Watchdog Timer}) para reiniciar o microcontrolador em caso de falha de \textit{software} & Reinicia automaticamente o microcontrolador caso haja a falha  & Teste \tabularnewline
 
         \hline
-        O módulo OBDH deve possuir sensores de medição de tensão e corrente em suas tensões & Para monitoramento de potência consumida & Alta\tabularnewline
+       8 & O módulo OBDH deve possuir sensores de medição de tensão e corrente em suas tensões & Para monitoramento de potência consumida & Inspeção \tabularnewline
 
         \hline
-        O módulo OBDH deve possuir proteção de sobrecorrente (20\% acima do valor nominal) & Para proteção contra \textit{latch-up}  & Alta \tabularnewline
+      9 &  O módulo OBDH deve possuir proteção de sobrecorrente (20\% acima do valor nominal) & Para proteção contra \textit{latch-up}  & Análise \tabularnewline
 
         \hline
-        O módulo OBDH deve possuir um giroscópio para medição de velocidade angular & Para permitir controle ativo do satélite  & Alta \tabularnewline 
+        10 & O módulo OBDH deve possuir um giroscópio para medição de velocidade angular & Para permitir controle ativo do satélite  & Inspeção \tabularnewline 
 
        \hline
-        O módulo OBDH deve possuir um magnetômetro & Para permitir controle ativo do satélite  & Alta \tabularnewline
+       11 & O módulo OBDH deve possuir um magnetômetro & Para permitir controle ativo do satélite  & Inspeção \tabularnewline
 
         \hline
-        O módulo OBDH deve possuir uma interface RS-422 para transmissão de mensagens de \textit{debug/log} e receber parâmetros de configuração & Comunicação de longa distância com maior imunidade ao ruído e maior taxa de dados (comparando com UART)  & Alta \tabularnewline
+        12 & O módulo OBDH deve possuir uma interface RS-422 para transmissão de mensagens de \textit{debug/log} e receber parâmetros de configuração & Comunicação de longa distância com maior imunidade ao ruído e maior taxa de dados (comparando com UART)  & Teste \tabularnewline
 
        \hline
-        O módulo OBDH deve possuir uma interface CAN para receber e transmitir comandos e dados & Comunicação robusta e com suporte a múltiplos sistemas do CubeSat  & Alta\tabularnewline
+       13 & O módulo OBDH deve possuir uma interface CAN para receber e transmitir comandos e dados & Comunicação robusta e com suporte a múltiplos sistemas do CubeSat  & Inspeção \tabularnewline
 
         \hline
-        O módulo OBDH deve possuir uma interface acessível externamente para programação do microcontrolador & Para o módulo ser facilmente programado pelo time  & Alta \tabularnewline
+        14 & O módulo OBDH deve possuir uma interface acessível externamente para programação do microcontrolador & Para o módulo ser facilmente programado pelo time  & Inspeção \tabularnewline
 
         \hline
-        O módulo OBDH deve possuir uma interface para uma \textit{daughter board} & Para prover suporte a outras interfaces e periféricos  & Baixa \tabularnewline
+        15 & O módulo OBDH deve possuir uma interface para uma \textit{daughter board} & Para prover suporte a outras interfaces e periféricos  & Inspeção \tabularnewline
 
         \hline
-        O módulo OBDH deve possuir um sensor de temperatura com precisão menor ou igual a 1°C & Para prevenir danos de temperaturas extremas & Baixa\tabularnewline
+       16 & O módulo OBDH deve possuir um sensor de temperatura com precisão menor ou igual a 1°C & Para prevenir danos de temperaturas extremas & Análise\tabularnewline
 
         \hline
-        O módulo OBDH deve possuir uma interface RS-485 para receber e transmitir comandos e dados  & Para transmissão robusta de dados com módulos externos & Baixa \tabularnewline
+       17 & O módulo OBDH deve possuir uma interface RS-485 para receber e transmitir comandos e dados  & Para transmissão robusta de dados com módulos externos & Teste \tabularnewline
        \hline
-	\centering{\fonte{Elaboração própria.}}
 \end{longtable}
+{\fonte{Elaboração própria.}}
 
 Com as definições apresentadas na Tabela \ref{tab:Tab_Req}, foi então necessária a definição da arquitetura do hardware, ou seja, os componentes e sua interconexões, bem como as interfaces de comunicação e saídas necessárias.
 
@@ -123,7 +123,7 @@ Por essa razão, foi escolhida uma memória do tipo DDR3, com capacidade de 2Gb 
 
 \subsubsection{Memórias não voláteis}
 
-No caso das memórias não voláteis, é necessária uma atenção especial ao tipo de dado que será armazenado em cada uma delas. Para o caso de dados críticos, é preciso de uma memória que possua alta resistência aos efeitos da radiação, mantendo-se um compromisso com os tempos de escrita e leitura. Por sua vez, para dados de inicialização são mais críticos os tempos de leitura, enquanto para uma memória de dados mais gerais, o importante é o armazenamento total. Por meio desses critérios, foi possível avaliar, por meio da Tabela \ref{tab:memnvol}, o tipo de memória ideal para cada caso.
+No caso das memórias não voláteis, é necessária uma atenção especial ao tipo de dado que será armazenado em cada uma delas. Para o caso de dados críticos, é preciso de uma memória que possua alta resistência aos efeitos da radiação, mantendo-se um compromisso com os tempos de escrita e leitura. Por sua vez, para dados de inicialização são mais críticos os tempos de leitura, enquanto para uma memória de dados mais gerais, o importante é o armazenamento total. Por meio desses critérios, foi possível avaliar, por meio da Tabela \ref{tab:memnvol}, o tipo de memória ideal para cada caso, considerando o número máximo de ciclos de leitura e escrita de cada tipo de memória.
 
 \begin{table}[H]
 	\ABNTEXfontereduzida
@@ -133,19 +133,19 @@ No caso das memórias não voláteis, é necessária uma atenção especial ao t
     \begin{tabular}{@{} >{\centering}p{2cm} >{\centering}p{3cm} >{\centering}p{3cm} >{\centering}p{3cm}>{\centering}p{3cm} @{}}
     
 		\toprule
-		\textbf{Memória} & \textbf{Tempo de leitura} & \textbf{Tempo de escrita} & \textbf{Tolerância à radiação} & \textbf{Armazenamento máximo} \tabularnewline 
+		\textbf{Memória} & \textbf{Tempo de leitura/escrita} & \textbf{Tolerância à radiação} & \textbf{Armazenamento máximo} & \textbf{Ciclos} \tabularnewline 
         \midrule
-        Flash NOR & Rápido & Lento & Ruim & Regular\tabularnewline
+        Flash NOR & \textasciitilde{} 1$\mu$s & Ruim & \textasciitilde{} 1 Gb & \textbf{$10^5$} \tabularnewline
         
         \midrule
-        Flash NAND & Rápido & Lento & Ruim & Bom \tabularnewline 
+        Flash NAND & \textasciitilde{} 100 $\mu$s & Ruim &\textasciitilde{} 1 Tb & \textbf{$10^5$} \tabularnewline 
 
         \midrule
-        FRAM & Rápido & Rápido & Bom & Ruim \tabularnewline 
+        FRAM & \textasciitilde{} 50 ns & Boa & \textasciitilde{} 1 Mb & \textbf{$10^{15}$}  \tabularnewline 
         
         \bottomrule
 	\end{tabular}
-	\fonte{Adaptado de GERARDIN E PACCAGNELLA, 2010.}
+	\fonte{Elaboração própria com base em (GERARDIN E PACCAGNELLA, 2010) e (BOUKHOBZA E OLIVIER, 2017).}
 \end{table}
 
 Com isso, foi então escolhida uma FRAM (\textit{Ferroelectric Random-Access Memory}) para armazenar dados críticos, uma Flash NAND para armazenamento de dados gerais e uma Flash NOR para armazenar o boot do sistema Linux no SoC.
@@ -158,7 +158,17 @@ Nos sistemas CubeSat do SpaceLab da UFSC, o módulo responsável pelo fornecimen
 	\item DDR3L: 1,35 V e 0,675 V.
 \end{itemize}
 
-Todos os demais periféricos devem aceitar uma tensão de alimentação de 3,3 V. Outro ponto importante são os circuitos de proteção contra \textit{latch-up}, um efeito similar a um curto-circuito na trilha de alimentação de circuitos CMOS (AN-600, 1989). 
+Todos os demais periféricos devem aceitar uma tensão de alimentação de 3,3 V. Outro ponto importante são os circuitos de proteção contra \textit{latch-up}, um efeito similar a um curto-circuito na trilha de alimentação de circuitos CMOS (AN-600, 1989). Essa proteção é essencial, pois ao ocorrer, gera um consumo elevado de corrente e consequentemente tem potencial de gerar efeitos e falhas catastróficas (ECSS, 2018). No caso desse projeto, será utilizado o LTC4361, anteriormente usado em outras PCBs do SpaceLab, como o OBDH da  segunda geração (MARCELINO, 2024). 
+
+Na Figura \ref{fig:diapower}, está esquematizado o sistema de potência proposto.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.8]{images/diapower.png}
+    \caption{Sistema de potência proposto.}
+    \label{fig:diapower}
+    \fonte{Elaboração própria.}
+\end{figure}
 
 \subsection{Sensores e Periféricos}
 Como dito nos pré-requisitos, alguns sensores precisam estar presentes no OBDH. Entre eles:
@@ -239,6 +249,9 @@ Também foram levadas em consideração as interfaces disponibilizadas pelo SoC,
         \midrule
         \textit{Load Switch} & TPS22920YZPR & - & 3,3 V & 0,2 mA \tabularnewline 
         
+        \midrule
+        Proteção contra \textit{Latch-up} & LTC4361 & - & - & - \tabularnewline 
+
         \bottomrule
 	\end{tabular}
 	\fonte{Elaboração própria com base nos Datasheets de cada componente.}
