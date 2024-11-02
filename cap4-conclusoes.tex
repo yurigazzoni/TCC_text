@@ -1,0 +1,20 @@
+% ----------------------------------------------------------
+\chapter{Considerações finais}
+% ----------------------------------------------------------
+O desenvolvimento deste trabalho teve como principal objetivo a criação de uma arquitetura de hardware robusta e versátil para um computador de bordo destinado a pequenos satélites, especificamente CubeSats. Este computador de bordo foi projetado para operar em ambientes espaciais adversos, assegurando a integridade e a confiabilidade no tratamento de dados, além de possibilitar a adaptação a diferentes tipos de missões e experimentos científicos em órbita.
+
+Dentre os objetivos específicos, estavam a análise dos requisitos de robustez para ambientes espaciais, a especificação de uma arquitetura adaptável e a documentação detalhada de todas as decisões de projeto. Para atender esses objetivos, inicialmente, a robustez do sistema foi trabalhada com a seleção cuidadosa de componentes eletrônicos que pudessem resistir a fatores ambientais como radiação e temperatura extrema, presentes em LEO. Tais componentes foram escolhidos de acordo com diretrizes de herança de voo e normas estabelecidas pela ESA e NASA, de forma a garantir maior confiabilidade e segurança operacional.
+
+No aspecto da versatilidade, o sistema foi arquitetado de modo a integrar memórias, sensores e periféricos variados, de modo a atender a diferentes tipos de missões. Esse objetivo foi cumprido por meio do uso de um SoC da família Zynq, que incorpora um microprocessador e uma FPGA, conferindo ao sistema uma alta adaptabilidade. As interfaces genéricas disponibilizadas para os conectores (SPI, I2C, UART, CAN e diversos pinos de entrada e saída genéricos), também corroboraram para essa versatilidade, permitindo a interconexão com muitos componentes diferentes.
+
+Outro aspecto relevante abordado neste projeto foi a robustez das interfaces de comunicação. Para garantir a integridade das transmissões de dados entre os módulos do CubeSat, optou-se pela utilização da interface CAN, que oferece maior resistência a interferências, sendo especialmente adequadas para sistemas embarcados que exigem alta confiabilidade. Além disso, o sistema conta com sensores para monitoramento de temperatura, tensão e corrente, componentes essenciais para a operação segura e para a prevenção de falhas.
+
+A abordagem de modularidade do projeto também reforça sua robustez e flexibilidade. Com o uso de memórias não voláteis (Flash NOR, Flash NAND e FRAM) para o armazenamento de dados críticos e a inicialização segura do sistema, o computador de bordo projetado consegue resistir às adversidades do ambiente espacial. Além disso, cada componente foi avaliado quanto ao consumo energético e às exigências de funcionamento entre -40°C e 85 °C.
+
+Conclui-se que o projeto realizado cumpre os objetivos propostos, apresentando uma solução robusta, segura e adaptável para a operação em CubeSats. A flexibilidade conferida pela arquitetura de SoC com FPGA integrada, associada à robustez das interfaces e ao uso de memórias especializadas, permite que o sistema seja facilmente adaptável a diferentes \textit{payloads}. Dessa forma, esse trabalho contribui para o avanço das tecnologias embarcadas em pequenos satélites, oferecendo uma base confiável e versátil para futuras inovações em missões espaciais.
+
+
+
+
+
+

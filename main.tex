@@ -48,9 +48,9 @@ hyperref=hidelinks]{abntex2}
 % ----------------------------------------------------
 % Informações do trabalho
 \autor{Yuri Gazzoni Rezende}
-\titulo{OBDH Robusto Para Uso em LEO}
+\titulo{Projeto de um Computador de Bordo Robusto e Versátil Para Uso em pequenos satélites}
 % \subtitulo{Subtítulo} % Preenchimento opcional para quando houver sub-título
-\orientador{Gabriel Marcelino}
+\orientador{Msc. Gabriel Mariano Marcelino}
 %\coorientador{Nome do coorientador} % Preenchimento opcional para quando houver co-orientador
 \curso{Departamento de Engenharia Elétrica e Eletrônica}
 % \titulacao{Bacharel em x}
@@ -68,21 +68,21 @@ hyperref=hidelinks]{abntex2}
 
 % 3. Folha de aprovação
 \begin{folhadeaprovacao}
-    \membrodabanca[Orientador/Presidente]{Prof. Dr. Nome do Orientador/Presidente}{}
-    \membrodabanca{Prof. Dr. Membro da banca 1}{UFSC}
-    \membrodabanca{Prof. Dr. Membro da banca 2}{UFSC}
-    \membrodabanca{Prof. Dr. Membro da banca 3}{UFSC\,-\,Florianópolis}
+    \membrodabanca[Orientador]{Msc. Gabriel Mariano Marcelino}{}
+    \membrodabanca{Prof. Dr. Eduardo Bezerra}{UFSC}
+    \membrodabanca{Membro da banca 2}{UFSC}
+    \membrodabanca{Membro da banca 3}{UFSC}
 \end{folhadeaprovacao}
 
 % 4. Dedicatória
-\begin{dedicatoria}
-    Este trabalho é dedicado aos meus colegas de classe e aos meus queridos pais.
-\end{dedicatoria}
+%\begin{dedicatoria}
+%    Este trabalho é dedicado aos meus colegas de classe e aos meus queridos pais.
+%\end{dedicatoria}
 
 % 5. Agradecimentos 
-\begin{agradecimentos}
-    Inserir os agradecimentos aos colaboradores à execução do trabalho.
-\end{agradecimentos}
+%\begin{agradecimentos}
+%   Inserir os agradecimentos aos colaboradores à execução do trabalho.
+%\end{agradecimentos}
 
 % 6. Epígrafe
 %\begin{epigrafe}
@@ -95,23 +95,13 @@ hyperref=hidelinks]{abntex2}
 
 % 7. Resumo em português
 \begin{resumo}
-    O texto do resumo deve ser digitado em um único bloco, sem espaço de parágrafo. Deve ser composto por uma sequência de frases concisas, afirmativas e não de uma enumeração de tópicos. Não deve conter citações. Manter o tempo verbal do texto do trabalho (impessoal) e por vezes usar a voz ativa (Ex.: este trabalho apresenta). O Resumo deve conter: tema, problema, justificativa, objetivos, método e resultados (de forma geral). Abaixo do resumo, informar as palavras-chave (palavras ou expressões significativas retiradas do texto) e preferencialmente não repetir termos do título (para aumentar os indexadores). No mínimo três e no máximo cinco. Separadas por ponto. Observe que o espaçamento aqui, entre linhas, é simples (1,0).
+Este trabalho apresenta o projeto e desenvolvimento de uma arquitetura de hardware para um computador de bordo robusto e versátil, adequado para pequenos satélites, como CubeSats, que operam em órbitas baixas (LEO). O objetivo principal foi desenvolver uma solução que atendesse aos requisitos críticos do ambiente espacial, integrando componentes comerciais (COTS) selecionados conforme diretrizes de herança de voo e normas da ESA e NASA, assegurando confiabilidade e estabilidade. Para garantir versatilidade, a solução foi baseada em um SoC da família Zynq, que integra um microprocessador e uma FPGA, permitindo a execução de um sistema RTOS. O projeto adota métodos de escolha de componentes e estimativas de potência. Como resultado, obtém-se uma arquitetura com interfaces genéricas, o que permite a adaptação a diferentes missões e estudos. Conclui-se que o computador de bordo projetado cumpre as exigências de robustez e flexibilidade para missões espaciais em pequenos satélites.
 
-    \palavrachave{Palavra-chave 1}
-    \palavrachave{Palavra-chave 2}
-    \palavrachave{Palavra-chave 3}
+\palavrachave{CubeSats}
+\palavrachave{Computador de Bordo}
+\palavrachave{Versatilidade}
 \end{resumo}
 
-% 8a. Resumo em inglês
-\begin{resumo}[Abstract]
-    \begin{otherlanguage*}{english}
-        Resumo traduzido para outros idiomas, neste caso, inglês. Segue o formato do resumo feito na língua vernácula. As palavras-chave traduzidas, versão em língua estrangeira, são colocadas abaixo do texto precedidas pela expressão \emph{Keywords}, separadas por ponto. Observe que o espaçamento aqui, entre linhas, é simples (1,0).
-    \end{otherlanguage*}
-
-    \palavrachave{First keyword}
-    \palavrachave{Second keyword}
-    \palavrachave{Third keyword}
-\end{resumo}
 % 9. Lista de figuras
 \imprimirlistafiguras
 
@@ -123,7 +113,40 @@ hyperref=hidelinks]{abntex2}
 
 % 12. Lista de abreviaturas e siglas
 \begin{siglas}
+	\item[ADC] \textit{Analog to Digital Converter}
+	\item[ADCS] \textit{Attitude Determination and Control System}
+	\item[CAN] \textit{Controller Area Network}
+	\item[COTS] \textit{Commercial-off-the-shelf}
+	\item[DDR] \textit{Double Data Rate}
+	\item[ECSS] \textit{European Cooperation for Space Standardization}
+	\item[EMI] \textit{Electromagnetic Interference}
+	\item[ESA] \textit{European Space Agency}
+	\item[ESR] \textit{Equivalent Series Resistor}
+	\item[FPGA] \textit{Field-Programmable Gate Array}
+	\item[HP] \textit{High Performance} 
+	\item[HR] \textit{High Range}
+	\item[I2C] \textit{Inter-Integrated Circuit}
+	\item[JTAG] \textit{Joint Test Action Group}
+	\item[LEO] \textit{Low Earth Orbit}
+	\item[MEO] \textit{Medium Earth Orbit}
+	\item[MIO] \textit{Multiplexed In-Out}
+	\item[NASA] \textit{National Aeronautics and Space Administration}
+	\item[NPSL] \textit{NASA Part Selection List}
 	\item[OBDH] \textit{On-board Data Handling} 
+	\item[PCB] \textit{Printed Circuit Board}
+	\item[PL] \textit{Programmable Logic}
+	\item[PS] \textit{Processing System}
+	\item[QSPI] \textit{Quad Serial Peripheral Interface}
+	\item[RTC] \textit{Real Time Clock}
+	\item[RTOS] \textit{Real Time Operational System}
+	\item[SDR] \textit{Single Data Rate}
+	\item[SEE] \textit{Single Event Effects}
+	\item[SoC] \textit{System-on-a-Chip}
+	\item[SPI] \textit{Serial Peripheral Interface}
+	\item[TID] \textit{Total Ionizing Dose}
+	\item[UART] \textit{Universal Asynchronous Receiver-Transmitter}
+	\item[WDT] \textit{Watchdog Timer}	
+	\item[XADC] \textit{Xilinx Analog to Digital Converter}
 \end{siglas}
 
 % 13. Lista de símbolos 
@@ -141,9 +164,20 @@ hyperref=hidelinks]{abntex2}
 \include{cap1-revbib.tex}
 \include{cap2-arquitetura.tex}
 \include{cap3-projeto.tex}
+\include{cap4-conclusoes.tex}
 \include{bib.tex}
 \postextual
 %\include{bib.tex}
 %\include{ref.bib}
 
+\begin{apendicesenv}
+
+% ----------------------------------------------------------
+\chapter{Esquemático completo}
+% ----------------------------------------------------------
+
+
+
+\end{apendicesenv}
+% ---
 \end{document}

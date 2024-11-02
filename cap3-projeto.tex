@@ -2,7 +2,7 @@
 \chapter{Desenvolvimento do Projeto}
 % ----------------------------------------------------------
 
-Depois das definições apresentadas e da escolha de componentes apresentada na seção anterior, foi possível construir um esquemático elétrico, que esquematiza a PCB do OBDH. Nesse capítulo, discutir-se-á circuitos específicos mais relevantes do projeto, usando o esquemático pronto, que se encontra no Anexo I.
+Depois das definições apresentadas e da escolha de componentes apresentada na seção anterior, foi possível construir um esquemático elétrico, que esquematiza a PCB do OBDH. Nesse capítulo, discutir-se-á circuitos específicos mais relevantes do projeto, usando o esquemático pronto, que se encontra no Apêndice A. O \textit{software} utilizado para construção desse esquemático foi o Altium Designer.
 
 \section{Conversores de Potência}
 
@@ -218,7 +218,7 @@ O banco zero do SoC é o responsável por algumas opções e sinais de configura
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
 
-Além disso, para a alimentação do XADC, foi necessário um circuito de filtragem, disposto na Figura \ref{fig:xadcfilter}, como requerido por (UG480, 2022).
+Além disso, para a alimentação do XADC (\textit{Xilinx Analog to Digital Converter}), foi necessário um circuito de filtragem, disposto na Figura \ref{fig:xadcfilter}, como requerido por (UG480, 2022).
 
 \begin{figure}[H]
     \centering
@@ -338,7 +338,7 @@ Também como mencionado, o projeto terá como memória volátil uma memória do 
 
 \subsection{Blocos do PL}
 
-O lado da FPGA do SoC, chamada de PL, é crucial para se ter um hardware versátil. Para isso, houve uma tentativa de usar a maior parte dos pinos possível, principalmente para o barramento externo. Nesses bancos também se encontram as entradas diferenciais do XADC do SoC. Nas Figuras \ref{fig:plhr} e \ref{fig:plhp} se encontram os esquemáticos dos bancos HR (\textit{High Range}) e HP (\textit{High Performance}), respectivamente. Na Tabela \ref{plzynq}, por sua vez, se encontra a descrição funcional dos pinos por nome.
+O lado da FPGA do SoC, chamada de PL, é crucial para se ter um hardware versátil. Para isso, houve uma tentativa de usar a maior parte dos pinos possível, principalmente para o barramento externo. Nesses bancos também se encontram as entradas diferenciais do XADC do SoC. Nas Figuras \ref{fig:plhr} e \ref{fig:plhp} se encontram os esquemáticos dos bancos HR (\textit{High Range}) e HP (\textit{High Performance}), respectivamente. Na Tabela \ref{tab:plzynq}, por sua vez, se encontra a descrição funcional dos pinos por nome.
 
 \begin{figure}[H]
     \centering
@@ -404,6 +404,120 @@ Por fim, os pinos de potência devem ser alimentados corretamente. Além disso, 
 
 \section{Memórias}
 
+Nesta seção, abordam-se as principais características das memórias utilizadas no sistema. Serão comentados os circuitos das memórias DDR3L, das memórias Flash NAND e NOR e da memória FRAM.
+
+\subsection{DDR3L} 
+
+A DDR3L selecionada oferece 2 Gb de capacidade de armazenamento, configurada em uma estrutura de 256M x 8 bits. Essa memória opera com tensão reduzida (1.35V), o que a torna eficiente em termos de consumo de energia, crucial para sistemas de satélite. Seu circuito se encontra na Figura \ref{fig:ddr3l}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/ddr3l.png}
+    \caption{Circuito da memória DDR3L.}
+    \label{fig:ddr3l}
+    \fonte{(MT41K256M8DA-125:K DDR3L Datasheet).}
+\end{figure}
+
+\subsection{Flash NOR}
+
+A memória flash NOR, acessada por uma interface QSPI, foi escolhida pela sua capacidade de realizar leituras rápidas, característica que torna esse tipo de memória adequado para armazenamento de firmware ou dados de inicialização do sistema. Seu circuito está presente na Figura \ref{fig:fnor}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/flash nor.png}
+    \caption{Circuito da memória Flash NOR.}
+    \label{fig:fnor}
+    \fonte{(MT25QL128ABB1ESE-0AUT Flash NOR Datasheet).}
+\end{figure}
+
+\subsection{Flash NAND}
+
+Diferente da flash NOR, a memória flash NAND, acessada via SPI, é utilizada para armazenamento de grandes volumes de dados que não necessitam de acesso frequente, ou seja, dados de uso prolongado, como logs e registros. Seu circuito se encontra na Figura \ref{fig:fnand}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/flash nand.png}
+    \caption{Circuito da memória Flash NAND.}
+    \label{fig:fnand}
+    \fonte{(MT29F1G01ABAFDSF-AAT:F Flash NAND Datasheet).}
+\end{figure}
+
+\subsection{FRAM}
+
+ A FRAM, com acesso por interface SPI, será usada para armazenar dados críticos por sua alta resistência a radiação e alta velocidade de escrita e leitura. Seu circuito se encontra na Figura \ref{fig:fram}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/fram.png}
+    \caption{Circuito da memória FRAM.}
+    \label{fig:fram}
+    \fonte{(CY15B104QN FRAM Datasheet).}
+\end{figure}
+
 \section{Periféricos}
 
+Como previsto nos requisitos, são necessários os circuitos do WDT, dos sensores de tensão, corrente e temperatura e do sistema do ADCS. 
+
+Primeiramente, o circuito do WDT, disposto na Figura \ref{fig:wdt}, foi construído para reinicializar o SoC caso o sinal de controle (WDI) não mude por mais de 1,6 segundos (tipicamente). Além disso, o circuito integrado é equipado com um sinal de \textit{reset} manual. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/wdt.png}
+    \caption{Circuito do WDT.}
+    \label{fig:wdt}
+    \fonte{(TPS3823-33QDBVRQ1 Watchdog Timer Datasheet).}
+\end{figure}
+
+No circuito do sensor de tensão e temperatura, são monitoradas as tensões de 1 V, 1,8 V, 1,35 V e  0,675 V. Além disso, são medidas as temperaturas tanto do SoC, através dos sinais DXP e DXN, provenientes do diodo interno do Zynq (UG865, 2021), quanto a temperatura da placa, em um transistor externo. O mesmo está disposto na Figura \ref{fig:sense}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/sense.png}
+    \caption{Circuito do monitor de tensão e temperatura.}
+    \label{fig:sense}
+    \fonte{(LTC2991IMS\#TRPBF Voltage, Current and Temperature Monitor Datasheet).}
+\end{figure}
+
+Quanto ao circuito de medição de corrente, foi necessário o cálculo do resistor de medição (Rsense), presente em (6) (INA180A2IDBVR Current Sense Datasheet). Com o valor máximo de Rsense, foi escolhido um resistor menor, de 75 m$\Omega$, para obter uma margem com relação à corrente máxima. Sua saída é lida por uma entrada do XADC do SoC. Seu circuito final está disposto na Figura \ref{fig:csense}.
+
+\begin{equation}
+	R_{sense} < Vsp / (G \times Imax) = 1 / (50 \times 2,5) = 80 m\Omega
+\end{equation} 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/current sense.png}
+    \caption{Circuito de medição de corrente.}
+    \label{fig:csense}
+    \fonte{(INA180A2IDBVR Current Sense Datasheet).}
+\end{figure}
+
+Por fim, o sistema ADCS, controlado pela interface I2C0, será formado pelos circuitos das Figuras \ref{fig:mag} e \ref{fig:gyro}, do magnetômetro e do giroscópio. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/magnetometer.png}
+    \caption{Circuito do magnetômetro.}
+    \label{fig:mag}
+    \fonte{(MMC5983MA Magnetometer Datasheet).}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/gyro.png}
+    \caption{Circuito do giroscópio.}
+    \label{fig:gyro}
+    \fonte{(A3G4250D Gyroscope Datasheet).}
+\end{figure}
+
 \section{Conexões entre blocos}
+
+Por fim, todos os blocos foram conectados, usando o princípio de projeto hierárquico fornecido pelo \textit{software} utilizado. A interconexão leva em conta a arquitetura proposta e as necessidades individuais de cada subcircuito apresentado no presente capítulo. Seu esquemático está disposto na Figura \ref{fig:inter}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{images/conexoes.png}
+    \caption{Interconexão dos blocos propostos.}
+    \label{fig:inter}
+    \fonte{Elaboração própria.}
+\end{figure}

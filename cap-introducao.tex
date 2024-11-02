@@ -1,34 +1,20 @@
 \chapter{Introdução}
 \label{Chap:intro}
 
-A Introdução é um texto sucinto e direto, no qual deve constar, organizado em parágrafos, com textualidade (coesão e coerência) e sem vícios linguísticos:
+O desenvolvimento de satélites de pequeno porte, como CubeSats e nanosatélites, trouxe novas oportunidades e desafios para a indústria espacial, permitindo que uma ampla gama de missões científicas, comerciais e educacionais fosse realizada com custos reduzidos e prazos de desenvolvimento mais curtos (CUBESAT Design Specification, 2022). No entanto, a miniaturização e a operação em ambientes espaciais impõem requisitos à robustez, confiabilidade e versatilidade dos sistemas embarcados, especialmente para os módulos OBDHs (\textit{On-Board Data Handling}). Nesse contexto, a arquitetura de um computador de bordo eficiente e robusto é essencial para o gerenciamento seguro das operações e para garantir a integridade das missões.
 
-\begin{enumerate}[label=\alph*)]
-    \item Tema;
-    \item Problema;
-    \item Justificativa;
-    \item Informação das bases/linhas teóricas e/ou autores de referência que serão utilizados no trabalho;
-    \item Objetivo geral e, se for o caso, alguns específicos;
-    \item Metodologia a ser seguida;
-    \item Resultados gerais.
-\end{enumerate}
+O sistema desenvolvido para o presente trabalho foca na implementação de uma arquitetura de processamento e memória capaz de atender às demandas de um satélite de pequeno porte. Esse sistema deve operar de maneira confiável em ambientes de alta radiação e alta variação de temperatura, em conjunto com a otimização do uso de energia.
 
-Não crie subtítulos para motivação ou metodologia.
-Motivação é justificativa e deve compor o texto.
-Para qualquer dúvida, consulte a Norma, não siga exemplos de formatação observados em outros textos, pois podem estar desatualizados ou equivocados.
+Além disso, a versatilidade do computador de bordo é essencial para adaptar o sistema a diferentes tipos de missões, desde operações de imagem e telemetria até experimentos científicos em órbita. Para isso, é necessário que o sistema ofereça uma arquitetura versátil, baseada em uma FPGA (\textit{Field-Programmable Gate Array}), com capacidade de expansão e adaptação a novos sensores e módulos de comunicação.
 
-\section{Objetivos}
+\section{Objetivo geral}
 
-Para resolver a problemática X, propõem-se os seguintes objetivos.
+O presente trabalho tem como objetivo o projetar e implementação de uma arquitetura de hardware robusta e versátil para um computador de bordo de satélite de pequeno porte, integrando diferentes tipos de memórias e periféricos para assegurar a operação confiável em ambientes espaciais adversos, garantindo a integridade dos dados e a eficiência no gerenciamento dos mesmos.
 
-\subsection{Objetivo geral}
-
-O objetivo geral deve ser claro, sucinto, direto e coerente com o que foi anunciado no título do trabalho.
-
-\subsection{Objetivos Específicos}
+\section{Objetivos Específicos}
 
 \begin{itemize}
-    \item Utilize a lista de verbos indicada para composição de objetivos específicos, conforme  \href{https://www.youtube.com/watch?v=Ycl5a-5gR4w}{disponível no material da disciplina de PTCC};
-    \item Os objetivos específicos atingem metas em fases de começo, meio e fim, da pesquisa;
-    \item Observe para não colocar a tarefa, mas sim o objetivo que deseja atingir com a mesma.
+    \item Analisar os requisitos de robustez em condições espaciais, com foco em resistência a radiação, tolerância a falhas e estabilidade térmica, a fim de assegurar o funcionamento contínuo do computador de bordo em órbita.
+    \item Especificar uma arquitetura de hardware que permita a adaptação a diferentes tipos de missões, integrando diferentes tipos de componentes comerciais com um SoC (\textit{System-on-a-chip}).
+    \item  Documentar as decisões de projeto para consolidar um guia técnico com recomendações de design para sistemas de robustos e versáteis aplicáveis a satélites de pequeno porte, contribuindo para futuras otimizações e adaptações em missões espaciais.
 \end{itemize}

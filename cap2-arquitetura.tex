@@ -94,13 +94,13 @@ Como podemos verificar, o microprocessador será crucial e deverá ter pinos suf
 
 \subsection{Microcontrolador}
 
-Como visto na Tabela \ref{tab:Tab_Missoes}, a fabricante com maior herança de voo estudada é a Xilinx, em especial os chips da família Zynq 7000, que são SoCs (\textit{System on a Chip}). Após um estudo próprio, o SoC Zynq 7030 se mostrou mais adequado pelas seguintes características:
+Como visto na Tabela \ref{tab:Tab_Missoes}, a fabricante com maior herança de voo estudada é a Xilinx, em especial os chips da família Zynq 7000, que são SoCs. Após um estudo próprio, o SoC Zynq 7030 se mostrou mais adequado pelas seguintes características:
 
 \begin{itemize}
 	\item Foi usado em missões extensivas em pequenos satélites (Gomspace, 2024), ou seja, possui herança de voo em missões similares em LEO e em CubeSats;
 	\item Possui um envelopamento com 484 pinos, suficiente para prover as conexões necessárias para todas as interfaces requeridas (UG865, 2021);
 	\item Capaz de rodar um sistema Linux (KADI et al.,2013);
-	\item Por ser um SoC, possui alta adaptabilidade e flexibilidade, disponibilizando no mesmo chip uma FPGA (\textit{Field-Programmable Gate Array}) e um microprocessador, denominados respectivamente de PL e PS;
+	\item Por ser um SoC, possui alta adaptabilidade e flexibilidade, disponibilizando no mesmo chip uma FPGA e um microprocessador, denominados respectivamente de PL (\textit{Programmable Logic}) e PS (\textit{Processing System});
 \end{itemize}
 
 \subsection{Memórias}
@@ -148,7 +148,7 @@ No caso das memórias não voláteis, é necessária uma atenção especial ao t
 	\fonte{Elaboração própria com base em (GERARDIN E PACCAGNELLA, 2010) e (BOUKHOBZA E OLIVIER, 2017).}
 \end{table}
 
-Com isso, foi então escolhida uma FRAM (\textit{Ferroelectric Random-Access Memory}) para armazenar dados críticos, uma Flash NAND para armazenamento de dados gerais e uma Flash NOR para armazenar o boot do sistema Linux no SoC.
+Com isso, foi então escolhida uma FRAM para armazenar dados críticos, uma Flash NAND para armazenamento de dados gerais e uma Flash NOR para armazenar o boot do sistema RTOS no SoC.
 
 \subsection{Conversores DC-DC}
 Nos sistemas CubeSat do SpaceLab da UFSC, o módulo responsável pelo fornecimento de potência é o chamado EPS (MARCELINO, 2024). A partir disso, partindo do pressuposto que haverá uma tensão fornecida de 3,3 V, pode-se inferir a cascata de potência a partir do mesmo. Para o caso do Zynq e da memória DDR3, circuitos integrados são necessários para gerar as seguintes tensões: 

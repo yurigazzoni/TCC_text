@@ -2,7 +2,7 @@
 \chapter{Revisão Bibliográfica}
 % ----------------------------------------------------------
 
-Para atingir o objetivo de projetar o \textit{hardware} de uma PCB (\textit{Printed Circuit Board}) de um computador de bordo robusto, foi preciso buscar na literatura acadêmica o estado da arte que tange o projeto de OBDHs (\textit{On-Board Data Handling}) para satélites de pequeno porte, especialmente para CubeSats (satélites de baixo custo, dimensões padronizadas e que utilizam componentes comerciais) (CUBESATS ..., 2022).
+Para atingir o objetivo de projetar o \textit{hardware} de uma PCB (\textit{Printed Circuit Board}) de um computador de bordo robusto, foi preciso buscar na literatura acadêmica o estado da arte que tange o projeto de OBDHs para satélites de pequeno porte, especialmente para CubeSats (satélites de baixo custo, dimensões padronizadas e que utilizam componentes comerciais) (CUBESATS ..., 2022).
  
 Primeiro, foi necessário um estudo sobre a radiação em LEO - \textit{Low Earth Orbit} (órbitas com raio menor que 1000 km, segundo ESA, 2024), para que a escolha dos componentes do projeto seja a melhor possível. Com esse estudo, buscaram-se formas de mitigar os efeitos mais conhecidos e verificar como instituições têm lidado com componentes do tipo \textit{commercial-off-the-shelf} (COTS).% Além disso, também foi dada a fundamentação dos conversores de potência, tipos de memória, microprocessadores e interfaces de comunicação.
 
@@ -52,7 +52,7 @@ O FloripaSat-2 é a segunda geração da plataforma \textit{open-source} desenvo
     \fonte{MARCELINO et al., 2024.}
 \end{figure}
 
-Especificamente para o OBDH, forami introduzidas uma memória FRAM e uma Flash NOR, ao invés das Flashs e cartão microSD anteriores, o que mostra uma melhoria clara de capacidade e confiabilidade. Outras duas melhorias importantes foram, primeiramente, a adição de um conector para eventualmente conectar uma \textit{daughter board} à placa, e, segundamente, a adição de \textit{buffers} às trilhas de I2C entre os módulos. Isso acrescenta flexibilidade e confiabilidade ao OBDH da segunda geração.
+Especificamente para o OBDH, forami introduzidas uma memória FRAM (\textit{Ferroelectric Random-Access Memory}) e uma Flash NOR, ao invés das Flashs e cartão microSD anteriores, o que mostra uma melhoria clara de capacidade e confiabilidade. Outras duas melhorias importantes foram, primeiramente, a adição de um conector para eventualmente conectar uma \textit{daughter board} à placa, e, segundamente, a adição de \textit{buffers} às trilhas de I2C (\textit{Inter-Integrated Circuit}) entre os módulos. Isso acrescenta flexibilidade e confiabilidade ao OBDH da segunda geração.
 
 \subsection{Projetos Comerciais}
 
@@ -116,7 +116,7 @@ Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenç�
 
 Comparando ambas tabelas, é possível verificar que a maioria dos processadores apresentados são de duas fabricantes: Xilinx (especialmente \textit{chips} da família Zynq 7000) e Microchip (incluindo Atmel). Além disso, a maior parte dos projetos comerciais vistos apresentam memórias FRAM, que possuem um número máximo de ciclos de leitura e escrita muito elevada, além de memórias Flash. Outro destaque foi a presença de sensores de tensão e corrente, bem como magnetômetros e giroscópios.
 
-Além disso, projetos como o OBDH Nanomind Z7000 (Gomspace Nanomind Z7000 Datasheet, 2019) demonstraram sua efetividade em diversas missões, como FSSCAT (CAMPS et al., 2018), ORCA (BARLES et al., 2022) e CubeMAP (WEIDMANN et al., 2020), o que mostra a confiabilidade e herança de voo de \textit{hardwares} contendo o SoCs da família Zynq 7000. Na Figura \ref{fig:nanomind}, podemos verificar o diagrama de blocos do anteriormente citado Nanomind Z7000.
+Além disso, projetos como o OBDH Nanomind Z7000 (Gomspace Nanomind Z7000 Datasheet, 2019) demonstraram sua efetividade em diversas missões, como FSSCAT (CAMPS et al., 2018), ORCA (BARLES et al., 2022) e CubeMAP (WEIDMANN et al., 2020), o que mostra a confiabilidade e herança de voo de \textit{hardwares} contendo SoCs (\textit{System-on-a-Chip}) da família Zynq 7000. Na Figura \ref{fig:nanomind}, podemos verificar o diagrama de blocos do anteriormente citado Nanomind Z7000.
 
 \begin{figure}[H]
     \centering
