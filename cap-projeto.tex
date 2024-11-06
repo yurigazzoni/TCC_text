@@ -2,7 +2,7 @@
 \chapter{Desenvolvimento do Projeto}
 % ----------------------------------------------------------
 
-Depois das definições apresentadas e da escolha de componentes apresentada na seção anterior, foi possível construir um esquemático elétrico, que esquematiza a PCB do OBDH. Nesse capítulo, discutir-se-á circuitos específicos mais relevantes do projeto, usando o esquemático pronto, que se encontra no Apêndice A. O \textit{software} utilizado para construção desse esquemático foi o Altium Designer.
+Depois das definições apresentadas e da escolha de componentes apresentada na seção anterior, foi possível construir um esquemático elétrico, que esquematiza a PCB do OBDH. Nesse capítulo, discutir-se-á circuitos específicos mais relevantes do projeto, usando o esquemático pronto, que se encontra no Apêndice A. O \textit{software} utilizado para construção desse esquemático foi o Altium Designer (versão 24.4.1).
 
 \section{Conversores de Potência}
 
@@ -10,7 +10,7 @@ Partindo do princípio que o módulo EPS da terceira geração de módulos do Sp
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.6]{images/Power_system.png}
+    \includegraphics[scale=0.8]{images/Power_system.png}
     \caption{Cascata de potência proposta.}
     \label{fig:power}
     \fonte{Elaboração própria.}
@@ -28,7 +28,7 @@ Costumeiramente, a entrada de tensão de uma placa robusta deve ser filtrada, pr
     \fonte{SOH et al., 2010.}
 \end{figure}
 
-Além disso, também foi necessária a inclusão de um diodo Zener em paralelo à entrada, servindo como um elemento extra de proteção contra perturbações e transientes (CADENCE, 2023). Outra característica explorada foi a colocação de capacitores em paralelo, a fim de reduzir sua resistência em série equivalente (ESR) e sua indutância série (SARJEANT, 1990).  O filtro proposto está disposto na Figura \ref{fig:FILTRO}.  Além disso, sua magnitude e fase simuladas estão dispostas na Figura \ref{fig:filtrof}.
+Além disso, também foi necessária a inclusão de um diodo Zener em paralelo à entrada, servindo como um elemento extra de proteção contra perturbações e transientes (CADENCE, 2023). Outra característica explorada foi a colocação de capacitores em paralelo, a fim de reduzir sua resistência em série equivalente (ESR) e sua indutância série (SARJEANT, 1990).  O filtro proposto está disposto na Figura \ref{fig:FILTRO}.  Além disso, sua magnitude e fase simuladas estão dispostas na Figura \ref{fig:filtrof}, utilizando o software LTSPICE XVII.
 
 \begin{figure}[H]
     \centering
@@ -78,7 +78,7 @@ Também foi possível montar seu circuito de proteção de sobrecorrente, dispos
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
 
-Depois disso, para seguir com o sequenciamento requerido pelo SoC, precisa-se de um circuito de chaveamento de carga, apresentado na Figura \ref{fig:sw1}. Seu circuito é baseado no sugerido por (TPS22920, 2016), com seu ligamento sendo feito pela própria tensão de 3,3 V.
+Depois disso, para seguir com o sequenciamento requerido pelo SoC, precisa-se de um circuito de chaveamento de carga, apresentado na Figura \ref{fig:sw1}. Seu circuito é baseado no sugerido por (TPS22920, 2016), com sua ativação o sendo realizada pela própria tensão de 3,3 V.
 
 \begin{figure}[H]
     \centering
@@ -114,7 +114,7 @@ Analogamente, para a tensão de 1,8 V, são necessários ambos um conversor e um
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
 
-Por fim, para ligar a tensão de 3,3 V fornecida para o SoC, é necessário um último circuito de chaveamento, dessa vez com seu ligamento feito pela tensão de 1,8 V, como mostra a Figura \ref{fig:sw2}.
+Por fim, para ligar a tensão de 3,3 V fornecida para o SoC, é necessário um último circuito de chaveamento, dessa vez com sua ativação realizada pela tensão de 1,8 V, como mostra a Figura \ref{fig:sw2}.
 
 \begin{figure}[H]
     \centering
@@ -273,7 +273,7 @@ Por fim, Na Tabela \ref{tab:interfaces}, pode-se verificar qual a função de ca
         \midrule
         CAN0 & Interface CAN para circuitos externos ao módulo OBDH. \tabularnewline
         \midrule
-        CAN1 & Interface CAN para o módulo \textit{daughter}. \tabularnewline
+        CAN1 & Interface CAN para o barramento de expansão. \tabularnewline
         \midrule
          UART0 & Conexão serial para \textit{debugging}. \tabularnewline
         \midrule
@@ -338,7 +338,7 @@ Também como mencionado, o projeto terá como memória volátil uma memória do 
 
 \subsection{Blocos do PL}
 
-O lado da FPGA do SoC, chamada de PL, é crucial para se ter um hardware versátil. Para isso, houve uma tentativa de usar a maior parte dos pinos possível, principalmente para o barramento externo. Nesses bancos também se encontram as entradas diferenciais do XADC do SoC. Nas Figuras \ref{fig:plhr} e \ref{fig:plhp} se encontram os esquemáticos dos bancos HR (\textit{High Range}) e HP (\textit{High Performance}), respectivamente. Na Tabela \ref{tab:plzynq}, por sua vez, se encontra a descrição funcional dos pinos por nome.
+O lado da FPGA do SoC, chamada de PL, é crucial para se ter um hardware versátil. Para isso, tentou-se utilizar a maior parte dos pinos possível, principalmente para o barramento externo. Nesses bancos também se encontram as entradas diferenciais do XADC do SoC. Nas Figuras \ref{fig:plhr} e \ref{fig:plhp} se encontram os esquemáticos dos bancos HR (\textit{High Range}) e HP (\textit{High Performance}), respectivamente. Na Tabela \ref{tab:plzynq}, por sua vez, se encontra a descrição funcional dos pinos por nome.
 
 \begin{figure}[H]
     \centering

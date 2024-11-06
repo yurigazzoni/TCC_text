@@ -158,7 +158,7 @@ Nos sistemas CubeSat do SpaceLab da UFSC, o módulo responsável pelo fornecimen
 	\item DDR3L: 1,35 V e 0,675 V.
 \end{itemize}
 
-Todos os demais periféricos devem aceitar uma tensão de alimentação de 3,3 V. Outro ponto importante são os circuitos de proteção contra \textit{latch-up}, um efeito similar a um curto-circuito na trilha de alimentação de circuitos CMOS (AN-600, 1989). Essa proteção é essencial, pois ao ocorrer, gera um consumo elevado de corrente e consequentemente tem potencial de gerar efeitos e falhas catastróficas (ECSS, 2018). No caso desse projeto, será utilizado o LTC4361, anteriormente usado em outras PCBs do SpaceLab, como o OBDH da  segunda geração (MARCELINO, 2024). 
+Todos os demais periféricos devem aceitar uma tensão de alimentação de 3,3 V. Outro ponto importante são os circuitos de proteção contra \textit{latch-up}, um efeito similar a um curto-circuito na trilha de alimentação de circuitos CMOS (AN-600, 1989). Essa proteção é essencial, pois ao ocorrer, gera um consumo elevado de corrente e consequentemente tem potencial de gerar efeitos e falhas catastróficas (ECSS, 2018). No caso desse projeto, será utilizado o LTC4361, anteriormente usado em outras PCBs do SpaceLab, como o Payload HARSH (MATTOS, 2020). 
 
 Na Figura \ref{fig:diapower}, está esquematizado o sistema de potência proposto.
 
@@ -171,23 +171,24 @@ Na Figura \ref{fig:diapower}, está esquematizado o sistema de potência propost
 \end{figure}
 
 \subsection{Sensores e Periféricos}
-Como dito nos pré-requisitos, alguns sensores precisam estar presentes no OBDH. Entre eles:
+Como dito nos requisitos, alguns sensores precisam estar presentes no OBDH. Entre eles:
 
 \begin{itemize}
-	\item Um monitor de tensão, para todas as tensões importantes do sistema;
-	\item Um sensor de corrente para a tensão de entrada do módulo;
+	\item Um monitor de tensão, para todas os barramentos de alimentação importantes do sistema;
+	\item Um sensor de corrente para o barramento de alimentação principal do módulo;
 	\item Um giroscópio para medir a velocidade angular em órbita;
 	\item Um magnetômetro para medição do campo magnético da Terra em órbita;
-	\item Um WDT para reiniciar o sistema em caso de falha de software.
+	\item Um WDT para reiniciar o sistema em caso de falha de software;
+	\item Um sensor de temperatura para o SoC e um para a região das memórias na PCB;
 \end{itemize}
 
 \section{Visualização da Arquitetura Proposta}
 
-Depois das decisões tomadas, foi possível montar um diagrama, apresentado na Figura \ref{fig:arq}, que mostra cada circuito do computador de bordo. Aqui, por simplicidade, foram suprimidos os transceptores do protocolo CAN (\textit{Controller Area Network}) e a parte de potência do módulo. 
+Depois das decisões tomadas, foi possível montar um diagrama, apresentado na Figura \ref{fig:arq}, que mostra cada circuito do computador de bordo. Aqui, por simplicidade, foram suprimidos os circuitos da parte de potência do módulo.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/arquitetura final.png}
+    \includegraphics[scale=1]{images/arquitetura final.png}
     \caption{Arquitetura proposta para o OBDH.}
     \label{fig:arq}
     \fonte{Elaboração própria.}
@@ -271,7 +272,7 @@ Com isso, foram obtidos os valores da Tabela \ref{tab:estpow}, considerando uma 
     \begin{tabular}{@{} >{\centering}p{2cm} >{\centering}p{4cm} >{\centering}p{4cm} >{\centering}p{4cm}@{}}
     
 		\toprule
-		\textbf{Tensão [V]} & \textbf{Potência Dissipada na Tensão [W]} & \textbf{Potência dissipada na tensão de 3,3 V [W]} & \textbf{Corrente máxima da trilha [A]} \tabularnewline 
+		\textbf{Tensão [V]} & \textbf{Potência Dissipada [W]} & \textbf{Potência dissipada na tensão de 3,3 V [W]} & \textbf{Corrente máxima da trilha [A]} \tabularnewline 
         \midrule
          1,00 & 2,20 & 2,59 & 2,20 \tabularnewline
         
