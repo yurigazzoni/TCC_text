@@ -6,7 +6,7 @@ Após estudar os desdobramentos dos efeitos de órbita baixa e entender o que é
 
 \section{Requisitos de Projeto}
 
-Como dito, foi preciso entender os pré-requisitos impostos para o OBDH da terceira geração do SpaceLab. Abaixo, na Tabela \ref{tab:Tab_Req}, se encontram os requisitos gerais do projeto, em conjunto com a \textit{rationale} e com o método de verificação (NASA Product Verification, 2024).
+Como dito, foi preciso entender os requisitos impostos para o OBDH da terceira geração do SpaceLab. Com base nas necessidades levantadas para o laboratório nos próximos projetos e na revisão do estado da arte, são apresentados na Tabela \ref{tab:Tab_Req} os requisitos gerais do projeto, em conjunto com a \textit{rationale} e com o método de verificação (NASA Product Verification, 2024). 
 
 \begin{longtable}{@{}>{\centering}p{1.5cm}p{4cm}p{4cm}p{4.7cm}@{}}
     \centering
@@ -23,7 +23,7 @@ Como dito, foi preciso entender os pré-requisitos impostos para o OBDH da terce
         2 & O módulo OBDH deve operar corretamente entre -40°C e 85°C & Para operar com segurança em um ambiente LEO & Teste e Análise \tabularnewline
 
        \hline
-       3 & O módulo OBDH deve possuir um microcontrolador capaz de usar um sistema Linux & Para gerenciar e coordenar operações dentro e fora do módulo, sendo capaz de realizar tarefas complexas  & Inspeção \tabularnewline
+       3 & O módulo OBDH deve possuir um processador capaz de usar um sistema Linux & Para gerenciar e coordenar operações dentro e fora do módulo, sendo capaz de realizar tarefas complexas definidas pela equipe  & Inspeção \tabularnewline
 
        \hline
         4 & O módulo OBDH deve possuir uma memória DDR com capacidade de 512Mb (preferencialmente com ECC)  & Memória suficiente para operações do OBDH e armazenamento de dados  & Inspeção\tabularnewline
@@ -32,40 +32,40 @@ Como dito, foi preciso entender os pré-requisitos impostos para o OBDH da terce
        5 & O módulo OBDH deve possuir uma memória FRAM para armazenar parâmetros de configuração & Provê memória não-volátil e duradoura, menos sucetível à radiação & Inspeção \tabularnewline 
 
         \hline
-        6 & O módulo OBDH deve possuir uma memória Flash para armazenar pacotes (preferencialmente com ECC) & Para armazenar dados e pacotes recebidos & Inspeção \tabularnewline 
+        6 & O módulo OBDH deve possuir uma memória Flash para armazenar dados do satélite (preferencialmente com ECC) & Para armazenar dados & Inspeção \tabularnewline 
 
         \hline
-       7 & O módulo OBDH deve possuir um WDT (\textit{Watchdog Timer}) para reiniciar o microcontrolador em caso de falha de \textit{software} & Reinicia automaticamente o microcontrolador caso haja a falha  & Teste \tabularnewline
+       7 & O módulo OBDH deve possuir um WDT (\textit{Watchdog Timer}) para reiniciar o processador em caso de falha de \textit{software} & Reinicia automaticamente o processador caso haja a falha  & Teste \tabularnewline
 
         \hline
-       8 & O módulo OBDH deve possuir sensores de medição de tensão e corrente em suas tensões & Para monitoramento de potência consumida & Inspeção \tabularnewline
+       8 & O módulo OBDH deve possuir sensores de medição de tensão e corrente em seus barramentos de alimentação & Para monitoramento de potência consumida & Inspeção \tabularnewline
 
         \hline
       9 &  O módulo OBDH deve possuir proteção de sobrecorrente (20\% acima do valor nominal) & Para proteção contra \textit{latch-up}  & Análise \tabularnewline
 
         \hline
-        10 & O módulo OBDH deve possuir um giroscópio para medição de velocidade angular & Para permitir controle ativo do satélite  & Inspeção \tabularnewline 
+        10 & O módulo OBDH deve possuir um giroscópio para medição de velocidade angular & Para permitir controle de atitude ativo do satélite  & Inspeção \tabularnewline 
 
        \hline
-       11 & O módulo OBDH deve possuir um magnetômetro & Para permitir controle ativo do satélite  & Inspeção \tabularnewline
+       11 & O módulo OBDH deve possuir um magnetômetro & Para permitir controle de atitude ativo do satélite  & Inspeção \tabularnewline
 
         \hline
-        12 & O módulo OBDH deve possuir uma interface RS-422 para transmissão de mensagens de \textit{debug/log} e receber parâmetros de configuração & Comunicação de longa distância com maior imunidade ao ruído e maior taxa de dados (comparando com UART)  & Teste \tabularnewline
+        12 & O módulo OBDH deve possuir uma interface RS-422 para transmissão de mensagens de \textit{debug/log} e receber parâmetros de configuração & Comunicação de longa distância com maior imunidade ao ruído e maior taxa de dados  & Teste \tabularnewline
 
        \hline
-       13 & O módulo OBDH deve possuir uma interface CAN para receber e transmitir comandos e dados & Comunicação robusta e com suporte a múltiplos sistemas do CubeSat  & Inspeção \tabularnewline
+       13 & O módulo OBDH deve possuir uma interface CAN para receber e transmitir comandos e dados & Para comunicação robusta e com suporte a múltiplos subsistemas do CubeSat  & Inspeção \tabularnewline
 
         \hline
         14 & O módulo OBDH deve possuir uma interface acessível externamente para programação do microcontrolador & Para o módulo ser facilmente programado pelo time  & Inspeção \tabularnewline
 
         \hline
-        15 & O módulo OBDH deve possuir uma interface para uma \textit{daughter board} & Para prover suporte a outras interfaces e periféricos  & Inspeção \tabularnewline
+        15 & O módulo OBDH deve possuir uma interface para um barramento de expansão & Para prover suporte a outras interfaces e periféricos  & Inspeção \tabularnewline
 
         \hline
-       16 & O módulo OBDH deve possuir um sensor de temperatura com precisão menor ou igual a 1°C & Para prevenir danos de temperaturas extremas & Análise\tabularnewline
+       16 & O módulo OBDH deve possuir um sensor de temperatura com precisão menor ou igual a 1°C & Para monitorar a temperatura de operação & Inspeção\tabularnewline
 
         \hline
-       17 & O módulo OBDH deve possuir uma interface RS-485 para receber e transmitir comandos e dados  & Para transmissão robusta de dados com módulos externos & Teste \tabularnewline
+       17 & O módulo OBDH deve possuir uma interface RS-485 para receber e transmitir comandos e dados  & Para comunicação robusta e com suporte a múltiplos subsistemas do CubeSat & Inspeção \tabularnewline
        \hline
 \end{longtable}
 {\fonte{Elaboração própria.}}
@@ -78,13 +78,13 @@ A partir dos requisitos, o primeiro passo foi definir de forma geral como seria 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/arquitetura geral.png}
+    \includegraphics[scale=1.2]{images/arquitetura geral.png}
     \caption{Esquema geral de arquitetura.}
     \label{fig:arq_geral}
     \fonte{Elaboração própria.}
 \end{figure}
 
-Como podemos verificar, o microprocessador será crucial e deverá ter pinos suficientes para interface com todas as memórias, sensores e para se comunicar com os outros módulos do CubeSat. Além disso, a parte dedicada às tensões usadas deverá ser cuidadosamente feita, para suportar a potência dissipada por todos os componentes da placa de circuito impresso. A escolha de cada componente será descrita nas seções a seguir, respeitando sempre os seguintes critérios:
+Como podemos verificar, o processador será crucial e deverá ter pinos suficientes para interface com todas as memórias, sensores e para se comunicar com os outros módulos do CubeSat. Além disso, a parte dos circuitos dedicados às tensões utilizadas deverá ser cuidadosamente estudada, para que seja corretamente dimensionado de acordo com o consumo de potência estimado. A escolha de cada componente será descrita nas seções a seguir, respeitando sempre os seguintes critérios:
 
 \begin{itemize}
 	\item O componente deve funcionar corretamente nas temperaturas entre -40°C e 85°C;
@@ -97,7 +97,7 @@ Como podemos verificar, o microprocessador será crucial e deverá ter pinos suf
 Como visto na Tabela \ref{tab:Tab_Missoes}, a fabricante com maior herança de voo estudada é a Xilinx, em especial os chips da família Zynq 7000, que são SoCs. Após um estudo próprio, o SoC Zynq 7030 se mostrou mais adequado pelas seguintes características:
 
 \begin{itemize}
-	\item Foi usado em missões extensivas em pequenos satélites (Gomspace, 2024), ou seja, possui herança de voo em missões similares em LEO e em CubeSats;
+	\item Foi usado em missões extensivas em pequenos satélites (GomSpace, 2024), ou seja, possui herança de voo em missões similares em LEO e em CubeSats;
 	\item Possui um envelopamento com 484 pinos, suficiente para prover as conexões necessárias para todas as interfaces requeridas (UG865, 2021);
 	\item Capaz de rodar um sistema Linux (KADI et al.,2013);
 	\item Por ser um SoC, possui alta adaptabilidade e flexibilidade, disponibilizando no mesmo chip uma FPGA e um microprocessador, denominados respectivamente de PL (\textit{Programmable Logic}) e PS (\textit{Processing System});
@@ -109,7 +109,7 @@ As memórias serão necessárias para realizar operações, armazenar dados exte
 
 \subsubsection{Memórias voláteis}
 
-Partindo do princípio que a robustez e versatilidade estão alinhadas com a velocidade da memória, bem como sua capacidade de armazenamento máximo, a principal opção se tornou as memórias do tipo DDR (\textit{Double Data Rate}), que utilizam ambas a borda de subida e de descida para transferência de dados, atingindo o dobro de largura de banda de uma memória com SDR (\textit{Single Data Rate}) para uma mesma frequência de relógio (JEDEC, 2008). Essa relação pode ser ilustrada pela Figura \ref{fig:sdrvsddr}, onde pode-se verificar a transferência de dados do sinal DQ em relação ao sinal de relógio (bCLK e CLK) para SDR e DDR.
+Partindo dos requisitos de projeto, bem como do esforço de se obter um \textit{hardware} capaz de rodar um sistema Linux, a principal opção se tornou as memórias do tipo DDR (\textit{Double Data Rate}), que utilizam ambas a borda de subida e de descida para transferência de dados para atingir o dobro de largura de banda de uma memória com SDR (\textit{Single Data Rate}) para uma mesma frequência de relógio (JEDEC, 2008). Essa relação pode ser ilustrada pela Figura \ref{fig:sdrvsddr}, onde pode-se verificar a transferência de dados do sinal DQ em relação ao sinal de relógio (bCLK e CLK) para SDR e DDR.
 
 \begin{figure}[H]
     \centering
@@ -133,7 +133,7 @@ No caso das memórias não voláteis, é necessária uma atenção especial ao t
     \begin{tabular}{@{} >{\centering}p{2cm} >{\centering}p{3cm} >{\centering}p{3cm} >{\centering}p{3cm}>{\centering}p{3cm} @{}}
     
 		\toprule
-		\textbf{Memória} & \textbf{Tempo de leitura/escrita} & \textbf{Tolerância à radiação} & \textbf{Armazenamento máximo} & \textbf{Ciclos} \tabularnewline 
+		\textbf{Memória} & \textbf{Tempo de leitura/escrita} & \textbf{Tolerância à radiação} & \textbf{Armazenamento máximo} & \textbf{Ciclos de escrita / apagamento} \tabularnewline 
         \midrule
         Flash NOR & \textasciitilde{} 1$\mu$s & Ruim & \textasciitilde{} 1 Gb & \textbf{$10^5$} \tabularnewline
         
@@ -148,10 +148,10 @@ No caso das memórias não voláteis, é necessária uma atenção especial ao t
 	\fonte{Elaboração própria com base em (GERARDIN E PACCAGNELLA, 2010) e (BOUKHOBZA E OLIVIER, 2017).}
 \end{table}
 
-Com isso, foi então escolhida uma FRAM para armazenar dados críticos, uma Flash NAND para armazenamento de dados gerais e uma Flash NOR para armazenar o boot do sistema RTOS no SoC.
+Com isso, foi então escolhida uma FRAM para armazenar dados críticos, uma Flash NAND para armazenamento de dados gerais e uma Flash NOR para armazenar o boot do sistema operacional no SoC.
 
 \subsection{Conversores DC-DC}
-Nos sistemas CubeSat do SpaceLab da UFSC, o módulo responsável pelo fornecimento de potência é o chamado EPS (MARCELINO, 2024). A partir disso, partindo do pressuposto que haverá uma tensão fornecida de 3,3 V, pode-se inferir a cascata de potência a partir do mesmo. Para o caso do Zynq e da memória DDR3, circuitos integrados são necessários para gerar as seguintes tensões: 
+Nos sistemas CubeSat do SpaceLab da UFSC, o módulo responsável pelo fornecimento de potência é o chamado EPS (MARCELINO, 2024). A partir disso, partindo do pressuposto que haverá uma tensão fornecida de 3,3 V, pode-se inferir a cascata dos barramentos de alimentação a partir do mesmo. Para o caso do Zynq e da memória DDR3, circuitos integrados são necessários para gerar as seguintes tensões: 
 
 \begin{itemize}
 	\item Zynq: 1 V e 1,8 V; 
@@ -164,7 +164,7 @@ Na Figura \ref{fig:diapower}, está esquematizado o sistema de potência propost
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/diapower.png}
+    \includegraphics[scale=1]{images/diapower.png}
     \caption{Sistema de potência proposto.}
     \label{fig:diapower}
     \fonte{Elaboração própria.}

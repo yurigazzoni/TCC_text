@@ -2,7 +2,7 @@
 \chapter{Revisão Bibliográfica}
 % ----------------------------------------------------------
 
-Para atingir o objetivo de projetar o \textit{hardware} de uma PCB (\textit{Printed Circuit Board}) de um computador de bordo robusto, foi preciso buscar na literatura acadêmica o estado da arte que tange o projeto de OBDHs para satélites de pequeno porte, especialmente para CubeSats (satélites de baixo custo, dimensões padronizadas e que utilizam componentes comerciais) (CUBESATS ..., 2022).
+Para atingir o objetivo de projetar o \textit{hardware} de um computador de bordo robusto, foi preciso buscar na literatura acadêmica o estado da arte que tange o projeto de OBDHs para satélites de pequeno porte, especialmente para CubeSats.
  
 Primeiro, foi necessário um estudo sobre a radiação em LEO - \textit{Low Earth Orbit} (órbitas com raio menor que 1000 km, segundo ESA, 2024), para que a escolha dos componentes do projeto seja a melhor possível. Com esse estudo, buscaram-se formas de mitigar os efeitos mais conhecidos e verificar como instituições têm lidado com componentes do tipo \textit{commercial-off-the-shelf} (COTS).% Além disso, também foi dada a fundamentação dos conversores de potência, tipos de memória, microprocessadores e interfaces de comunicação.
 
@@ -10,7 +10,7 @@ Depois, foram analisadas as placas de OBDH dos projetos do FloripaSat-1 e Florip
 
 \section{Radiação em LEO e Componentes COTS}
 
-Estando em solo terrestre, os eletrônicos atuais estão bem protegidos contra a maior parte da radiação incidente do universo. No caso dos satélites orbitais, a proteção atmosférica é atenuada pela distância em relação ao solo, mesmo para aqueles que operam em LEO. Nesse caso, a radiação pode ser suficientemente significativa para causar a mudança do comportamento eletromagnético dos materiais, causando efeitos como falhas, aquisição ou execução errada de comandos e distorção da corrente elétrica (MAYANBARI, 2011).  Esses danos são divididos em dois grupos (JUNQUEIRA, 2020): os acumulativos como o TID (\textit{Total Ionizing Dose}), e os SEE (\textit{Single Event Effects}), que indicam o acontecimento de eventos únicos. 
+Estando em solo terrestre, os eletrônicos atuais estão bem protegidos contra a maior parte da radiação incidente do universo. No caso dos satélites orbitais, a proteção atmosférica é atenuada pela distância em relação ao solo, mesmo para aqueles que operam em LEO. Nesse caso, a radiação pode ser suficientemente significativa para causar a mudança do comportamento eletromagnético dos materiais, causando efeitos como falhas, aquisição ou execução errada de comandos e distorções dos sinais (MAYANBARI, 2011) (LABEL, 2004).  Esses danos são divididos em dois grupos (JUNQUEIRA, 2020): os acumulativos como o TID (\textit{Total Ionizing Dose}), e os SEE (\textit{Single Event Effects}), que indicam o acontecimento de eventos únicos. 
 
 Ainda segundo Junqueira (2020), o TID se caracteriza principalmente pela formação de pares elétron-lacuna, onde o primeiro aumenta a condutividade do material e o segundo contribui para oxidação, mudando as características elétricas do componente com o tempo.  Já os SEE ocorrem quando um íon atravessa um componente crítico, gerando uma linha de ionização que pode ou não ser destrutiva. 
 
@@ -34,7 +34,7 @@ Com isso, é possível ver três formas confiáveis de escolher cada componente:
 
 \subsection{FloripaSat-1}
 % https://ieeexplore.ieee.org/abstract/document/9085277
-O FloripaSat-1 é uma plataforma \textit{open-source} para nanossatélites. Essa plataforma consiste em três módulos: um módulo de fornecimento de potência (EPS), um computador de bordo (OBDH) e um módulo de telemetria e comunicação (TTC) (MARCELINO et al., 2020).
+O FloripaSat-1 (MARCELINO et al., 2020) é uma plataforma \textit{open-source} para nanossatélites, além de ser também o nome do primeiro satélite lançado pelo SpaceLab. O satélite FloripaSat-1 é um CubeSat 1U,  composto de três módulos: um módulo de fornecimento de potência (EPS), um computador de bordo (OBDH) e um módulo de telemetria e comunicação (TTC). Além disso, possuía duas cargas úteis que consistiam de placas com FPGAs. A missão tinha como objetivos a validação do satélite em órbita, tanto dos módulos desenvolvidos na UFSC quanto do módulo de comunicação desenvolvido no INPE e do módulo da FPGA tolerante a radiação.
 
 Seu OBDH foi feito para realização da interface e comunicação entre os módulos e \textit{payloads}. Aqui, destacam-se os sensores presentes: uma \textit{Inertial Measurement Unit} (com giroscópio, magnetômetro e acelerômetro), a interface com os sensores dos painéis solares e as medições de tensão e corrente de entrada do próprio módulo.
 
@@ -47,21 +47,21 @@ O FloripaSat-2 é a segunda geração da plataforma \textit{open-source} desenvo
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.8]{images/floripasat2.png}
-    \caption{Diagrama de blocos da plataforma FloripaSat2.}
+    \caption{Diagrama de blocos da plataforma FloripaSat-2.}
     \label{fig:floripasat2}
     \fonte{MARCELINO et al., 2024.}
 \end{figure}
 
-Especificamente para o OBDH, forami introduzidas uma memória FRAM (\textit{Ferroelectric Random-Access Memory}) e uma Flash NOR, ao invés das Flashs e cartão microSD anteriores, o que mostra uma melhoria clara de capacidade e confiabilidade. Outras duas melhorias importantes foram, primeiramente, a adição de um conector para eventualmente conectar uma \textit{daughter board} à placa, e, segundamente, a adição de \textit{buffers} às trilhas de I2C (\textit{Inter-Integrated Circuit}) entre os módulos. Isso acrescenta flexibilidade e confiabilidade ao OBDH da segunda geração.
+Especificamente para o OBDH, foram introduzidas uma memória FRAM (\textit{Ferroelectric Random-Access Memory}) e uma Flash NOR de maior capacidade de armazenamento, o que mostra uma melhoria clara de capacidade e confiabilidade. Outras duas melhorias importantes foram, primeiramente, a adição de um conector para eventualmente conectar uma \textit{daughter board} à placa, e, segundamente, a adição de \textit{buffers} às trilhas de I2C (\textit{Inter-Integrated Circuit}) entre os módulos. Isso acrescenta flexibilidade e confiabilidade ao OBDH da segunda geração.
 
 \subsection{Projetos Comerciais}
 
-Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenção de noções sobre a arquitetura e componentes usados. Foram verificados principalmente os processadores, as memórias voláteis e não-voláteis, as interfaces de comunicação e outros periféricos (ADCs, RTC, etc.) utilizados. A Tabela \ref{tab:Tab_Rev} abaixo mostra a pesquisa realizada sobre o Estado da Arte, em conjunto com os dados de George e Wilson (2018), sintetizados na Tabela \ref{tab:Tab_Missoes}.
+Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenção de noções sobre a arquitetura e componentes usados. Foram verificados principalmente os processadores, as memórias voláteis e não-voláteis, as interfaces de comunicação e outros periféricos (ADCs, RTC, etc.) utilizados. A Tabela \ref{tab:Tab_Rev} mostra a pesquisa realizada sobre o estado da arte, em conjunto com os dados de George e Wilson (2018), sintetizados na Tabela \ref{tab:Tab_Missoes}.
 
 \begin{table}[htb]
     \centering
 	\ABNTEXfontereduzida
-	\caption{\label{tab:Tab_Rev}Principais componentes usados pelos fabricantes de OBDHs comerciais.}
+	\caption{\label{tab:Tab_Rev}Comparação entre os principais modelos comerciais de OBDH disponíveis atualmente no mercado.}
 	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
     \begin{tabular}{@{}p{2cm}p{2.6cm}p{2cm}p{2cm}p{2.2cm}p{2.6cm}@{}}
 		\toprule
@@ -114,7 +114,7 @@ Abaixo se encontram sintetizados os projetos comerciais estudados, para obtenç�
 	\fonte{Elaboração própria com base em George e Wilson, 2018, página 463.}
 \end{table}
 
-Comparando ambas tabelas, é possível verificar que a maioria dos processadores apresentados são de duas fabricantes: Xilinx (especialmente \textit{chips} da família Zynq 7000) e Microchip (incluindo Atmel). Além disso, a maior parte dos projetos comerciais vistos apresentam memórias FRAM, que possuem um número máximo de ciclos de leitura e escrita muito elevada, além de memórias Flash. Outro destaque foi a presença de sensores de tensão e corrente, bem como magnetômetros e giroscópios.
+Comparando ambas tabelas, é possível verificar que a maioria dos processadores apresentados, no contexto explorado por (GEORGE E WILSON,  2018), são de duas fabricantes: Xilinx (especialmente \textit{chips} da família Zynq 7000) e Microchip (incluindo Atmel). Além disso, a maior parte dos projetos comerciais vistos apresentam memórias FRAM, que possuem um número máximo de ciclos de leitura e escrita muito elevada, além de memórias Flash. Outro destaque foi a presença de sensores de tensão e corrente, bem como magnetômetros e giroscópios.
 
 Além disso, projetos como o OBDH Nanomind Z7000 (Gomspace Nanomind Z7000 Datasheet, 2019) demonstraram sua efetividade em diversas missões, como FSSCAT (CAMPS et al., 2018), ORCA (BARLES et al., 2022) e CubeMAP (WEIDMANN et al., 2020), o que mostra a confiabilidade e herança de voo de \textit{hardwares} contendo SoCs (\textit{System-on-a-Chip}) da família Zynq 7000. Na Figura \ref{fig:nanomind}, podemos verificar o diagrama de blocos do anteriormente citado Nanomind Z7000.
 
@@ -123,7 +123,7 @@ Além disso, projetos como o OBDH Nanomind Z7000 (Gomspace Nanomind Z7000 Datash
     \includegraphics[scale=0.8]{images/nanomind z7000.png}
     \caption{Diagrama de blocos do OBDH Nanomind Z7000.}
     \label{fig:nanomind}
-    \fonte{Gomspace Nanomind Z7000 Datasheet, 2019.}
+    \fonte{GomSpace Nanomind Z7000 Datasheet, 2019.}
 \end{figure}
 
 \subsection{Projetos Acadêmicos}
@@ -150,7 +150,7 @@ Na segunda publicação estudada, o OBDH é parte de um sistema que implementa u
     \fonte{PUTRA, 2021.}
 \end{figure}
 
-No terceiro caso, a missão incluía a pesquisa e observação em órbita média (MEO), ou seja, em condições mais críticas do que o propósito do OBDH projetado nesse trabalho. Mesmo assim, as noções da arquitetura proposta são muito parecidas com o estado da arte comercial para LEO, usando inclusive um SoC da família Zynq 7000 (LOFFLER, 2021). O diagrama de blocos do OBDH proposto nesse trabalho está disposto na Figura \ref{fig:loffler}.
+No terceiro caso, a missão incluía a pesquisa e observação em órbita média (MEO), ou seja, em condições mais críticas do que o propósito do OBDH projetado nesse trabalho. Mesmo assim, as noções da arquitetura proposta são muito parecidas com o estado da arte para LEO, usando inclusive um SoC da família Zynq 7000 (LOFFLER, 2021). O diagrama de blocos do OBDH proposto nesse trabalho está disposto na Figura \ref{fig:loffler}.
 
 \begin{figure}[H]
     \centering
