@@ -2,7 +2,7 @@
 \chapter{Desenvolvimento do Projeto}
 % ----------------------------------------------------------
 
-Depois das definições apresentadas e da escolha de componentes apresentada na seção anterior, foi possível construir um esquemático elétrico, que esquematiza a PCB do OBDH. Nesse capítulo, discutir-se-á circuitos específicos mais relevantes do projeto, usando o esquemático pronto, que se encontra no Apêndice A. O \textit{software} utilizado para construção desse esquemático foi o Altium Designer (versão 24.4.1).
+Depois das definições apresentadas e da escolha de componentes apresentada na seção anterior, foi possível elaborar um esquemático elétrico, que mostra os circuitos relevantes do OBDH. Nesse capítulo, discutir-se-á circuitos específicos mais relevantes do projeto, usando o esquemático pronto, que se encontra no Apêndice A. O \textit{software} utilizado para elaboração desse esquemático foi o Altium Designer (versão 24.4.1).
 
 \section{Conversores de Potência}
 
@@ -10,8 +10,8 @@ Partindo do princípio que o módulo EPS da terceira geração de módulos do Sp
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/Power_system.png}
     \caption{Cascata de potência proposta.}
+    \includegraphics[scale=0.8]{images/Power_system.png}
     \label{fig:power}
     \fonte{Elaboração própria.}
 \end{figure}
@@ -22,8 +22,8 @@ Costumeiramente, a entrada de tensão de uma placa robusta deve ser filtrada, pr
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/EMI noise.png}
     \caption{Interferência com ruído conduzido.}
+    \includegraphics[scale=1]{images/EMI noise.png}
     \label{fig:emi}
     \fonte{SOH et al., 2010.}
 \end{figure}
@@ -32,16 +32,16 @@ Além disso, também foi necessária a inclusão de um diodo Zener em paralelo �
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/FILTRO.png}
     \caption{Filtro proposto.}
+    \includegraphics[scale=1]{images/FILTRO.png}
     \label{fig:FILTRO}
     \fonte{Elaboração própria.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/filtrof.png}
     \caption{Simulação de magnitude e fase em função da frequência para o filtro proposto.}
+    \includegraphics[scale=1]{images/filtrof.png}
     \label{fig:filtrof}
     \fonte{Elaboração própria.}
 \end{figure}
@@ -58,8 +58,8 @@ O primeiro regulador, que gera a tensão de 1 V, apresentado na Figura \ref{fig:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/1vsupp.png}
     \caption{Regulador de tensão de 1 V.}
+    \includegraphics[scale=0.8]{images/1vsupp.png}
     \label{fig:1vsupp}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
@@ -67,13 +67,13 @@ O primeiro regulador, que gera a tensão de 1 V, apresentado na Figura \ref{fig:
 Também foi possível montar seu circuito de proteção de sobrecorrente, disposto na Figura \ref{fig:1vocp}. Seu resistor de entrada, que escolhe o limiar de corrente permitido, foi caculado conforme (LTC4361, 2018), considerando uma corrente 20\% superior à máxima calculada (na Tabela \ref{tab:estpow}):
 
 \begin{equation}
-	R_{sense} = 50 mV / I_{max} =50 / 2,63 = 19,01 m\Omega
+	R_{sense} = 50 mV / I_{max} =50 / 0,94 = 53 m\Omega
 \end{equation} 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/1vocp.png}
     \caption{Proteção contra \textit{latch-up} para a tensão de 1 V.}
+    \includegraphics[scale=1]{images/1vocp.png}
     \label{fig:1vocp}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
@@ -82,8 +82,8 @@ Depois disso, para seguir com o sequenciamento requerido pelo SoC, precisa-se de
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/sw1.png}
     \caption{Circuito de \textit{Load switch} para a tensão de 1,8 V.}
+    \includegraphics[scale=1]{images/sw1.png}
     \label{fig:sw1}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
@@ -96,8 +96,8 @@ Analogamente, para a tensão de 1,8 V, são necessários ambos um conversor e um
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/1v8supp.png}
     \caption{Regulador de tensão de 1,8 V.}
+    \includegraphics[scale=0.8]{images/1v8supp.png}
     \label{fig:1v8supp}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
@@ -108,23 +108,35 @@ Analogamente, para a tensão de 1,8 V, são necessários ambos um conversor e um
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/1v8ocp.png}
     \caption{Proteção contra \textit{latch-up} para a tensão de 1,8 V.}
+    \includegraphics[scale=1]{images/1v8ocp.png}
     \label{fig:1v8ocp}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
 
-Por fim, para ligar a tensão de 3,3 V fornecida para o SoC, é necessário um último circuito de chaveamento, dessa vez com sua ativação realizada pela tensão de 1,8 V, como mostra a Figura \ref{fig:sw2}.
+Por fim, para ligar a tensão de 3,3 V fornecida para o SoC, é necessário um último circuito de chaveamento, dessa vez com sua ativação realizada pela tensão de 1,8 V, como mostra a Figura \ref{fig:sw2}. Na Figura \ref{fig:3v3ocp} se encontra o circuito de proteção proposto.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/sw2.png}
     \caption{Circuito de \textit{Load switch} para a tensão de 3,3 V do SoC.}
+    \includegraphics[scale=0.8]{images/sw2.png}
     \label{fig:sw2}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
 
-Paralelamente, para a memória DDR3L, são necessários um conversor para a alimentação, de 1,35 V, e um conversor para a tensão de referência e de terminação. Esses circuitos estão dispostos respectivamente nas Figuras \ref{fig:1v35supp} e \ref{fig:1v35ref}.
+\begin{equation}
+	R_{sense} = 50 mV / I_{max} =50 / 0,5 = 100 m\Omega
+\end{equation} 
+
+\begin{figure}[H]
+    \centering
+    \caption{Proteção contra \textit{latch-up} para a tensão de 3,3 V para o SoC.}
+    \includegraphics[scale=0.8]{images/3v3ocp.png}
+    \label{fig:3v3ocp}
+    \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
+\end{figure}
+
+Paralelamente, para a memória DDR3L, são necessários um conversor para a alimentação, de 1,35 V, e um conversor para a tensão de referência e de terminação. Esses circuitos estão dispostos respectivamente nas Figuras \ref{fig:1v35supp} e \ref{fig:1v35ref}. No caso da tensão de alimentação de 1,35 V, também foi colocado um circuito de proteção, como mostra a Figura \ref{fig:1v35ocp}.
 
 \begin{equation}
 	V_{out} = 0,8 * (1 + R_1/R_2) = 0,8 * (1+ 47k/68k) = 1,353 V
@@ -132,17 +144,44 @@ Paralelamente, para a memória DDR3L, são necessários um conversor para a alim
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/1v35supp.png}
     \caption{Regulador de tensão de 1,35 V.}
+    \includegraphics[scale=0.8]{images/1v35supp.png}
     \label{fig:1v35supp}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
 
+\begin{equation}
+	R_{sense} = 50 mV / I_{max} =50 / 0,22 = 227 m\Omega
+\end{equation} 
+
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/refsupp.png}
+    \caption{Proteção contra \textit{latch-up} para a tensão de 1,35 V.}
+    \includegraphics[scale=0.8]{images/1v35ocp.png}
+    \label{fig:1v35ocp}
+    \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
     \caption{Regulador de tensão de referência e terminação para a memória DDR3L.}
+    \includegraphics[scale=0.8]{images/refsupp.png}
     \label{fig:1v35ref}
+    \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
+\end{figure}
+
+Finalmente, para os outros circuitos conectados ao barramento de alimentação de 3,3 V, foi colocado mais uma proteção contra o efeito de \textit{latch-up}, disposta na Figura \ref{fig:3v3gocp}.
+
+\begin{equation}
+	R_{sense} = 50 mV / I_{max} =50 / 2,72 = 18,4 m\Omega
+\end{equation} 
+
+\begin{figure}[H]
+    \centering
+    \caption{Proteção contra \textit{latch-up} para a tensão de 3,3 V para outros circuitos do OBDH.}
+    \includegraphics[scale=0.8]{images/1v35ocp.png}
+    \label{fig:3v3gocp}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
 
@@ -204,16 +243,16 @@ O banco zero do SoC é o responsável por algumas opções e sinais de configura
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/zynqconfig.png}
     \caption{Banco de configuração do SoC.}
+    \includegraphics[scale=0.8]{images/zynqconfig.png}
     \label{fig:config}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/pullupconfig.png}
     \caption{Resistores de \textit{pull-up} necessários.}
+    \includegraphics[scale=0.8]{images/pullupconfig.png}
     \label{fig:pullupconfig}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
@@ -222,8 +261,8 @@ Além disso, para a alimentação do XADC (\textit{Xilinx Analog to Digital Conv
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/xadcfilter.png}
     \caption{Filtro da alimentação analógica do SoC.}
+    \includegraphics[scale=0.8]{images/xadcfilter.png}
     \label{fig:xadcfilter}
     \fonte{Elaboração própria com base no circuito apresentado pelo fabricante.}
 \end{figure}
@@ -231,20 +270,20 @@ Além disso, para a alimentação do XADC (\textit{Xilinx Analog to Digital Conv
 
 \subsection{Blocos do PS}
 
-No caso do sistema de processamento (PS), existem três bancos principais. O primeiro, denominado MIO (\textit{Multiplexed In-Out}), é onde se encontram os controladores das interfaces de comunicação, bem como a entrada de relógio e a escolha do \textit{boot}. No caso desse projeto, foi-se decidido que o SoC poderá inicializar de duas formas, sendo a primeira pela interface JTAG e a segunda pela memória Flash NOR (QSPI), escolhidos pelos resistores R48 e R51. O banco MIO e seus modos de inicialização estão dispostos nas Figuras \ref{fig:psmio} e \ref{fig:boot}.
+No caso do sistema de processamento (PS), existem três bancos principais. O primeiro, denominado MIO (\textit{Multiplexed In-Out}), é onde se encontram os controladores das interfaces de comunicação, bem como a entrada de relógio e a escolha do \textit{boot}. No caso desse projeto, foi decidido que o SoC poderá inicializar de duas formas, sendo a primeira pela interface JTAG e a segunda pela memória Flash NOR (QSPI), escolhidos pelos resistores R48 e R51. O banco MIO e seus modos de inicialização estão dispostos nas Figuras \ref{fig:psmio} e \ref{fig:boot}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/psmio.png}
     \caption{Banco MIO do SoC com suas respectivas entradas e saídas.}
+    \includegraphics[scale=0.8]{images/psmio.png}
     \label{fig:psmio}
     \fonte{Elaboração própria com base na Tabela MIO-at-a-glance (UG585, 2023).}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/bootmode.png}
     \caption{Modos de inicialização do SoC.}
+    \includegraphics[scale=0.8]{images/bootmode.png}
     \label{fig:boot}
     \fonte{Elaboração própria com base em (UG585, 2023).}
 \end{figure}
@@ -290,8 +329,8 @@ Também como mencionado, o projeto terá como memória volátil uma memória do 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/psddr.png}
     \caption{Banco da Memória DDR do PS.}
+    \includegraphics[scale=0.7]{images/psddr.png}
     \label{fig:psddr}
     \fonte{Elaboração própria com base em (UG585, 2023) e (UG933, 2019).}
 \end{figure}
@@ -342,16 +381,16 @@ O lado da FPGA do SoC, chamada de PL, é crucial para se ter um hardware versát
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.8]{images/plhr.png}
     \caption{Banco HR do PL.}
+    \includegraphics[scale=0.8]{images/plhr.png}
     \label{fig:plhr}
     \fonte{Elaboração própria com base em (UG585, 2023).}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/plhp.png}
     \caption{Banco HP do PL.}
+    \includegraphics[scale=0.7]{images/plhp.png}
     \label{fig:plhp}
     \fonte{Elaboração própria com base em (UG585, 2023).}
 \end{figure}
@@ -388,16 +427,16 @@ Por fim, os pinos de potência devem ser alimentados corretamente. Além disso, 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/zynqpower.png}
     \caption{Pinos de potência do SoC.}
+    \includegraphics[scale=0.7]{images/zynqpower.png}
     \label{fig:zpower}
     \fonte{Elaboração própria com base em (UG585, 2023) e (UG933, 2019).}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/zynqcaps.png}
     \caption{Capacitores de desacoplamento recomendados.}
+    \includegraphics[scale=0.7]{images/zynqcaps.png}
     \label{fig:zcaps}
     \fonte{(UG933, 2019).}
 \end{figure}
@@ -412,8 +451,8 @@ A DDR3L selecionada oferece 2 Gb de capacidade de armazenamento, configurada em 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/ddr3l.png}
     \caption{Circuito da memória DDR3L.}
+    \includegraphics[scale=0.7]{images/ddr3l.png}
     \label{fig:ddr3l}
     \fonte{(MT41K256M8DA-125:K DDR3L Datasheet).}
 \end{figure}
@@ -424,8 +463,8 @@ A memória flash NOR, acessada por uma interface QSPI, foi escolhida pela sua ca
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/flash nor.png}
     \caption{Circuito da memória Flash NOR.}
+    \includegraphics[scale=0.7]{images/flash nor.png}
     \label{fig:fnor}
     \fonte{(MT25QL128ABB1ESE-0AUT Flash NOR Datasheet).}
 \end{figure}
@@ -436,8 +475,8 @@ Diferente da flash NOR, a memória flash NAND, acessada via SPI, é utilizada pa
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/flash nand.png}
     \caption{Circuito da memória Flash NAND.}
+    \includegraphics[scale=0.7]{images/flash nand.png}
     \label{fig:fnand}
     \fonte{(MT29F1G01ABAFDSF-AAT:F Flash NAND Datasheet).}
 \end{figure}
@@ -448,8 +487,8 @@ Diferente da flash NOR, a memória flash NAND, acessada via SPI, é utilizada pa
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/fram.png}
     \caption{Circuito da memória FRAM.}
+    \includegraphics[scale=0.7]{images/fram.png}
     \label{fig:fram}
     \fonte{(CY15B104QN FRAM Datasheet).}
 \end{figure}
@@ -462,8 +501,8 @@ Primeiramente, o circuito do WDT, disposto na Figura \ref{fig:wdt}, foi constru�
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/wdt.png}
     \caption{Circuito do WDT.}
+    \includegraphics[scale=0.7]{images/wdt.png}
     \label{fig:wdt}
     \fonte{(TPS3823-33QDBVRQ1 Watchdog Timer Datasheet).}
 \end{figure}
@@ -472,8 +511,8 @@ No circuito do sensor de tensão e temperatura, são monitoradas as tensões de 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/sense.png}
     \caption{Circuito do monitor de tensão e temperatura.}
+    \includegraphics[scale=0.7]{images/sense.png}
     \label{fig:sense}
     \fonte{(LTC2991IMS\#TRPBF Voltage, Current and Temperature Monitor Datasheet).}
 \end{figure}
@@ -486,8 +525,8 @@ Quanto ao circuito de medição de corrente, foi necessário o cálculo do resis
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/current sense.png}
     \caption{Circuito de medição de corrente.}
+    \includegraphics[scale=0.7]{images/current sense.png}
     \label{fig:csense}
     \fonte{(INA180A2IDBVR Current Sense Datasheet).}
 \end{figure}
@@ -496,16 +535,16 @@ Por fim, o sistema ADCS, controlado pela interface I2C0, será formado pelos cir
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/magnetometer.png}
     \caption{Circuito do magnetômetro.}
+    \includegraphics[scale=0.7]{images/magnetometer.png}
     \label{fig:mag}
     \fonte{(MMC5983MA Magnetometer Datasheet).}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/gyro.png}
     \caption{Circuito do giroscópio.}
+    \includegraphics[scale=0.7]{images/gyro.png}
     \label{fig:gyro}
     \fonte{(A3G4250D Gyroscope Datasheet).}
 \end{figure}
@@ -516,8 +555,8 @@ Por fim, todos os blocos foram conectados, usando o princípio de projeto hierá
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{images/conexoes.png}
     \caption{Interconexão dos blocos propostos.}
+    \includegraphics[scale=0.7]{images/conexoes.png}
     \label{fig:inter}
     \fonte{Elaboração própria.}
 \end{figure}

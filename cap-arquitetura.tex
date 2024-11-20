@@ -6,13 +6,13 @@ Após estudar os desdobramentos dos efeitos de órbita baixa e entender o que é
 
 \section{Requisitos de Projeto}
 
-Como dito, foi preciso entender os requisitos impostos para o OBDH da terceira geração do SpaceLab. Com base nas necessidades levantadas para o laboratório nos próximos projetos e na revisão do estado da arte, são apresentados na Tabela \ref{tab:Tab_Req} os requisitos gerais do projeto, em conjunto com a \textit{rationale} e com o método de verificação (NASA Product Verification, 2024). 
+Como dito, foi preciso entender os requisitos impostos para o OBDH da terceira geração do SpaceLab. Com base nas necessidades levantadas para o laboratório nos próximos projetos e na revisão do estado da arte, são apresentados na Tabela \ref{tab:Tab_Req} os requisitos gerais do projeto, em conjunto com a \textit{rationale} e com o método de verificação (NASA Product Verification, 2024). Outro ponto importante a ser considerado seriam as revisões de projeto, que não foram consideradas nesse trabalho.
 
 \begin{longtable}{@{}>{\centering}p{1.5cm}p{4cm}p{4cm}p{4.7cm}@{}}
     \centering
 	\ABNTEXfontereduzida
 	\label{tab:Tab_Req}\tabularnewline
-	\caption{Requisitos do projeto.}\tabularnewline
+	\caption{Requisitos do OBDH da terceira geração do SpaceLab.}\tabularnewline
 	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
 	\hline
 	\multicolumn{1}{c}{\textbf{Índice}} & \multicolumn{1}{c}{\textbf{Descrição}} & \multicolumn{1}{c}{\textbf{Rationale}} & \multicolumn{1}{c}{\textbf{Método de Verificação}} \tabularnewline
@@ -23,7 +23,7 @@ Como dito, foi preciso entender os requisitos impostos para o OBDH da terceira g
         2 & O módulo OBDH deve operar corretamente entre -40°C e 85°C & Para operar com segurança em um ambiente LEO & Teste e Análise \tabularnewline
 
        \hline
-       3 & O módulo OBDH deve possuir um processador capaz de usar um sistema Linux & Para gerenciar e coordenar operações dentro e fora do módulo, sendo capaz de realizar tarefas complexas definidas pela equipe  & Inspeção \tabularnewline
+       3 & O módulo OBDH deve possuir um processador capaz de usar um sistema RTOS & Para gerenciar e coordenar operações dentro e fora do módulo, sendo capaz de realizar tarefas complexas definidas pela equipe  & Inspeção \tabularnewline
 
        \hline
         4 & O módulo OBDH deve possuir uma memória DDR com capacidade de 512Mb (preferencialmente com ECC)  & Memória suficiente para operações do OBDH e armazenamento de dados  & Inspeção\tabularnewline
@@ -78,13 +78,13 @@ A partir dos requisitos, o primeiro passo foi definir de forma geral como seria 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1.2]{images/arquitetura geral.png}
     \caption{Esquema geral de arquitetura.}
+    \includegraphics[scale=1.2]{images/arquitetura geral.png}
     \label{fig:arq_geral}
     \fonte{Elaboração própria.}
 \end{figure}
 
-Como podemos verificar, o processador será crucial e deverá ter pinos suficientes para interface com todas as memórias, sensores e para se comunicar com os outros módulos do CubeSat. Além disso, a parte dos circuitos dedicados às tensões utilizadas deverá ser cuidadosamente estudada, para que seja corretamente dimensionado de acordo com o consumo de potência estimado. A escolha de cada componente será descrita nas seções a seguir, respeitando sempre os seguintes critérios:
+Como podemos verificar, o processador será crucial e deverá ter pinos suficientes para interface com todas as memórias, sensores e para se comunicar com os outros módulos do CubeSat. Além disso, a parte dos circuitos dedicados aos barramentos de alimentação deverá ser cuidadosamente estudada, para que seja corretamente dimensionado de acordo com o consumo de potência estimado. A escolha de cada componente será descrita nas seções a seguir, respeitando sempre os seguintes critérios:
 
 \begin{itemize}
 	\item O componente deve funcionar corretamente nas temperaturas entre -40°C e 85°C;
@@ -99,7 +99,7 @@ Como visto na Tabela \ref{tab:Tab_Missoes}, a fabricante com maior herança de v
 \begin{itemize}
 	\item Foi usado em missões extensivas em pequenos satélites (GomSpace, 2024), ou seja, possui herança de voo em missões similares em LEO e em CubeSats;
 	\item Possui um envelopamento com 484 pinos, suficiente para prover as conexões necessárias para todas as interfaces requeridas (UG865, 2021);
-	\item Capaz de rodar um sistema Linux (KADI et al.,2013);
+	\item Capaz de rodar um sistema operacional Linux (KADI et al.,2013);
 	\item Por ser um SoC, possui alta adaptabilidade e flexibilidade, disponibilizando no mesmo chip uma FPGA e um microprocessador, denominados respectivamente de PL (\textit{Programmable Logic}) e PS (\textit{Processing System});
 \end{itemize}
 
@@ -113,13 +113,13 @@ Partindo dos requisitos de projeto, bem como do esforço de se obter um \textit{
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/ddrsdr.png}
     \caption{Comparação entre DDR e SDR.}
+    \includegraphics[scale=1]{images/ddrsdr.png}
     \label{fig:sdrvsddr}
     \fonte{KLEHN E BROX, 2003.}
 \end{figure}
  
-Por essa razão, foi escolhida uma memória do tipo DDR3, com capacidade de 2Gb e frequência de operação de 800 MHz.
+Por essa razão, bem como pelo fato de que para rodar um sistema operacional complexo (seja ele RTOS ou Linux) existam requisitos de memória RAM, foi escolhida uma memória do tipo DDR3, com capacidade de 2Gb (256 MB) e frequência de operação de 800 MHz.
 
 \subsubsection{Memórias não voláteis}
 
@@ -164,8 +164,8 @@ Na Figura \ref{fig:diapower}, está esquematizado o sistema de potência propost
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/diapower.png}
     \caption{Sistema de potência proposto.}
+    \includegraphics[scale=1]{images/diapower.png}
     \label{fig:diapower}
     \fonte{Elaboração própria.}
 \end{figure}
@@ -188,8 +188,8 @@ Depois das decisões tomadas, foi possível montar um diagrama, apresentado na F
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=1]{images/arquitetura final.png}
     \caption{Arquitetura proposta para o OBDH.}
+    \includegraphics[scale=1]{images/arquitetura final.png}
     \label{fig:arq}
     \fonte{Elaboração própria.}
 \end{figure}
@@ -209,10 +209,10 @@ Também foram levadas em consideração as interfaces disponibilizadas pelo SoC,
         FRAM & CY15B104QN-50SXI & SPI & 3,3 V & 3,7 mA \tabularnewline
         
         \midrule
-        Flash NOR & MT25QL128ABB1ESE-0AUT & QSPI & 3,3 V & 55 mA \tabularnewline 
+        Flash NOR & MT25QL128ABB1ESE-0AUT & QSPI & 3,3 V & 35 mA \tabularnewline 
 
         \midrule
-        Flash NAND & MT29F1G01ABAFDSF-AAT:F & SPI & 3,3 V & 35 mA \tabularnewline 
+        Flash NAND & MT29F1G01ABAFDSF-AAT:F & SPI & 3,3 V & 55 mA \tabularnewline 
 
         \midrule
         DDR3L & MT41K256M8DA-125:K & Paralela & 1,35 V & 182 mA \tabularnewline 
@@ -236,7 +236,7 @@ Também foram levadas em consideração as interfaces disponibilizadas pelo SoC,
         Buffer I2C & TCA4311ADR & I2C & 3,3 V & 7 mA \tabularnewline 
 
         \midrule
-        Transceptor CAN & A3G4250D & CAN & 3,3 V & 60 mA \tabularnewline 
+        Transceptor CAN & TCAN330D & CAN & 3,3 V & 60 mA \tabularnewline 
 
         \midrule
         Transceptor RS-485 & THVD1451DR & Serial & 3,3 V & 3 mA \tabularnewline 
@@ -260,13 +260,13 @@ Também foram levadas em consideração as interfaces disponibilizadas pelo SoC,
 
 \subsection{Estimativa de Potência Consumida}
 
-A fim de garantir o funcionamento correto dos conversores DC-DC e seus respectivos periféricos, foi necessária uma estimativa da potência total consumida por todas as tensões disponíveis no módulo. Para isso, foi utilizada a Tabela \ref{tab:componentes}, bem como o datasheet de cada componente. No caso do SoC, sua fabricante disponibiliza uma planilha (XPE, 2019) para estimativas de potência em cada tensão de alimentação. 
+A fim de garantir o funcionamento correto dos conversores DC-DC e seus respectivos periféricos, foi necessária uma estimativa da potência total consumida por todas as tensões disponíveis no módulo. Para isso, foi utilizada a Tabela \ref{tab:componentes}, bem como o datasheet de cada componente, com a corrente máxima do barramento de alimentação (levando-se em consideração as correntes de chaveamento e quiescentes). No caso do SoC, sua fabricante disponibiliza uma planilha (XPE, 2019) para estimativas de potência em cada tensão de alimentação. 
 
-Com isso, foram obtidos os valores da Tabela \ref{tab:estpow}, considerando uma eficiência de conversão de 85\% (TPS82085, 2019), já incluindo as estimativas de potência e os piores casos descritos anteriormente.
+Com isso, foram obtidos os valores da Tabela \ref{tab:estpoww}, considerando uma eficiência de conversão de 85\% (TPS82085, 2019), já incluindo as estimativas de potência e os piores casos descritos anteriormente. 
 
 \begin{table}[H]
 	\ABNTEXfontereduzida
-	\caption{\label{tab:estpow}Estimativas de potência consumida.}
+	\caption{\label{tab:estpoww}Estimativas de potência consumida no pior caso.}
 	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
     \centering
     \begin{tabular}{@{} >{\centering}p{2cm} >{\centering}p{4cm} >{\centering}p{4cm} >{\centering}p{4cm}@{}}
@@ -283,11 +283,39 @@ Com isso, foram obtidos os valores da Tabela \ref{tab:estpow}, considerando uma 
         1,80 & 0,63 & 0,74 & 0,35 \tabularnewline
 
         \midrule
-        3,3 & 7,5 & - & 2,27  \tabularnewline        
+        3,3 & 3,88 & - & -  \tabularnewline        
 
         \bottomrule
 	\end{tabular}
 	\fonte{Elaboração própria.}
 \end{table}
 
-Através dessas estimativas, pode-se confirmar que o sistema de potência proposto suporta os componentes escolhidos e suas tensões e variações, mesmo quando se considera o pior caso.
+Através dessas estimativas, pode-se inferir que o sistema de potência proposto suporta os componentes escolhidos e suas tensões e variações, mesmo quando se considera o pior caso, totalizando uma potência total consumida de 7,5 W, ou seja, 2,27 A no barramento proveniente do EPS. Agora, partindo do mesmo percentual de eficiência, é considerado um caso típico, apresentado na Tabela \ref{tab:estpow}. 
+
+\begin{table}[H]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:estpow}Estimativas de potência consumida no caso típico.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{2cm} >{\centering}p{4cm} >{\centering}p{4cm} >{\centering}p{4cm}@{}}
+    
+		\toprule
+		\textbf{Tensão [V]} & \textbf{Potência Dissipada [W]} & \textbf{Potência dissipada na tensão de 3,3 V [W]} & \textbf{Corrente típica da trilha [A]} \tabularnewline 
+        \midrule
+         1,00 & 0,67 & 0,79 & 0,67 \tabularnewline
+        
+        \midrule
+        1,35 & 0,127 & 0,15 & 0,13 \tabularnewline 
+
+        \midrule
+        1,80 & 0,51 & 0,60 & 0,28 \tabularnewline
+
+        \midrule
+        3,3 & 3,2 & - & -  \tabularnewline        
+
+        \bottomrule
+	\end{tabular}
+	\fonte{Elaboração própria.}
+\end{table}
+
+Com esses resultados, já estão sendo considerados os superdimensionamentos dos conversores de potência. Nesse caso, o consumo típico total é próximo de 4,7 W, ou seja, com uma corrente de 1,4 A no barramento proveniente do EPS. Mesmo assim, é possível adotar técnicas no firmware para diminuir o consumo mesmo no caso típico, ativando e desativando entradas e saídas conforme o necessário, visto que essa tabela pressupõe que todos os componentes estão em funcionamento ao mesmo tempo, incluindo memórias e transceptores.

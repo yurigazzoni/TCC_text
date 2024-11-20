@@ -1,3 +1,37 @@
 % ----------------------------------------------------------
 \chapter{Resultados}
 % ----------------------------------------------------------
+O desenvolvimento deste trabalho teve como principal objetivo a criação de uma arquitetura de hardware robusta e versátil para um computador de bordo destinado a pequenos satélites, especificamente CubeSats. Este computador de bordo foi projetado para operar em ambientes espaciais adversos, assegurando a integridade e a confiabilidade no tratamento de dados, além de possibilitar a adaptação a diferentes tipos de missões e experimentos científicos em órbita.
+
+Dentre os objetivos específicos, estavam a análise dos requisitos de versatilidade para ambientes espaciais, a especificação de uma arquitetura adaptável e a documentação detalhada de todas as decisões de projeto. Para atender esses objetivos, inicialmente, a robustez do sistema foi trabalhada com a seleção cuidadosa de componentes eletrônicos. Tais componentes foram escolhidos de acordo com diretrizes de herança de voo e normas estabelecidas pela ESA e NASA, de forma a garantir maior confiabilidade e segurança operacional.
+
+No aspecto da versatilidade, o sistema foi arquitetado de modo a integrar memórias, sensores e periféricos variados, de modo a atender a diferentes tipos de missões. Esse objetivo foi cumprido por meio do uso de um SoC da família Zynq, que incorpora um microprocessador e um FPGA. As interfaces genéricas disponibilizadas para os conectores (SPI, I2C, UART, CAN e diversos pinos de entrada e saída genéricos), também corroboraram para essa versatilidade, permitindo a interconexão e adaptação a módulos e subsistemas diversos.
+
+A abordagem de modularidade do projeto também reforça sua robustez e flexibilidade. Com o uso de memórias não voláteis (Flash NOR, Flash NAND e FRAM) para o armazenamento de dados críticos e a inicialização segura do sistema, o computador de bordo projetado consegue resistir às adversidades do ambiente espacial. Além disso, cada componente foi avaliado quanto ao consumo energético e às exigências de funcionamento entre -40 e 85 °C.
+
+A arquitetura foi definida conforme a Figura \ref{fig:arq}, respeitando os requisitos levantados e projetada como mostra a Figura \ref{fig:inter}. Para fins de comparação, a Tabela \ref{tab:results} mostra uma comparação entre o OBDH projetado e alguns dos OBDHs revisados, mostrando que as principais características estão de acordo com o estado da arte investigado.
+
+\begin{table}
+\tiny
+	\caption{\label{tab:results}Comparação entre o OBDH proposto e o estado da arte.}
+	%\begin{tabular}{@{}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{2cm}p{3cm}@{}}
+    \centering
+    \begin{tabular}{@{} >{\centering}p{2cm}>{\centering}p{3cm}>{\centering}p{3cm}>{\centering}p{2cm}>{\centering}p{2cm}>{\centering}p{2cm}@{}}
+    
+		\toprule
+		\textbf{Nome} & \textbf{Memória RAM} & \textbf{Memória não volátil} & \textbf{Sensores} & \textbf{Dimensões} & \textbf{Massa} \tabularnewline 
+        \midrule
+         OBDH proposto & DDR3L (256 Gbit) & FRAM (8 Mbit), Flash NOR (128 Mbit), Flash NAND (1 Gbit). & Tensão, Corrente, Temperatura, Giroscópio, Magnetômetro & TBD & TBD   \tabularnewline
+        \midrule
+         OBDH2 (MARCELINO et al., 2024) & SRAM (64 kB) & FRAM (2 Mbit), Flash NOR (128 MB). & Tensão, Corrente, Temperatura & 89,15 x 92,13 x 15 mm & 53 g\tabularnewline
+        \midrule
+         (PUTRA, 2018) & SRAM (128 kB) & Flash NOR (512 kB) & Tensão, Acelerômetro, Giroscópio, Magnetômetro, Temperatura, Umidade & Não informado & Não informado\tabularnewline
+        \midrule
+         GomSpace Nanomind Z7000 & DDR3 (1 GB) & Flash NAND (32 GB), Flash NOR (64 MB). & Tensão, Corrente. & 65 x 40 x 6,5 mm & 105,5 g  \tabularnewline
+        \bottomrule
+	\end{tabular}
+	\fonte{Elaboração própria.}
+\end{table}
+
+Através disso, é possível verificar que a estrutura proposta é condizente com os OBDHs estudados, demonstrando uma evolução clara quando comparado ao OBDH 1.0 e OBDH 2.0, principalmente no que tange as memórias, com a inclusão da DDR. Por fim, o último resultado é o esquemático desenvolvido, apresentado no Apêndice A. Nele estão dispostas todas conexões necessárias entre os circuitos apresentados no Capítulo 4, respeitando as decisões de projeto tomadas na definição da arquitetura. 
+

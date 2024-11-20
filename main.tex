@@ -48,13 +48,13 @@ hyperref=hidelinks]{abntex2}
 % ----------------------------------------------------
 % Informações do trabalho
 \autor{Yuri Gazzoni Rezende}
-\titulo{Projeto de um Computador de Bordo Robusto e Versátil Para Uso em pequenos satélites}
+\titulo{Projeto de um computador de bordo versátil para uso em pequenos satélites}
 % \subtitulo{Subtítulo} % Preenchimento opcional para quando houver sub-título
-\orientador{Msc. Gabriel Mariano Marcelino}
+\orientador{MSc. Gabriel Mariano Marcelino}
 %\coorientador{Nome do coorientador} % Preenchimento opcional para quando houver co-orientador
 \curso{Departamento de Engenharia Elétrica e Eletrônica}
 % \titulacao{Bacharel em x}
-\datadadefesa{15}{novembro}{2024}
+\datadadefesa{18}{novembro}{2024}
 \local{Florianópolis}
 
 \begin{document}
@@ -66,49 +66,57 @@ hyperref=hidelinks]{abntex2}
 % 2. Folha de rosto
 \imprimirfolhaderosto
 
+\newpage
+\null
+\vfill
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{images/ficha-catalografica.png}
+\end{figure}
+
+
 % 3. Folha de aprovação
 \begin{folhadeaprovacao}
     \membrodabanca[Orientador]{Msc. Gabriel Mariano Marcelino}{}
     \membrodabanca{Prof. Dr. Eduardo Bezerra}{UFSC}
-    \membrodabanca{Membro da banca 2}{UFSC}
-    \membrodabanca{Membro da banca 3}{UFSC}
+    \membrodabanca{Eng. André Martins Pio de Mattos}{Université de Montpellier}
+    \membrodabanca{Eng. João Cláudio Elsen Barcellos}{UFSC}
 \end{folhadeaprovacao}
 
 % 4. Dedicatória
-%\begin{dedicatoria}
-%    Este trabalho é dedicado aos meus colegas de classe e aos meus queridos pais.
-%\end{dedicatoria}
+\begin{dedicatoria}
+    Este trabalho é dedicado aos meus pais, que sempre me apoiaram em todas escolhas difíceis.
+\end{dedicatoria}
 
 % 5. Agradecimentos 
-%\begin{agradecimentos}
-%   Inserir os agradecimentos aos colaboradores à execução do trabalho.
-%\end{agradecimentos}
+\begin{agradecimentos}
+	Primeiramente, gostaria de agradecer minha família, em especial meus pais, Carlos e Edina, por sempre me darem o suporte necessário e me impulsionarem, quaisquer que fossem minhas escolhas.
 
-% 6. Epígrafe
-%\begin{epigrafe}
-%    \aspas
-%    A natureza é um enorme jogo de xadrez disputado por deuses, e que temos o privilégio de observar.
-%    As regras do jogo são o que chamamos de física fundamental, e compreender essas regras é a nossa meta.
-%    \aspas
-%    \autor{Richard Phillips Feynman} % autor da epígrafe
-%\end{epigrafe}
+	Também gostaria de agradecer à minha namorada, Nathalia, por estar ao meu lado durante todo esse trajeto, compartilhando os momentos importantes que fizeram parte do meu crescimento pessoal e profissional.
+
+	Agradeço também aos meus amigos e colegas, em especial Bruno, Caio, João, Luciane, Matheus, Sabrina, Vinicius e Vitória, por deixarem momentos difíceis mais leves.
+
+	Por fim, agradeço ao meu orientador, Gabriel, por todo o suporte e orientação, tornando possível a realização desse trabalho de conclusão de curso.
+	
+\end{agradecimentos}
 
 % 7. Resumo em português
 \begin{resumo}
-Este trabalho apresenta o projeto e desenvolvimento de uma arquitetura de hardware para um computador de bordo adequado para pequenos satélites, como CubeSats, que operam em órbitas baixas (LEO). O objetivo principal foi desenvolver uma solução que atendesse aos requisitos críticos do ambiente espacial, integrando componentes comerciais (COTS) selecionados conforme diretrizes de herança de voo e normas da ESA e NASA, assegurando confiabilidade e estabilidade. Para garantir versatilidade, a solução foi baseada em um SoC da família Zynq, que integra um microprocessador e uma FPGA, que permite a mudança da funcionalidade de cada pino de entrada e saída. O projeto adota métodos de escolha de componentes e estimativas de potência. Como resultado, obtém-se um esquemático eletrônico baseado em uma arquitetura com interfaces genéricas, apresentando circuitos que possibilitam futuros desenvolvimentos para missões ou estudos específicos em órbita. Conclui-se que o computador de bordo projetado cumpre as exigências de robustez e flexibilidade para missões espaciais em pequenos satélites.
+Este trabalho apresenta o projeto e desenvolvimento de uma arquitetura de hardware para um computador de bordo adequado para pequenos satélites, como CubeSats, que operam em órbitas baixas (LEO). O objetivo principal foi desenvolver uma solução que atendesse aos requisitos críticos do ambiente espacial, integrando componentes comerciais (COTS) selecionados conforme diretrizes de herança de voo e normas da ESA e NASA. Para garantir versatilidade, a solução foi baseada em um SoC da família Zynq, que integra um microprocessador e um FPGA, que permite a mudança da funcionalidade de cada pino de entrada e saída. O projeto adota métodos de escolha de componentes e estimativas de potência. Como resultado, obtém-se um esquemático eletrônico baseado em uma arquitetura com interfaces genéricas, apresentando circuitos que possibilitam futuros desenvolvimentos para missões ou estudos específicos em órbita. Conclui-se que o computador de bordo projetado cumpre as exigências de flexibilidade para missões espaciais em pequenos satélites.
 
-\palavrachave{CubeSats}
 \palavrachave{Computador de Bordo}
-\palavrachave{Versatilidade}
+\palavrachave{Satélites}
+\palavrachave{Sistemas Embarcados}
+\palavrachave{COTS}
 \end{resumo}
 
 \begin{resumo}[Abstract]
 \begin{otherlanguage*}{english}
-This project presents the design and development of a hardware architecture for an on-board computer suitable for small satellites, such as CubeSats, operating in low Earth orbit (LEO). The main objective was to develop a solution that meets the critical requirements of the space environment, integrating commercial components (COTS) selected according to flight heritage guidelines and ESA and NASA standards, ensuring reliability and stability. To ensure versatility, the solution was based on a SoC from the Zynq family, which integrates a microprocessor and an FPGA, allowing the functionality of each input and output pin to be changed. The project adopts methods for choosing components and estimating power. The result is a schematic capture based on an architecture with generic interfaces, featuring circuits that enable future developments for specific missions or studies in orbit. It is concluded that the on-board computer designed meets the requirements of robustness and flexibility for space missions on small satellites.
+This project presents the design and development of a hardware architecture for an on-board computer suitable for small satellites, such as CubeSats, operating in low Earth orbit (LEO). The main objective was to develop a solution that meets the critical requirements of the space environment, integrating commercial components (COTS) selected according to flight heritage guidelines and ESA and NASA standards. To ensure versatility, the solution was based on a SoC from the Zynq family, which integrates a microprocessor and an FPGA, allowing the functionality of each input and output pin to be changed. The project adopts methods for choosing components and estimating power. The result is a schematic capture based on an architecture with generic interfaces, featuring circuits that enable future developments for specific missions or studies in orbit. It is concluded that the proposed on-board computer meets the requirements of flexibility for space missions on small satellites.
 \vspace{\onelineskip}
 \noindent 
 
-\textbf{Keywords}: CubeSats. On-board Computer. Versatility.
+\textbf{Keywords}: On-board Computer. Satellites. Embedded Systems. COTS.
  \end{otherlanguage*}
 \end{resumo}
 
